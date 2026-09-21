@@ -1,7 +1,7 @@
 # TuxBot Artifact
 
 This artifact accompanies **“TuxBot: Semantic-Aware Online OS Tuning with
-Large Language Models,”** accepted at the ACM SIGOPS 32nd Symposium on
+Large Language Models,”** (formerly known as SemaTune), accepted at the ACM SIGOPS 32nd Symposium on
 Operating Systems Principles (SOSP ’26).
 
 ## Artifact Available (< 5 minutes)
