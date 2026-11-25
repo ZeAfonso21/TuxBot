@@ -1,0 +1,13 @@
+{
+  "benchmark": "tailbench",
+  "tailbench_app": "img-dnn",
+  "tailbench_root": "deps/Tailbench/tailbench",
+  "tailbench_data_root": "deps/Tailbench/tailbench.inputs",
+  "tailbench_output_dir": "results/multi/workloads/img-dnn",
+  "results_dir": "results/multi/workloads/img-dnn/collector",
+  "tailbench_qps": 10000,
+  "tailbench_threads": 4,
+  "tailbench_warmupreqs": 1000,
+  "tailbench_maxreqs": 1000000000,
+  "tailbench_metrics_interval_sec": 1
+}

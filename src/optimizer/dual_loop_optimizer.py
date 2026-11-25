@@ -61,7 +61,11 @@ class SimpleDualLoopOptimizer:
         """
         self.config = config
         self.benchmark = benchmark
-        self.param_manager = ParameterManager()
+        # EXTENSION
+        ####################################################################
+        runtime = getattr(config, '_extension_runtime', None)
+        self.param_manager = runtime.manager if runtime else ParameterManager()
+        ####################################################################
         
         # Trimming support
         self.trimming_cycles = config.trimming_cycles if config.trimming_enabled else 0
@@ -79,9 +83,13 @@ class SimpleDualLoopOptimizer:
         
         # Create two LLM tuners
         # Speculator (Quick) - runs every window
-        self.quick_tuner = LLMTuner(config, agent_type="quick")
+        # EXTENSION
+        ####################################################################
+        tuner_class = runtime.tuner_class if runtime else LLMTuner
+        self.quick_tuner = tuner_class(config, agent_type="quick")
         # Actor (Reasoning) - runs when previous request completed
-        self.reasoning_tuner = LLMTuner(config, agent_type="reasoning")
+        self.reasoning_tuner = tuner_class(config, agent_type="reasoning")
+        ####################################################################
         
         # Executors for async tuner calls
         #
@@ -297,7 +305,11 @@ class SimpleDualLoopOptimizer:
                 )
             
             # Initialize only the parameters selected by this experiment.
-            initial_params = get_selected_default_parameters(experiment_params)
+            # EXTENSION
+            ####################################################################
+            # Scoped sessions use captured live state, never legacy host-default discovery.
+            initial_params = {} if getattr(self.config, '_extension_runtime', None) else get_selected_default_parameters(experiment_params)
+            ####################################################################
             initial_params.update(self.config.fixed_parameters)
             self.current_parameters = initial_params.copy()
             logger.info(f"Starting with parameters: {self.current_parameters}")

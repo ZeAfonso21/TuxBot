@@ -1,0 +1,19 @@
+{
+  "mode": "independent",
+  "defaults_verified": false,
+  "cgroup_root": "/sys/fs/cgroup/tuxbot-experiment",
+  "results_dir": "results/multi/independent-run-1",
+  "warmup_seconds": 30,
+  "window_seconds": 10,
+  "tuning_windows": 10,
+  "stable_windows": 3,
+  "regression_tolerance": 0.05,
+  "regression_windows": 3,
+  "approved_host_parameters": ["min_granularity_ns", "latency_ns", "wakeup_granularity_ns", "migration_cost_ns", "napi_busy_poll", "min_perf_pct", "max_perf_pct"],
+  "actor_model": "gemini-2.5-flash",
+  "instant_model": "gemini-2.5-flash-lite",
+  "applications": [
+    {"id": "application_A", "metric": "latency_p99", "objective": "minimize", "bound": "default", "priority": 1, "ready_signal": true, "start": ["python3", "-m", "extension.tailbench", "serve", "src/extension/examples/silo.json"], "measure": ["python3", "-m", "extension.tailbench", "measure", "src/extension/examples/silo.json"]},
+    {"id": "application_B", "metric": "throughput", "objective": "maximize", "bound": "default", "priority": 1, "ready_signal": true, "start": ["python3", "-m", "extension.tailbench", "serve", "src/extension/examples/img-dnn.json"], "measure": ["python3", "-m", "extension.tailbench", "measure", "src/extension/examples/img-dnn.json"]}
+  ]
+}

@@ -92,3 +92,4 @@ config/*.json
 
 *.txt
 *metrics.json
+PROJECT_ANALYSIS.md
