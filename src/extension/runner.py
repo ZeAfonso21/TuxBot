@@ -3,6 +3,7 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict
 import json
+import logging
 import os
 from pathlib import Path
 import signal
@@ -29,7 +30,7 @@ def child_exec(group, command):
 
 def run(data):
     from optimizer.config import SimpleConfig
-    from .host import resolve_host
+    from .host import resolve_host, limit_host
     from .telemetry import Windows, WindowBroker, View
     mode = data['mode']
     if mode not in ('default', 'independent', 'coordinated'):
@@ -62,6 +63,7 @@ def run(data):
         result['cgroup_parent_initial_controllers'] = groups.original_subtree
         save(output / 'cgroup_state.json', dict(root=str(groups.root), initial_controllers=groups.original_subtree))
         host, report = resolve_host(data.get('approved_host_parameters', []))
+        limit_host(host, data.get('host_limits', {}))
         save(output / 'host_compatibility.json', report)
         if mode == 'coordinated' and not host:
             raise RuntimeError('Coordinated experiments require at least one verified writable host control')
@@ -72,6 +74,8 @@ def run(data):
         save(output / 'initial_state.json', result)
         collector_config = SimpleConfig()
         collector_config.results_dir = str(output / 'telemetry')
+        if data.get('require_perf_metrics', False):
+            collector_config.optimization_metric = 'instructions_per_cycle'
         windows = Windows(collector_config, apps, groups, output, tolerance)
         windows.actuator = master
         windows.host_observers = host
@@ -121,8 +125,8 @@ def run(data):
                 config.max_iterations, config.post_tuning_windows = tuning, stable
                 config.window_duration = duration
                 # Keep settings narrow: no legacy profiles, trimming, replay, fixed knobs, or gists.
-                config.llm_actor_model = data.get('actor_model', 'gemini-2.5-flash')
-                config.llm_speculator_model = data.get('instant_model', 'gemini-2.5-flash-lite')
+                config.llm_actor_model = data.get('actor_model', 'gemini-3.5-flash')
+                config.llm_speculator_model = data.get('instant_model', 'gemini-3.5-flash-lite')
                 if not all(m.startswith('gemini-') for m in (config.llm_actor_model, config.llm_speculator_model)):
                     raise ValueError('Initial extension runner supports Gemini models only')
                 config.llm_request_timeout_seconds = data.get('llm_timeout_seconds', 120)
@@ -212,6 +216,7 @@ def main():
     args = parser.parse_args()
     if not args.authorize_execution:
         parser.error('Execution disabled: explicit --authorize-execution required on a dedicated machine')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s: %(message)s')
     data = decode(Path(args.config).read_text())
     # Catch graceful interruption; SIGKILL/power loss still require the saved snapshot.
     def interrupted(signum, frame):

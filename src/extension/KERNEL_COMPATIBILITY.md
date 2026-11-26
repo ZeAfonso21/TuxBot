@@ -1,6 +1,6 @@
 # Eight-parameter compatibility review
 
-This is a **source/interface review, not empirical validation**. No writes, mounts, experiments, or privileged probes were performed. The dedicated experimental kernel has not been identified. Runtime availability is therefore established again by the authorized runner, not assumed from this development machine.
+The initial review below was source/read-only inspection, not empirical validation. The target is now identified as **bart, Linux 5.15.0-89-lowlatency**; see TESTING.md for subsequent authorized remote checks. Real cgroup CPU writes/readback/restoration and, subsequently, the six CPU-related scalar host controls were exercised in the real Sysbench C pilot. Busy polling was intentionally not exposed for these workloads; cstate_max remains excluded. Runtime host-control availability must still be resolved per run rather than assumed from either machine.
 
 | Logical name | Linux 5.15 / existing implementation interface | Semantics and scope | Extension policy / constraints |
 |---|---|---|---|
@@ -32,6 +32,16 @@ The old sysctl and debugfs paths above are alternate historical locations for th
 - No idle-state masks were changed or investigated by writing. No writable capability has been empirically established.
 
 Thus the only locally observed scalar candidates are busy polling and the two Intel P-state percentages. They are not automatically the active set on the future experimental machine.
+
+## Subsequent target observations: bart
+
+Read-only resolution during the authorized cgroup smoke check found all seven scalar candidates accessible and reported writable: the four exact-name scheduler debugfs interfaces, `/proc/sys/net/core/busy_poll`, and the paired Intel P-state percentage files. Values were min granularity 3000000, scheduler latency 24000000, wakeup granularity 4000000, migration cost 500000, busy_poll 0, minimum percentage 45 and maximum 100. The full report is in `results/cgroup-smoke/stdout.json`. These are candidate availability observations, **not** write validation or a default-state attestation. `cstate_max` remains excluded. No replacement aliases were required on this target.
+
+## Subsequent live validation: Sysbench C pilot
+
+The four scheduler controls and both Intel P-state percentage endpoints were written/read back successfully through the scoped actuator on bart, with the original selected snapshot restored after completion. The pilot narrowed scheduler latency to 6–48 ms, min granularity to 0.5–6 ms, wakeup granularity to 0–8 ms, migration cost to 0–2 ms, min_perf_pct to 45–100 and max_perf_pct to 80–100. These limits may only narrow the verified schema, never add interfaces. See `results/pilot-01/C-coordinated/results.json`, sibling delegation evidence and `progress/002-sysbench-pilot.md`.
+
+This validates successful writes and final restoration for the actual sampled values on this Linux 5.15 target. It does not validate every allowed value, all failed-partial-write paths, newer-kernel compatibility or equivalence of unimplemented EEVDF controls. Busy-poll writes and idle-state masks were not tested.
 
 ## Runtime evidence
 

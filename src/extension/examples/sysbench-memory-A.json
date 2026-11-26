@@ -1,0 +1,5 @@
+{
+  "workload": "memory",
+  "threads": 4,
+  "metrics_file": "/work_dir/TuxBot/results/pilot-01/A-default-02/memory.intervals.jsonl"
+}

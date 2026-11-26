@@ -83,6 +83,7 @@ htmlcov/
 *.log
 
 plots*
+!src/extension/plots.py
 
 # Config files
 config/*.json
@@ -93,3 +94,4 @@ config/*.json
 *.txt
 *metrics.json
 PROJECT_ANALYSIS.md
+GEMINI_API_KEY

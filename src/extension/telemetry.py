@@ -18,6 +18,39 @@ def cgroup_sample(path):
     return result
 
 
+def cgroup_deltas(before, after, seconds):
+    """Derive rates from the existing raw cgroup endpoint samples; missing stays absent."""
+    result = {}
+    old = dict(line.split() for line in before.get('cpu.stat', '').splitlines())
+    new = dict(line.split() for line in after.get('cpu.stat', '').splitlines())
+    for key, output, divisor in (
+        ('usage_usec', 'cpu_usage_cores', 1000000 * seconds),
+        ('throttled_usec', 'cpu_throttled_seconds', 1000000),
+        ('nr_throttled', 'cpu_throttled_periods', 1),
+    ):
+        if key in old and key in new:
+            delta = int(new[key]) - int(old[key])
+            if delta < 0:
+                raise ValueError('Cgroup counter reset during measurement')
+            result[output] = delta / divisor
+    if 'memory.current' in after:
+        result['memory_current_bytes'] = int(after['memory.current'])
+    for resource in ('cpu', 'memory', 'io'):
+        key = resource + '.pressure'
+        for category in ('some', 'full'):
+            totals = []
+            for sample in (before, after):
+                rows = [line.split() for line in sample.get(key, '').splitlines() if line.startswith(category + ' ')]
+                total = next((field.split('=')[1] for row in rows for field in row if field.startswith('total=')), None)
+                totals.append(int(total) if total is not None else None)
+            if None not in totals:
+                delta = totals[1] - totals[0]
+                if delta < 0:
+                    raise ValueError('Pressure counter reset during measurement')
+                result[resource + '_pressure_' + category + '_seconds'] = delta / 1000000
+    return result
+
+
 class Windows(BenchmarkInterface):
     """Reuse TuxBot's perf/system collectors; measurement commands share explicit endpoints."""
     def __init__(self, config, apps, groups, output, tolerance):
@@ -32,6 +65,9 @@ class Windows(BenchmarkInterface):
 
     def pre_execute(self):
         return True
+
+    def cleanup(self):
+        pass  # runner owns the two workload processes and cgroup restoration
 
     def parse_results(self, output_dir):
         raise NotImplementedError("Metrics come from window measurement commands")
@@ -85,7 +121,8 @@ class Windows(BenchmarkInterface):
         for app, raw in zip(self.apps, values):
             value = raw[app.metric]
             observation = app.observation(value, self.tolerance) if app.baseline else dict(metric=app.metric, objective=app.objective, current=value)
-            observation.update(raw=raw, cgroup_before=before[app.id], cgroup_after=after[app.id])
+            observation.update(raw=raw, cgroup_before=before[app.id], cgroup_after=after[app.id],
+                               cgroup_window=cgroup_deltas(before[app.id], after[app.id], end - start))
             observations[app.id] = observation
         row = dict(window=number, phase=self.phase, start=start, end=end, applications=observations,
                    shared=system, configuration_start=configuration_start,

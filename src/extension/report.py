@@ -10,17 +10,26 @@ from .controls import decode
 def export(files, output, plots=False):
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
-    trajectories, summary, decisions, evaluations = [], [], [], []
+    trajectories, summary, decisions, evaluations, results, controls = [], [], [], [], [], []
     for filename in files:
         result = decode(Path(filename).read_text())
+        results.append(result)
         mode = result['mode']
         run_id = str(Path(filename).resolve().parent)
         for row in result.get('windows', []):
+            for app, values in (row.get('configuration_start') or {}).get('application_updates', {}).items():
+                for parameter, value in values.items():
+                    controls.append(dict(run=run_id, mode=mode, phase=row['phase'], window=row['window'],
+                                         scope='application', application=app, parameter=parameter, value=value))
+            for parameter, value in row.get('observed_host_start', {}).items():
+                controls.append(dict(run=run_id, mode=mode, phase=row['phase'], window=row['window'],
+                                     scope='host', application='', parameter=parameter, value=value))
             for app, observation in row['applications'].items():
                 trajectories.append(dict(run=run_id, completed=result['completed'], mode=mode, application=app,
                                          phase=row['phase'], window=row['window'], start=row['start'], end=row['end'],
-                                         metric=observation['metric'], value=observation['current'],
+                                         metric=observation['metric'], objective=observation.get('objective'), value=observation['current'],
                                          improvement=observation.get('improvement', ''),
+                                         improvement_pct=(observation['improvement'] - 1) * 100 if 'improvement' in observation else '',
                                          constraint_violation=observation.get('constraint_violation', ''),
                                          significant_regression=observation.get('significant_regression', '')))
         for app in result.get('applications', []):
@@ -35,7 +44,7 @@ def export(files, output, plots=False):
             tolerance = result['config'].get('regression_tolerance', 0.05)
             regressed = value > baseline * (1 + tolerance) if app['objective'] == 'minimize' else value < baseline * (1 - tolerance)
             summary.append(dict(run=run_id, mode=mode, application=app['id'], completed=result['completed'],
-                                metric=app['metric'], stable_median=value, baseline=baseline, improvement=factor,
+                                metric=app['metric'], objective=app['objective'], stable_median=value, baseline=baseline, improvement=factor,
                                 bound=bound, constraint_violation=violated, stable_regression=regressed,
                                 measured_windows=len(selected), expected_windows=result['config'].get('stable_windows', 3)))
         for controller, records in result.get('decisions', {}).items():
@@ -47,10 +56,15 @@ def export(files, output, plots=False):
     for run in sorted({r['run'] for r in summary}):
         rows = [r for r in summary if r['run'] == run]
         complete = len(rows) == 2 and all(r['completed'] and r['measured_windows'] == r['expected_windows'] for r in rows)
+        observations = [r for r in trajectories if r['run'] == run and r['phase'] != 'baseline']
+        violating_windows = {r['window'] for r in observations if r['constraint_violation']}
         evaluations.append(dict(run=run, mode=rows[0]['mode'], complete=complete,
                                 experimental_success=complete and not any(r['stable_regression'] for r in rows),
-                                all_user_bounds_satisfied=complete and not any(r['constraint_violation'] for r in rows)))
-    for name, rows in (('trajectories', trajectories), ('stable', summary), ('decisions', decisions), ('evaluation', evaluations)):
+                                all_user_bounds_satisfied=complete and not any(r['constraint_violation'] for r in rows),
+                                bound_evaluation='stable_window_median',
+                                windows_with_bound_violation=len(violating_windows),
+                                all_windows_bounds_satisfied=complete and not violating_windows))
+    for name, rows in (('trajectories', trajectories), ('stable', summary), ('decisions', decisions), ('evaluation', evaluations), ('controls', controls)):
         with (output / f'{name}.csv').open('w', newline='') as stream:
             if rows:
                 writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
@@ -81,6 +95,10 @@ def export(files, output, plots=False):
             fig.tight_layout()
             fig.savefig(output / f'{app}.png')
             plt.close(fig)
+        from .plots import improvement_plots, telemetry_plots, control_plots
+        improvement_plots(trajectories, summary, output)
+        telemetry_plots(results, output)
+        control_plots(results, output)
 
 
 def main():

@@ -43,12 +43,13 @@ class ScopedTuner(LLMTuner):
                     result[name] = dict(type='integer', minimum=control.minimum, maximum=control.maximum)
                 else:
                     result[name] = dict(type='string', description=control.schema()['format'])
-            return dict(type='object', properties=result, additionalProperties=False)
+            # Gemini response_schema rejects additionalProperties; local validation remains strict.
+            return dict(type='object', properties=result)
 
         return dict(type='object', properties={
-            'application_updates': dict(type='object', properties={a: properties(c) for a, c in runtime.manager.applications.items()}, additionalProperties=False),
+            'application_updates': dict(type='object', properties={a: properties(c) for a, c in runtime.manager.applications.items()}),
             'host_updates': properties(runtime.manager.host),
-            'reasoning': dict(type='string')}, required=['application_updates', 'host_updates', 'reasoning'], additionalProperties=False)
+            'reasoning': dict(type='string')}, required=['application_updates', 'host_updates', 'reasoning'])
 
     def _parse_structured_response(self, data):
         self.config._extension_runtime.manager.validate(data)
@@ -121,4 +122,10 @@ class ScopedController(SimpleDualLoopOptimizer):
         self.reasoning_executor.shutdown(wait=True, cancel_futures=True)
         if reason != 'completed':
             self.benchmark.broker.abort()
-        return super()._finish(reason)
+        result = super()._finish(reason)
+        # The legacy finish routine logs save failures but can still claim completion.
+        if not self._history_saved:
+            result['terminated_reason'] = 'error'
+            result['history_error'] = 'Controller history could not be saved'
+            self.benchmark.broker.abort()
+        return result

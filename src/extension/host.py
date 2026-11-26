@@ -15,6 +15,18 @@ HOST = {
 }
 
 
+def limit_host(controls, limits):
+    """Narrow verified ranges for a pilot; configuration cannot broaden the allowlist."""
+    for name, bounds in limits.items():
+        if name not in controls or not isinstance(bounds, list) or len(bounds) != 2 or any(type(v) is not int for v in bounds):
+            raise ValueError('Host limits require an active control and two integer bounds')
+        control = controls[name]
+        low, high = max(control.minimum, bounds[0]), min(control.maximum, bounds[1])
+        if low > high:
+            raise ValueError('Host limits have no overlap with the verified range')
+        control.minimum, control.maximum = low, high
+
+
 def resolve_host(approved):
     """Called only by the authorized runner. Report absent/unapproved controls explicitly."""
     unknown = set(approved) - set(HOST) - {'cstate_max'}

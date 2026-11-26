@@ -1,6 +1,6 @@
 # Coordinated multi-application TuxBot
 
-**Implementation only. No tests, benchmarks, tuning sessions, kernel/cgroup writes, or LLM requests have been executed for this extension.** Read-only interface observations are in [KERNEL_COMPATIBILITY.md](KERNEL_COMPATIBILITY.md). Do not run the commands below until the user explicitly authorizes testing on a dedicated experimental host.
+**A real Sysbench A/C pilot has completed on `bart`.** See [TESTING.md](TESTING.md) and [progress logs](../../progress/README.md) for 24 passing tests, workloads/telemetry, live host/cgroup changes, restoration and the retained plots in `results/pilot-01/comparison/`. This is a single functional pilot, not a statistical research result. Never execute TuxBot, tests or workloads locally; all execution must use `ssh bart 'COMMAND'`. Compatibility notes: [KERNEL_COMPATIBILITY.md](KERNEL_COMPATIBILITY.md).
 
 ## Architecture
 
@@ -27,9 +27,10 @@ Examples:
 - `src/extension/examples/default.json`
 - `src/extension/examples/independent.json`
 - `src/extension/examples/coordinated.json`
-- Workloads: `src/extension/examples/silo.json`, `src/extension/examples/img-dnn.json`
+- TailBench workloads: `src/extension/examples/silo.json`, `src/extension/examples/img-dnn.json`
+- Validated Sysbench pilot: `pilot-A.json`, `pilot-C.json` plus `sysbench-{cpu,memory}-{A,C}.json` in the same examples directory.
 
-The examples deliberately set `defaults_verified: false`. The operator must establish actual default kernel settings, default ancestor cgroup settings, controller delegation, workload provisioning, and machine suitability before changing it to true. Capturing the current host does **not** prove it is at kernel defaults. The runner does not impose the legacy hardcoded Linux 5.15 defaults on a newer kernel.
+The generic examples deliberately set `defaults_verified: false`. The bart-specific pilot profiles set it true only alongside explicit expected host values, narrow `host_limits`, default-parent checks and required perf metrics. Their existing result paths must be changed before another run. The operator must establish actual default kernel settings, default ancestor cgroup settings, controller delegation, workload provisioning, and machine suitability before changing it to true. Capturing the current host does **not** prove it is at kernel defaults. The runner does not impose the legacy hardcoded Linux 5.15 defaults on a newer kernel.
 
 Application fields:
 
@@ -70,7 +71,9 @@ The server enters its cgroup **before exec**, so forked children inherit members
 
 ### Existing supported workloads
 
-The bridge in `tailbench.py` reuses `TailbenchBenchmark.pre_execute`, timestamped interval CSV parsing, and `_aggregate_metrics`. The sample pair is **Silo latency minimization + img-dnn throughput maximization**. They require built modified TailBench dependencies, datasets, and workload-specific provisioning. Dependencies were previously found empty; nothing has been downloaded or built here.
+The first real pilot uses **Sysbench CPU + memory**, now installed on bart. `sysbench.py` runs both continuously; CPU is a four-thread prime workload minimizing the maximum of interval p99 values, and memory is four-thread sequential read throughput over four private 256 MiB buffers. Reports use complete one-second intervals contained in common windows. These are receipt-time-aligned interval summaries, not request traces. Existing TuxBot collectors supply OS telemetry. See [pilot progress log](../../progress/002-sysbench-pilot.md) for actual parameters, limitations and results. `pilot.py` wraps the normal runner with verified temporary CPU delegation and restoration; it is not another tuning implementation.
+
+The optional bridge in `tailbench.py` reuses `TailbenchBenchmark.pre_execute`, timestamped interval CSV parsing, and `_aggregate_metrics`. The sample pair is **Silo latency minimization + img-dnn throughput maximization**. They require built modified TailBench dependencies, datasets, and workload-specific provisioning. Dependencies were previously found empty; nothing has been downloaded or built here.
 
 The example rates and thread counts are starting values, not validated saturation points. Calibrate the throughput application's offered load before experiments: under a fixed unsaturated arrival rate, reported throughput may simply equal offered load. Hold the chosen rates/data/thread counts constant across A/B/C. Give each run/application a **unique absolute** `tailbench_output_dir`, `results_dir`, and workload config; update both `start` and `measure` to the same config. Never run multiple experimental modes concurrently against the same metric directories.
 
@@ -91,9 +94,9 @@ It must emit exactly one JSON object on stdout, e.g.:
 
 Endpoints must echo the exact provided floats; the metric must be finite and strictly positive. Logs belong on stderr. The reader must actually select data from that interval; endpoint echoing cannot verify workload semantics. Missing, zero, nonfinite, stale endpoint, duplicate-key, process-exit, reader failure, and timeout conditions fail the experiment instead of being treated as valid measurements.
 
-## Future execution (NOT authorized yet)
+## Experiment execution (remote only)
 
-After explicit user authorization on a dedicated machine:
+Testing and a first A/C workload pilot have been authorized and performed on `bart`. For additional workloads/repetitions:
 
 1. Provision workloads and datasets; configure Gemini credentials (`GEMINI_API_KEY`) for B/C. A requires no key.
 2. Provision an empty delegated cgroup root with CPU access; verify default ancestors and host state. Ensure exclusive control of approved knobs; stop unrelated tuners.
@@ -101,16 +104,17 @@ After explicit user authorization on a dedicated machine:
 4. Obtain separate permission to run the prepared pure tests before any live experiments. Example future command:
 
 ```sh
-PYTHONPATH=src python -m unittest extension.test_extension
+ssh bart 'cd /work_dir/TuxBot && OS_PARAM_TUNING_ROOT=/work_dir/TuxBot PYTHONPATH=src /work_dir/tuxbot-venv/bin/python -m unittest extension.test_extension extension.test_controller extension.test_runner'
 ```
 
 5. Execute each mode separately, repeating/rerandomizing run order as the experimental design requires:
 
 ```sh
-# FUTURE ONLY: starts real workloads, creates cgroups, and B/C make paid API calls.
-PYTHONPATH=src python -m extension.runner src/extension/examples/default.json --authorize-execution
-PYTHONPATH=src python -m extension.runner src/extension/examples/independent.json --authorize-execution
-PYTHONPATH=src python -m extension.runner src/extension/examples/coordinated.json --authorize-execution
+# FUTURE ONLY after provisioning: real workloads/cgroups, plus paid API calls in B/C.
+# Use /work_dir/tuxbot-venv/bin/python in workload argv arrays too.
+ssh bart 'cd /work_dir/TuxBot && OS_PARAM_TUNING_ROOT=/work_dir/TuxBot PYTHONPATH=src /work_dir/tuxbot-venv/bin/python -m extension.runner src/extension/examples/default.json --authorize-execution'
+ssh bart '. /work_dir/.secrets/gemini.env; cd /work_dir/TuxBot && OS_PARAM_TUNING_ROOT=/work_dir/TuxBot PYTHONPATH=src /work_dir/tuxbot-venv/bin/python -m extension.runner src/extension/examples/independent.json --authorize-execution'
+ssh bart '. /work_dir/.secrets/gemini.env; cd /work_dir/TuxBot && OS_PARAM_TUNING_ROOT=/work_dir/TuxBot PYTHONPATH=src /work_dir/tuxbot-venv/bin/python -m extension.runner src/extension/examples/coordinated.json --authorize-execution'
 ```
 
 6. Inspect restoration results after **every** run. Do not continue after incomplete restoration. Re-establish defaults before the next run.
@@ -124,14 +128,14 @@ Per run: capture initial state → start both servers and await readiness → wa
 Future offline export (does not run workloads or APIs):
 
 ```sh
-PYTHONPATH=src python -m extension.report \
+ssh bart 'cd /work_dir/TuxBot && PYTHONPATH=src /work_dir/tuxbot-venv/bin/python -m extension.report \
   results/multi/default-run-1/results.json \
   results/multi/independent-run-1/results.json \
   results/multi/coordinated-run-1/results.json \
-  --output results/multi/comparison --plots
+  --output results/multi/comparison --plots'
 ```
 
-CSV exports: per-app window trajectories, stable-phase median performance, default-relative factors, constraint violations, significant regressions, inference latency/tokens and decisions, plus per-run experimental success. Optional plots require matplotlib and show each application's cross-mode stable comparison, raw trajectory with violation markers, and normalized trajectory. Raw effective cgroup/host snapshots, per-app cgroup counter endpoints/pressure, shared TuxBot telemetry, provider histories and token information remain in JSON. No model pricing is invented; token usage/latency are supplied, monetary cost is not estimated.
+CSV exports: per-app window trajectories, stable-phase median performance, factors/percentages, constraint violations, significant regressions, inference latency/tokens, decisions, measured controls and per-run experimental success. Stable-median bound checks and any-window violation flags are explicit and separate. Optional matplotlib plots include raw/stable comparisons, per-window improvement against own baselines and a single A reference, hardware/resource telemetry and actual window-start control trajectories. Plot logic is in `report.py` and `plots.py`; actual pilot PNG/PDF/CSV outputs are retained locally and remotely under `results/pilot-01/comparison/`. Raw effective cgroup/host snapshots, per-app cgroup counter endpoints/pressure, shared TuxBot telemetry, provider histories and token information remain in JSON. No model pricing is invented; token usage/latency are supplied, monetary cost is not estimated.
 
 Success is evaluated independently of user bounds: stable-phase median regression beyond tolerance for **either** application makes a complete run experimentally unsuccessful. Bounds may be looser/tighter than that baseline criterion. Stable medians reduce single-window-noise sensitivity; all noisy windows and violations remain visible. `sustained_regression` in controller histories flags consecutive bad tuning windows, including exploration. Automatic restore-to-known-good during tuning is intentionally not implemented; safe coordination with stale model requests would require more scheduler changes. Exact original-state restoration at experiment completion/failure is implemented.
 
@@ -139,12 +143,13 @@ Success is evaluated independently of user bounds: stable-phase median regressio
 
 ## Limitations / verification handoff
 
-- No empirical acceptance criterion is verified. Prepared unit tests, syntax/import behavior, existing-regression tests, Gemini structured-schema compatibility, dual-loop lifecycle, privileged interfaces, actual readbacks, rollback and signal cleanup all still need authorized testing.
+- 24 targeted tests and one real Sysbench A/C pilot have passed on bart, including real coordinated provider calls, host/cgroup readback and exact restoration. Repeated research evaluation, independent-mode B under real workloads and live signal/failure recovery remain unverified; see TESTING.md.
 - No Gemini key is required to inspect/edit this implementation or prepare configurations. B/C create clients only during an explicitly gated future execution.
 - Scheduler controls may be unavailable on EEVDF. `cstate_max` is excluded; no unverified aliases are invented.
 - Shared perf/power sampling reuses the original collectors, including their buffered timing and daemon system-sampler limitations described in `PROJECT_ANALYSIS.md`. Application readers have common exact endpoints; hardware/system samples are not magically perfectly aligned or attributable per application.
-- Cgroup counters are saved as before/after cumulative endpoints (CPU time/throttling, memory events/usage, pressure, I/O); consumers must compute deltas/rates, not interpret counters as instantaneous rates.
-- TailBench adapter startup/parser APIs and Gemini SDK behavior have only been statically inspected. Timestamped CSV availability, source time convention, throughput saturation, and workload survival under quotas must be verified before claiming usable measurements.
+- Raw cgroup endpoints are retained; `cgroup_window` additionally supplies CPU core-equivalents, throttling/pressure deltas and memory bytes. Do not interpret raw cumulative counters as instantaneous rates.
+- Gemini Lite no-op schemas have been exercised live; TailBench startup/parser APIs remain statically inspected only. Timestamped CSV availability, source time convention, throughput saturation, and workload survival under quotas must be verified before claiming usable measurements.
+- Current extension defaults use Gemini 3.5 Flash / Flash-Lite after the API rejected 2.5 Flash-Lite for this new key. Both roles were exercised in the real C pilot. Model prices/account balance were not independently verified.
 - Independent instances use isolated state within one experiment process, not separate OS processes. The coordinator knows both applications; neither model does. There is no tuner negotiation.
 - Operator-authored commands/configurations and cgroup delegation are trusted. The model supplies only validated allowlisted JSON values, never paths or shell commands.
 
@@ -152,4 +157,4 @@ Success is evaluated independently of user bounds: stable-phase median regressio
 
 Legacy modification: `src/optimizer/dual_loop_optimizer.py` (constructor dependency injection and scoped startup bypass of legacy default discovery).
 
-New modules under `src/extension`: `model.py`, `controls.py`, `telemetry.py`, `controller.py`, `host.py`, `runner.py`, `tailbench.py`, `report.py`, `test_extension.py`, and `__init__.py`. Examples and this guide/compatibility review live alongside them. `PROJECT_ANALYSIS.md` receives an append-only implementation note. The pre-existing `.gitignore` modification is unrelated and was left untouched. `PROJECT_ANALYSIS.md` is currently ignored by that file; its appended notes exist on disk but will require explicit inclusion if the handoff is committed.
+Modules under `src/extension` include configuration/controls/telemetry/controller/host code, `runner.py`, `pilot.py`, workload bridges `sysbench.py`/`tailbench.py`, exporters `report.py`/`plots.py`, smoke helpers and four test modules. Progress logs are under root `progress/`; current status is in `TESTING.md`. Examples and this guide/compatibility review live alongside them. `PROJECT_ANALYSIS.md` receives an append-only implementation note. Existing `.gitignore` entries were preserved; a narrow exception keeps `src/extension/plots.py` trackable despite the broad `plots*` rule. `PROJECT_ANALYSIS.md` is currently ignored by that file; its appended notes exist on disk but will require explicit inclusion if the handoff is committed.
