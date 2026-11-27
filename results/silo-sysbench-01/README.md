@@ -1,5 +1,7 @@
 # Silo p99 latency vs Sysbench CPU throughput
 
+> **Subsequent audit: optimizer-context integrity failure.** In run-02, 22/30 tuning-history rows label measured performance with settings applied *after* measurement. The final Actor demonstrably blamed the wrong migration-cost setting and also described millisecond values as seconds. Raw measurement/readback records remain intact, but this is not a clean evaluation of a correctly informed optimizer. See [history-attribution-audit.json](run-02/history-attribution-audit.json). No implementation fix or rerun has been performed for this audit.
+
 ## Completed experiment: run-02
 
 [Report](run-02/comparison/evaluation.md) · [Final audit](run-02/final-audit.json) · [Foreground log](run-02/experiment.log)

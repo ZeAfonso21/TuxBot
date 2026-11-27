@@ -323,6 +323,10 @@ class EvaluationTests(unittest.TestCase):
         for name in ('default', 'independent', 'coordinated', 'pilot-A', 'pilot-C'):
             data = json.loads((examples / (name + '.json')).read_text())
             self.assertEqual((data['tuning_windows'], data['stable_windows']), (30, 20))
+            self.assertEqual(data['window_seconds'], 5)
+            if data['mode'] == 'coordinated':
+                self.assertEqual(data['reference_policy'], 'stable_mean')
+                self.assertTrue(data['reference_run'])
         plan = json.loads((examples / 'workload-pairs.json').read_text())
         self.assertTrue(all(p['relationship'] == 'unmeasured' for p in plan['pairs']))
         for name in ('xapian', 'sphinx', 'sysbench-cpu-throughput'):

@@ -1,6 +1,6 @@
 # TuxBot extension progress
 
-The local checkout is the source of truth; source/results are mirrored with bart. All Python execution/installations/workloads/tuning occur only through `ssh bart 'COMMAND'`. **Latest stage: real Silo/Sysbench A/C experiment completed on bart in the foreground, with a shared A initial-three-window mean and 30/20 windows.**
+The local checkout is the source of truth; source/results are mirrored with bart. All Python execution/installations/workloads/tuning occur only through `ssh bart 'COMMAND'`. **Latest stage: attribution corrected and 57 mock-only tests passed; future protocol is A stable means and five-second 30/20 windows. No live post-fix experiment has run.**
 
 - [001 — Initial remote validation](001-remote-validation.md)
 - [002 — Historical grouped-A/C Sysbench pilot](002-sysbench-pilot.md)
@@ -8,6 +8,9 @@ The local checkout is the source of truth; source/results are mirrored with bart
 - [004 — Evaluation redesign and provenance](004-evaluation-redesign.md)
 - [005 — Completed real relationship batch](005-relationship-batch.md)
 - [006 — TailBench/Silo installation and Silo/Sysbench results](006-silo-sysbench.md)
+- [007 — Attribution correction and mock-only validation](007-attribution-fix-mocked.md)
+
+**Latest validation:** [57-test mock-only evidence](../results/attribution-fix-validation/README.md); next Silo/Sysbench recipe is prepared but unexecuted under `results/silo-sysbench-02/`. Earlier live optimizer histories suffered configuration attribution errors and must not be interpreted as correctly informed optimization runs.
 
 **Latest measured results:** [Silo/Sysbench](../results/silo-sysbench-01/README.md). The completed pair did not show a stable Pareto gain. Older experiments below retain their original baseline policies.
 

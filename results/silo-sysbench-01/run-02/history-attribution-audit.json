@@ -1,0 +1,76 @@
+{
+  "finding": "Tuner history attributes measurements to settings applied after the measured window",
+  "affected_tuning_windows": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9,
+    10,
+    12,
+    16,
+    17,
+    19,
+    20,
+    22,
+    23,
+    24,
+    25,
+    26,
+    28,
+    29,
+    30
+  ],
+  "affected_count": 22,
+  "total_tuning_windows": 30,
+  "history_source": "/work_dir/TuxBot/results/silo-sysbench-01/run-02/C/coordinated/dual_loop_actor_speculator_extension_20261127_183411.json",
+  "raw_window_source": "results/silo-sysbench-01/run-02/C/results.json",
+  "example_window": 30,
+  "actual_configuration": {
+    "application_updates": {
+      "silo": {
+        "cpu.weight": "700",
+        "cpu.max": "max 100000"
+      },
+      "sysbench_cpu": {
+        "cpu.weight": "100",
+        "cpu.max": "max 100000"
+      }
+    },
+    "host_updates": {
+      "min_granularity_ns": "3000000",
+      "latency_ns": "24000000",
+      "wakeup_granularity_ns": "4000000",
+      "migration_cost_ns": "1000000",
+      "min_perf_pct": "100",
+      "max_perf_pct": "100"
+    }
+  },
+  "history_configuration": {
+    "application_updates": {
+      "silo": {
+        "cpu.weight": "1000",
+        "cpu.max": "max 100000"
+      },
+      "sysbench_cpu": {
+        "cpu.weight": "100",
+        "cpu.max": "max 100000"
+      }
+    },
+    "host_updates": {
+      "min_granularity_ns": "3000000",
+      "latency_ns": "24000000",
+      "wakeup_granularity_ns": "2000000",
+      "migration_cost_ns": "250000",
+      "min_perf_pct": "100",
+      "max_perf_pct": "100"
+    }
+  },
+  "actual_latency_p99_ms": 2.073,
+  "final_actor_reasoning": "Lowering migration_cost_ns to 250us in iteration 30 caused severe CPU migration churn and L1/L2 cache invalidations, escalating Silo's p99 latency to 2.073s. Reverting migration_cost_ns to 1000000 (1ms) restores cache locality for waking transaction threads. We maintain default CFS scheduling periods (3ms min_granularity, 24ms latency, 4ms wakeup_granularity), 100% min_perf_pct, and a 5:1 cpu.weight ratio (silo 500 vs sysbench 100), which previously achieved Silo's best p99 latency (0.366s vs 0.389s bound).",
+  "interpretation": "Raw window metrics/readbacks remain evidence; this run is not a clean evaluation of a correctly informed optimizer. No causal attribution of the whole performance difference is established.",
+  "note": "Audit only. No code, raw measurements or knob settings were changed; no API/workload execution."
+}

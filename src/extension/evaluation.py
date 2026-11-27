@@ -246,23 +246,27 @@ def evaluate_pair(a, c, pair_id='pair-1', review=None, allow_legacy_a=False):
     conditions = check_conditions(a, c, review)
     reference, a_windows = stable_aggregate(a)
     reference_windows = a_windows
-    reference_policy = review.get('reference_policy', 'initial_mean' if c['data'].get('baseline_reference') else 'stable_median')
-    if c['data'].get('baseline_reference') and reference_policy != 'initial_mean':
+    proof = c['data'].get('baseline_reference', {})
+    # Missing policy in older proofs denotes the historical initial-three mean, not the new policy.
+    recorded_policy = proof.get('policy', 'initial_mean') if proof else None
+    reference_policy = review.get('reference_policy', recorded_policy or 'stable_median')
+    if recorded_policy and reference_policy != recorded_policy:
         raise ValueError('Report must retain the shared A reference actually used by the tuner')
-    if reference_policy not in ('stable_median', 'initial_mean'):
+    if reference_policy not in ('stable_median', 'initial_mean', 'stable_mean'):
         raise ValueError('Unknown A reference policy')
-    if reference_policy == 'initial_mean':
+    if reference_policy in ('initial_mean', 'stable_mean'):
         # EXTENSION: the requested A reference also governs C's actual tuning targets.
-        from .baseline import initial_mean_reference
-        reference = initial_mean_reference(a)
-        reference_windows = [w['window'] for w in a['windows'] if w['phase'] == 'baseline']
-        proof = c['data'].get('baseline_reference', {})
+        from .baseline import initial_mean_reference, stable_mean_reference
+        reference = (stable_mean_reference if reference_policy == 'stable_mean' else initial_mean_reference)(a)
+        phase = 'stable' if reference_policy == 'stable_mean' else 'baseline'
+        reference_windows = [w['window'] for w in a['windows'] if w['phase'] == phase]
         if proof.get('sha256') != a['sha256'] or proof.get('values') != reference:
-            raise ValueError('C did not record the same A initial-mean tuning reference')
-    aggregate = 'mean' if reference_policy == 'initial_mean' else 'median'
+            raise ValueError('C did not record the same A mean tuning reference')
+    aggregate = 'median' if reference_policy == 'stable_median' else 'mean'
     stable_c, c_windows = stable_aggregate(c, aggregate)
-    reference_description = ('fixed A initial-three-window arithmetic mean' if reference_policy == 'initial_mean'
-                             else 'fixed A complete joint stable-window median')
+    reference_description = {'initial_mean': 'fixed A initial-three-window arithmetic mean',
+                             'stable_mean': 'fixed A complete joint stable-window arithmetic mean',
+                             'stable_median': 'fixed A complete joint stable-window median'}[reference_policy]
     for app, value in reference.items():
         improvement(value, value, a['apps'][app]['objective'])  # reject zero/invalid A references
     notes = a['notes'] + c['notes']

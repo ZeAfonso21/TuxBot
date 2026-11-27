@@ -1,4 +1,5 @@
 """Adapters for the original Actor/Speculator scheduler and LLM transport."""
+import copy
 import json
 import time
 from optimizer.dual_loop_optimizer import SimpleDualLoopOptimizer
@@ -16,6 +17,8 @@ class ScopedTuner(LLMTuner):
                 'Exploration can regress performance but do not needlessly harm an objective. '
                 'Return JSON with application_updates, host_updates, and reasoning. No commands or paths. '
                 'Only change controls in the supplied schema; an empty update is allowed. '
+                'Measurements belong to observation.configuration_start/end and history parameters, not to newer controls or parameters_after_window. '
+                'latency_p99 and latency_p99_ms are milliseconds; events_per_second is events/s; *_ns controls are nanoseconds. '
                 f'Your loop role is {self.agent_type}. Reasoning chooses a durable configuration; quick reacts to recent evidence.')
 
     def _create_update_message(self, metrics, current_params, iteration, best_reward=0,
@@ -76,8 +79,19 @@ class ScopedTuner(LLMTuner):
 class ScopedController(SimpleDualLoopOptimizer):
     def _execute_window_simple(self, iteration):
         # Legacy helper swallows missing windows. Extension observations must be complete.
+        # EXTENSION: capture measured settings before the legacy loop commits newer proposals.
+        before = self.param_manager.snapshot()
         self.current_window_start_time = time.time()
-        return self.benchmark.execute_window(window_number=iteration, duration=self.config.window_duration)
+        metrics = self.benchmark.execute_window(window_number=iteration, duration=self.config.window_duration)
+        after = self.param_manager.snapshot()
+        if before != after:
+            raise RuntimeError('Controls changed during an outside-of-window measurement')
+        if metrics is None or not isinstance(metrics.extra_metrics.get('extension_observation'), dict):
+            raise RuntimeError('Missing extension measurement observation')
+        observation = dict(metrics.extra_metrics['extension_observation'])
+        observation.update(configuration_start=copy.deepcopy(before), configuration_end=copy.deepcopy(after))
+        metrics.extra_metrics['extension_observation'] = observation
+        return metrics
 
     def _measure_default_baseline_window(self):
         # Three synchronized default windows have already been measured by the runner.
@@ -108,6 +122,12 @@ class ScopedController(SimpleDualLoopOptimizer):
         # stale in-flight requests would immediately overwrite it without scheduler changes.
         runtime = self.config._extension_runtime
         observation = entry.get('metrics', {}).get('extension_observation', {})
+        # EXTENSION: history is recorded after responses apply; preserve both meanings explicitly.
+        measured = observation.get('configuration_start')
+        if not isinstance(measured, dict) or measured != observation.get('configuration_end'):
+            raise RuntimeError('Cannot attribute a measurement without a constant measured configuration')
+        entry['parameters_after_window'] = copy.deepcopy(self.current_parameters)
+        entry['parameters'] = copy.deepcopy(measured)
         bad = any(a.get('significant_regression', False) for a in observation.get('applications', {}).values())
         runtime.bad_windows = runtime.bad_windows + 1 if bad else 0
         entry['sustained_regression'] = runtime.bad_windows >= runtime.regression_windows

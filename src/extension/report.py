@@ -60,7 +60,7 @@ def bounds_rows(pair):
                 rows.append(dict(pair=pair['id'], configuration=DISPLAY[run['mode']], application=app,
                                  window=window['window'], phase=window['phase'], metric=specification['metric'],
                                  objective=specification['objective'], value=value, bound=bound, violation=violation,
-                                 bound_source=('shared A initial mean' if run['data'].get('baseline_reference') or pair['reference_policy'] == 'initial_mean' else 'own run measured initial baseline; NOT the A evaluation reference') if origin == 'default' else 'explicit or recorded run bound'))
+                                 bound_source=('shared A reference: ' + run['data']['baseline_reference'].get('aggregation', pair['reference_policy']) if run['data'].get('baseline_reference') else 'own run measured initial baseline') if origin == 'default' else 'explicit or recorded run bound'))
     return rows
 
 

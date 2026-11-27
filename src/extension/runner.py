@@ -51,9 +51,10 @@ def run(data):
     apps = [Application.load(a) for a in data['applications']]
     if len(apps) != 2 or len({a.id for a in apps}) != 2:
         raise ValueError('Exactly two distinct applications are required')
-    duration = data.get('window_seconds', 10)
-    tuning = data.get('tuning_windows', 10)
-    stable = data.get('stable_windows', 3)
+    # EXTENSION: future sessions match the paper's five-second 30/20 protocol.
+    duration = data.get('window_seconds', 5)
+    tuning = data.get('tuning_windows', 30)
+    stable = data.get('stable_windows', 20)
     warmup = data.get('warmup_seconds', 30)
     if any(type(x) is not int or x < 1 for x in (duration, tuning, stable)) or type(warmup) is not int or warmup < 0:
         raise ValueError('Invalid phase durations/counts')
@@ -68,11 +69,15 @@ def run(data):
     if aggregation not in ('mean', 'median'):
         raise ValueError('Unknown baseline aggregation')
     reference = None
+    if mode == 'coordinated' and data.get('data_kind') != 'synthetic' and not data.get('reference_run'):
+        raise ValueError('Coordinated C requires a completed A reference_run; no private-baseline fallback')
     if data.get('reference_run'):
         if mode != 'coordinated' or aggregation != 'mean':
             raise ValueError('Shared A reference requires coordinated mode and mean aggregation')
         from .baseline import load_reference
-        reference = load_reference(data['reference_run'], apps, data.get('workload_conditions'))
+        reference = load_reference(data['reference_run'], apps, data.get('workload_conditions'),
+                                   policy=data.get('reference_policy', 'stable_mean'),
+                                   window_seconds=duration, warmup_seconds=warmup)
     output = Path(data['results_dir']).resolve()
     output.mkdir(parents=True, exist_ok=False)  # never mix/overwrite experimental runs
     # EXTENSION: A inherits the caller's cgroup; only B/C create workload groups.
@@ -128,7 +133,8 @@ def run(data):
             result['baseline_reference'] = reference
             for app in apps:
                 app.baseline = reference['values'][app.id]
-        baseline_context = {a.id: a.observation(a.baseline, tolerance) for a in apps}
+        # EXTENSION: current startup performance is measured C, not the external A target.
+        baseline_context = {a.id: a.observation(result['measured_initial_baselines'][a.id], tolerance) for a in apps}
         result['applications'] = [asdict(a) for a in apps]
         save(output / 'baseline.json', dict(applications=baseline_context, windows=baseline,
                                           aggregation=f'{aggregation} of three window metrics, NOT pooled request p99',

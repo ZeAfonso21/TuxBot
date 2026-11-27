@@ -5,7 +5,7 @@ import signal
 import tempfile
 import unittest
 from unittest.mock import MagicMock, patch
-from .baseline import initial_mean_reference, load_reference
+from .baseline import initial_mean_reference, stable_mean_reference, load_reference
 from .evaluation import evaluate_pair, load_run
 from .evaluation_fixture import fixture_runs
 from .model import Application
@@ -38,7 +38,7 @@ class SharedBaselineTests(unittest.TestCase):
         apps = [Application.load(dict(id=a['id'], metric=a['metric'], objective=a['objective'], start=['fake'], measure=['fake'])) for a in self.a['applications']]
         conditions = self.a['config']['workload_conditions']
         path = self.save('A.json', self.a)
-        reference = load_reference(path, apps, conditions)
+        reference = load_reference(path, apps, conditions, policy='initial_mean')
         self.assertEqual(reference['values']['cpu_latency'], 5)
         with self.assertRaises(ValueError):
             load_reference(path, apps, {'different': {}})
@@ -60,6 +60,34 @@ class SharedBaselineTests(unittest.TestCase):
         self.c['baseline_reference']['values']['cpu_latency'] = 999
         with self.assertRaises(ValueError):
             evaluate_pair(a, load_run(self.save('C.json', self.c)), review={'reference_policy': 'initial_mean'})
+
+    def test_stable_mean_reference_and_matching_window_length(self):
+        for row, value in zip(self.a['windows'][-3:], (2, 4, 12)):
+            row['applications']['cpu_latency']['current'] = value
+        path = self.save('A.json', self.a)
+        a = load_run(path)
+        self.assertEqual(stable_mean_reference(a)['cpu_latency'], 6)
+        apps = [Application.load(dict(id=s['id'], metric=s['metric'], objective=s['objective'], start=['fake'], measure=['fake'])) for s in self.a['applications']]
+        proof = load_reference(path, apps, self.a['config']['workload_conditions'], window_seconds=1)
+        self.assertEqual(proof['policy'], 'stable_mean')
+        self.assertEqual(proof['windows'], [3, 4, 5])
+        self.c['baseline_reference'] = proof
+        pair = evaluate_pair(a, load_run(self.save('C.json', self.c)))
+        self.assertEqual(pair['reference_policy'], 'stable_mean')
+        self.assertEqual(pair['reference']['cpu_latency'], 6)
+        self.assertEqual(pair['reference_windows'], [3, 4, 5])
+        with self.assertRaisesRegex(ValueError, 'window_seconds'):
+            load_reference(path, apps, self.a['config']['workload_conditions'], window_seconds=5)
+        with self.assertRaisesRegex(ValueError, 'retain'):
+            evaluate_pair(a, load_run(self.save('C.json', self.c)), review={'reference_policy': 'initial_mean'})
+
+    def test_incomplete_stable_reference_is_rejected(self):
+        self.a['windows'][-1]['applications'].pop('memory_bandwidth')
+        with self.assertRaisesRegex(ValueError, 'complete joint A stable'):
+            stable_mean_reference(load_run(self.save('A.json', self.a)))
+        self.a['windows'].pop()
+        with self.assertRaisesRegex(ValueError, 'complete joint A stable'):
+            stable_mean_reference(load_run(self.save('A.json', self.a)))
 
     def test_tailbench_sigterm_runs_native_cleanup(self):
         from .tailbench import bridge

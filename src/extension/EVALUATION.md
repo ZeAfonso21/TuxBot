@@ -2,7 +2,15 @@
 
 This is a **read-only plotting/data-validation pipeline**. It never imports an optimizer, launches a workload, creates a cgroup, changes kernel parameters or calls an LLM. All execution, including plotting tests, is performed on bart through SSH. The local checkout remains the source of truth.
 
-## Current initial-mean protocol (Silo/Sysbench run-02)
+## Current protocol: A stable means, five-second 30/20 windows
+
+New coordinated sessions require a completed `reference_run` pointing to a matching untuned/no-cgroup A, `baseline_aggregation: "mean"`, and `reference_policy: "stable_mean"` (the shared-reference loader default). The reference is the arithmetic mean of **all complete recorded A stable windows**. Missing/invalid stable samples, mismatched window/warmup lengths, metrics, workload conditions, host changes or provenance are rejected. Latency bounds are upper bounds; throughput bounds are lower bounds. C startup metrics remain separately measured observations, not a substitution for the shared A targets.
+
+Future runner defaults/example profiles use **5-second windows, 30 tuning + 20 stable**. A fresh matching five-second A is required; archived eight-second A data cannot silently seed a new five-second C. Reports automatically preserve the recorded policy/source hash/values. Their C stable aggregate is an arithmetic mean before percent calculation. Historical initial-mean and stable-median records retain their original policies.
+
+Attribution is now corrected in the scoped extension controller: `history.parameters` and observation `configuration_start/end` describe measured settings; `parameters_after_window` and live `controls` describe newer state. Mixed constant-window measurements fail closed. This does not retroactively fix the prompts used by past experiments. [Mock validation](../../results/attribution-fix-validation/README.md) passed 57 tests, including a legacy negative control; no live rerun was performed.
+
+## Historical initial-mean protocol (Silo/Sysbench run-02)
 
 The completed [Silo/Sysbench experiment](../../results/silo-sysbench-01/README.md) uses `baseline_aggregation: "mean"` in A/C and `reference_run: ".../A/results.json"` in C. The loader validates a completed untuned no-cgroup A, matching workload conditions/metrics and unchanged captured host settings. C records A's source hash and the arithmetic means of its three initial windows. Those same values set C's default bounds and every report reference; C's own initial measurements remain separately recorded diagnostics.
 
@@ -18,7 +26,7 @@ At the offline-redesign stage, no protocol-conforming measured A was available. 
 - `results/evaluation-redesign/synthetic/`: four main figures from explicitly synthetic fixtures with a no-cgroup A schema. Every figure is marked **SYNTHETIC**. These demonstrate rendering/validation, not experiment results.
 - No raw historical measurement was edited, relabelled, or replaced by synthetic data. No new experiments were run during that offline stage.
 
-The current `runner.py` still creates per-app groups in default mode. It was **not changed** in this plotting task, per the execution-logic restriction. Implementing the true no-cgroup A path requires a separate execution change before future live evaluation. The A template remains disabled (`defaults_verified=false`). Changing JSON provenance alone cannot make old grouped data compliant: contradictory declarations are rejected.
+At that offline stage, `runner.py` still created per-app groups in default mode and was not changed by the plotting task. Later execution stages implemented no-cgroup A; the grouped historical pilot itself remains nonconforming. The A template remains disabled (`defaults_verified=false`). Changing JSON provenance alone cannot make old grouped data compliant: contradictory declarations are rejected.
 
 ## Inputs and data contract
 
