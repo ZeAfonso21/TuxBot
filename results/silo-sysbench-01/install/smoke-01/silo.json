@@ -1,0 +1,13 @@
+{
+  "benchmark": "tailbench",
+  "tailbench_app": "silo",
+  "tailbench_root": "/work_dir/tailbench-src/tailbench",
+  "tailbench_output_dir": "/work_dir/TuxBot/results/silo-sysbench-01/install/smoke-01/silo",
+  "results_dir": "/work_dir/TuxBot/results/silo-sysbench-01/install/smoke-01/silo-collector",
+  "tailbench_qps": 1000,
+  "tailbench_threads": 4,
+  "tailbench_silo_scale_factor": 4,
+  "tailbench_warmupreqs": 1000,
+  "tailbench_maxreqs": 1000000000,
+  "tailbench_metrics_interval_sec": 1
+}

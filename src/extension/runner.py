@@ -63,6 +63,16 @@ def run(data):
         raise ValueError('Invalid regression policy')
     if mode != 'default' and not os.getenv('GEMINI_API_KEY'):
         raise ValueError('Future tuning execution requires GEMINI_API_KEY; no workload has been started')
+    # EXTENSION: load the same completed A reference for both C objectives.
+    aggregation = data.get('baseline_aggregation', 'median')
+    if aggregation not in ('mean', 'median'):
+        raise ValueError('Unknown baseline aggregation')
+    reference = None
+    if data.get('reference_run'):
+        if mode != 'coordinated' or aggregation != 'mean':
+            raise ValueError('Shared A reference requires coordinated mode and mean aggregation')
+        from .baseline import load_reference
+        reference = load_reference(data['reference_run'], apps, data.get('workload_conditions'))
     output = Path(data['results_dir']).resolve()
     output.mkdir(parents=True, exist_ok=False)  # never mix/overwrite experimental runs
     # EXTENSION: A inherits the caller's cgroup; only B/C create workload groups.
@@ -112,11 +122,17 @@ def run(data):
         time.sleep(warmup)
         baseline = [windows.collect(-i, duration) for i in range(1, 4)]
         for app in apps:
-            app.set_baseline([row['applications'][app.id]['current'] for row in baseline])
+            app.set_baseline([row['applications'][app.id]['current'] for row in baseline], aggregation)
+        result['measured_initial_baselines'] = {a.id: a.baseline for a in apps}
+        if reference:
+            result['baseline_reference'] = reference
+            for app in apps:
+                app.baseline = reference['values'][app.id]
         baseline_context = {a.id: a.observation(a.baseline, tolerance) for a in apps}
         result['applications'] = [asdict(a) for a in apps]
         save(output / 'baseline.json', dict(applications=baseline_context, windows=baseline,
-                                          aggregation='median of three window metrics, NOT pooled request p99'))
+                                          aggregation=f'{aggregation} of three window metrics, NOT pooled request p99',
+                                          measured_initial_baselines=result['measured_initial_baselines'], reference=reference))
         if mode == 'default':
             for phase, count in (('tuning', tuning), ('stable', stable)):
                 windows.phase = phase
@@ -185,6 +201,13 @@ def run(data):
             except OSError as exc:
                 errors.append(str(exc))
         for process in processes:
+            # EXTENSION: a TailBench bridge must clean its native child's separate session.
+            if groups is None and process.poll() is None:
+                process.terminate()
+                try:
+                    process.wait(timeout=20)
+                except subprocess.TimeoutExpired:
+                    errors.append('Graceful workload cleanup timed out; inspect native descendants')
             try:
                 os.killpg(process.pid, signal.SIGKILL)
             except ProcessLookupError:

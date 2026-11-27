@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 import math
 import re
-from statistics import median
+from statistics import mean, median
 
 
 def positive(value):
@@ -44,10 +44,11 @@ class Application:
                 raise ValueError("Commands must be nonempty argv arrays (never model-generated)")
         return app
 
-    def set_baseline(self, values):
-        if len(values) != 3:
-            raise ValueError("Baseline requires exactly three co-located windows")
-        self.baseline = median(positive(v) for v in values)
+    def set_baseline(self, values, aggregation='median'):
+        # EXTENSION: opt-in mean preserves historical median experiments.
+        if len(values) != 3 or aggregation not in ('mean', 'median'):
+            raise ValueError('Baseline requires exactly three windows and mean/median aggregation')
+        self.baseline = (mean if aggregation == 'mean' else median)(positive(v) for v in values)
 
     def observation(self, current, tolerance):
         positive(current)

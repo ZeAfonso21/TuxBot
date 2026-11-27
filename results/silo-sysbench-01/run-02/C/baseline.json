@@ -1,0 +1,683 @@
+{
+  "applications": {
+    "silo": {
+      "metric": "latency_p99",
+      "objective": "minimize",
+      "baseline": 0.38933333333333336,
+      "current": 0.38933333333333336,
+      "bound": 0.38933333333333336,
+      "priority": 1,
+      "improvement": 1.0,
+      "constraint_violation": false,
+      "significant_regression": false
+    },
+    "sysbench_cpu": {
+      "metric": "events_per_second",
+      "objective": "maximize",
+      "baseline": 611.4290476190477,
+      "current": 611.4290476190477,
+      "bound": 611.4290476190477,
+      "priority": 1,
+      "improvement": 1.0,
+      "constraint_violation": false,
+      "significant_regression": false
+    }
+  },
+  "windows": [
+    {
+      "window": -1,
+      "phase": "baseline",
+      "start": 1795800217.4189973,
+      "end": 1795800225.430954,
+      "applications": {
+        "silo": {
+          "metric": "latency_p99",
+          "objective": "minimize",
+          "current": 0.342,
+          "raw": {
+            "window_start": 1795800217.4189973,
+            "window_end": 1795800225.430954,
+            "latency_p99": 0.342,
+            "throughput": 999.875,
+            "intervals": 8,
+            "percentile_semantics": "maximum of interval p99s, not pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 11706595\nuser_usec 11370332\nsystem_usec 336262\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.06 avg60=0.10 avg300=0.02 total=148664\nfull avg10=0.03 avg60=0.06 avg300=0.01 total=91463",
+            "memory.current": "472961024",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 12740721\nuser_usec 12361068\nsystem_usec 379653\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.02 avg60=0.08 avg300=0.02 total=187239\nfull avg10=0.01 avg60=0.05 avg300=0.01 total=123980",
+            "memory.current": "477650944",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 0.1290728394807589,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 477650944,
+            "cpu_pressure_some_seconds": 0.038575,
+            "cpu_pressure_full_seconds": 0.032517,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "sysbench_cpu": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 611.52,
+          "raw": {
+            "window_start": 1795800217.4189973,
+            "window_end": 1795800225.430954,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 14.46,
+            "events_per_second": 611.52,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 309323663\nuser_usec 309228735\nsystem_usec 94927\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=1.88 avg60=1.73 avg300=0.49 total=1726157\nfull avg10=0.91 avg60=0.35 avg300=0.08 total=448635",
+            "memory.current": "10514432",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 372210988\nuser_usec 372079109\nsystem_usec 131879\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=1.39 avg60=1.63 avg300=0.50 total=1877190\nfull avg10=0.96 avg60=0.43 avg300=0.11 total=597719",
+            "memory.current": "10514432",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 7.849184340302164,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10514432,
+            "cpu_pressure_some_seconds": 0.151033,
+            "cpu_pressure_full_seconds": 0.149084,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795800217.4189973,
+          "window_end_time": 1795800225.430954,
+          "perf_start_time": 1795800218.420985,
+          "perf_end_time": 1795800224.420985,
+          "system_metrics_start_time": 1795800218.4229653,
+          "system_metrics_end_time": 1795800224.4223702,
+          "power_socket0_watts": 33.1204135,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48047.79,
+            "cpus_utilized": 8.0,
+            "context_switches": 17019.0,
+            "context_switches_per_sec": 354.21,
+            "cpu_migrations": 41.0,
+            "cpu_migrations_per_sec": 0.853,
+            "page_faults": 6127.0,
+            "page_faults_per_sec": 127.519,
+            "cycles": 147322214844.0,
+            "ghz": 3.066,
+            "instructions": 44080091881.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12135963172.0,
+            "branches_per_sec": 252.581,
+            "branch_misses": 88556414.0,
+            "branch_miss_rate_pct": 0.73,
+            "cache_references": 220905458.0,
+            "cache_references_per_sec": 4.598,
+            "cache_misses": 58260279.0,
+            "time_elapsed_seconds": 6.005822021
+          }
+        },
+        "msec_task_clock": 48047.79,
+        "cpus_utilized": 8.0,
+        "context_switches": 17019.0,
+        "context_switches_per_sec": 354.21,
+        "cpu_migrations": 41.0,
+        "cpu_migrations_per_sec": 0.853,
+        "page_faults": 6127.0,
+        "page_faults_per_sec": 127.519,
+        "cycles": 147322214844.0,
+        "ghz": 3.066,
+        "instructions": 44080091881.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12135963172.0,
+        "branches_per_sec": 252.581,
+        "branch_misses": 88556414.0,
+        "branch_miss_rate_pct": 0.73,
+        "cache_references": 220905458.0,
+        "cache_references_per_sec": 4.598,
+        "cache_misses": 58260279.0,
+        "time_elapsed_seconds": 6.005822021,
+        "power_socket0_watts": 33.1204135,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "silo": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "sysbench_cpu": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "silo": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "sysbench_cpu": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": -2,
+      "phase": "baseline",
+      "start": 1795800225.630407,
+      "end": 1795800233.6409547,
+      "applications": {
+        "silo": {
+          "metric": "latency_p99",
+          "objective": "minimize",
+          "current": 0.356,
+          "raw": {
+            "window_start": 1795800225.630407,
+            "window_end": 1795800233.6409547,
+            "latency_p99": 0.356,
+            "throughput": 1005.375,
+            "intervals": 8,
+            "percentile_semantics": "maximum of interval p99s, not pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 12770147\nuser_usec 12384311\nsystem_usec 385835\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.02 avg60=0.08 avg300=0.02 total=189133\nfull avg10=0.01 avg60=0.05 avg300=0.01 total=125740",
+            "memory.current": "479621120",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 13810740\nuser_usec 13369180\nsystem_usec 441560\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.01 avg60=0.07 avg300=0.02 total=225886\nfull avg10=0.00 avg60=0.04 avg300=0.01 total=155905",
+            "memory.current": "480378880",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 0.12990285396613294,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 480378880,
+            "cpu_pressure_some_seconds": 0.036753,
+            "cpu_pressure_full_seconds": 0.030165,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "sysbench_cpu": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 611.8571428571429,
+          "raw": {
+            "window_start": 1795800225.630407,
+            "window_end": 1795800233.6409547,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 14.46,
+            "events_per_second": 611.8571428571429,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 373532764\nuser_usec 373399889\nsystem_usec 132875\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=1.39 avg60=1.63 avg300=0.50 total=1914962\nfull avg10=0.96 avg60=0.43 avg300=0.11 total=608341",
+            "memory.current": "10514432",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 436401620\nuser_usec 436239789\nsystem_usec 161830\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=1.37 avg60=1.61 avg300=0.53 total=2066623\nfull avg10=1.08 avg60=0.53 avg300=0.14 total=757966",
+            "memory.current": "10514432",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 7.848259425141089,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10514432,
+            "cpu_pressure_some_seconds": 0.151661,
+            "cpu_pressure_full_seconds": 0.149625,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795800225.630407,
+          "window_end_time": 1795800233.6409547,
+          "perf_start_time": 1795800226.6320748,
+          "perf_end_time": 1795800232.6320748,
+          "system_metrics_start_time": 1795800226.6329656,
+          "system_metrics_end_time": 1795800232.6327553,
+          "power_socket0_watts": 33.128538166666665,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48044.38,
+            "cpus_utilized": 8.0,
+            "context_switches": 17117.0,
+            "context_switches_per_sec": 356.275,
+            "cpu_migrations": 46.0,
+            "cpu_migrations_per_sec": 0.957,
+            "page_faults": 3499.0,
+            "page_faults_per_sec": 72.828,
+            "cycles": 147313704602.0,
+            "ghz": 3.066,
+            "instructions": 44066692792.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12131444521.0,
+            "branches_per_sec": 252.505,
+            "branch_misses": 88764483.0,
+            "branch_miss_rate_pct": 0.73,
+            "cache_references": 219786584.0,
+            "cache_references_per_sec": 4.575,
+            "cache_misses": 53341304.0,
+            "time_elapsed_seconds": 6.005386663
+          }
+        },
+        "msec_task_clock": 48044.38,
+        "cpus_utilized": 8.0,
+        "context_switches": 17117.0,
+        "context_switches_per_sec": 356.275,
+        "cpu_migrations": 46.0,
+        "cpu_migrations_per_sec": 0.957,
+        "page_faults": 3499.0,
+        "page_faults_per_sec": 72.828,
+        "cycles": 147313704602.0,
+        "ghz": 3.066,
+        "instructions": 44066692792.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12131444521.0,
+        "branches_per_sec": 252.505,
+        "branch_misses": 88764483.0,
+        "branch_miss_rate_pct": 0.73,
+        "cache_references": 219786584.0,
+        "cache_references_per_sec": 4.575,
+        "cache_misses": 53341304.0,
+        "time_elapsed_seconds": 6.005386663,
+        "power_socket0_watts": 33.128538166666665,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "silo": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "sysbench_cpu": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "silo": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "sysbench_cpu": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": -3,
+      "phase": "baseline",
+      "start": 1795800233.8153667,
+      "end": 1795800241.8259554,
+      "applications": {
+        "silo": {
+          "metric": "latency_p99",
+          "objective": "minimize",
+          "current": 0.345,
+          "raw": {
+            "window_start": 1795800233.8153667,
+            "window_end": 1795800241.8259554,
+            "latency_p99": 0.345,
+            "throughput": 998.125,
+            "intervals": 8,
+            "percentile_semantics": "maximum of interval p99s, not pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 13835394\nuser_usec 13391854\nsystem_usec 443540\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.01 avg60=0.07 avg300=0.02 total=226490\nfull avg10=0.00 avg60=0.04 avg300=0.01 total=156169",
+            "memory.current": "480522240",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 14885745\nuser_usec 14392142\nsystem_usec 493602\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.00 avg60=0.06 avg300=0.02 total=264053\nfull avg10=0.00 avg60=0.03 avg300=0.00 total=186445",
+            "memory.current": "484241408",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 0.13112032666076248,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 484241408,
+            "cpu_pressure_some_seconds": 0.037563,
+            "cpu_pressure_full_seconds": 0.030276,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "sysbench_cpu": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 611.7157142857143,
+          "raw": {
+            "window_start": 1795800233.8153667,
+            "window_end": 1795800241.8259554,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 14.46,
+            "events_per_second": 611.7157142857143,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 437540459\nuser_usec 437378629\nsystem_usec 161830\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=1.37 avg60=1.61 avg300=0.53 total=2095878\nfull avg10=1.08 avg60=0.53 avg300=0.14 total=771476",
+            "memory.current": "10514432",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 500403741\nuser_usec 500203958\nsystem_usec 199783\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=1.36 avg60=1.60 avg300=0.56 total=2248728\nfull avg10=1.13 avg60=0.62 avg300=0.17 total=922434",
+            "memory.current": "10518528",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 7.847523419130968,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10518528,
+            "cpu_pressure_some_seconds": 0.15285,
+            "cpu_pressure_full_seconds": 0.150958,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795800233.8153667,
+          "window_end_time": 1795800241.8259554,
+          "perf_start_time": 1795800234.8170345,
+          "perf_end_time": 1795800240.8170345,
+          "system_metrics_start_time": 1795800234.8179715,
+          "system_metrics_end_time": 1795800240.8176417,
+          "power_socket0_watts": 33.0561825,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48045.59,
+            "cpus_utilized": 8.0,
+            "context_switches": 16878.0,
+            "context_switches_per_sec": 351.291,
+            "cpu_migrations": 34.0,
+            "cpu_migrations_per_sec": 0.708,
+            "page_faults": 4775.0,
+            "page_faults_per_sec": 99.385,
+            "cycles": 147314464033.0,
+            "ghz": 3.066,
+            "instructions": 44054527245.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12127335556.0,
+            "branches_per_sec": 252.413,
+            "branch_misses": 88465375.0,
+            "branch_miss_rate_pct": 0.73,
+            "cache_references": 218162585.0,
+            "cache_references_per_sec": 4.541,
+            "cache_misses": 50550207.0,
+            "time_elapsed_seconds": 6.005535069
+          }
+        },
+        "msec_task_clock": 48045.59,
+        "cpus_utilized": 8.0,
+        "context_switches": 16878.0,
+        "context_switches_per_sec": 351.291,
+        "cpu_migrations": 34.0,
+        "cpu_migrations_per_sec": 0.708,
+        "page_faults": 4775.0,
+        "page_faults_per_sec": 99.385,
+        "cycles": 147314464033.0,
+        "ghz": 3.066,
+        "instructions": 44054527245.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12127335556.0,
+        "branches_per_sec": 252.413,
+        "branch_misses": 88465375.0,
+        "branch_miss_rate_pct": 0.73,
+        "cache_references": 218162585.0,
+        "cache_references_per_sec": 4.541,
+        "cache_misses": 50550207.0,
+        "time_elapsed_seconds": 6.005535069,
+        "power_socket0_watts": 33.0561825,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "silo": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "sysbench_cpu": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "silo": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "sysbench_cpu": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    }
+  ],
+  "aggregation": "mean of three window metrics, NOT pooled request p99",
+  "measured_initial_baselines": {
+    "silo": 0.3476666666666667,
+    "sysbench_cpu": 611.697619047619
+  },
+  "reference": {
+    "source": "/work_dir/TuxBot/results/silo-sysbench-01/run-02/A/results.json",
+    "sha256": "5853fcbb4a6c5faf23883ca9d57d507d9357f3416b54b2dda55a25890e9494d8",
+    "aggregation": "mean of first three concurrent A windows",
+    "windows": [
+      -1,
+      -2,
+      -3
+    ],
+    "values": {
+      "silo": 0.38933333333333336,
+      "sysbench_cpu": 611.4290476190477
+    }
+  }
+}

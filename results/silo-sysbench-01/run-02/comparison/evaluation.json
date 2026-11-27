@@ -1,0 +1,156 @@
+{
+  "report_version": 2,
+  "comparison_status": "protocol_compatible_recorded_data",
+  "data_kind": "measured",
+  "all_runs_completed": true,
+  "reference_strategy": "fixed A initial-three-window arithmetic mean",
+  "formulas": {
+    "minimize": "100 * (A - C) / A",
+    "maximize": "100 * (C - A) / A"
+  },
+  "aggregation": "mean of complete joint C stable-window metrics; NOT pooled request p99",
+  "repetition_unit": "explicitly paired independent runs, never individual windows",
+  "no_window_index_pairing": true,
+  "pairs": [
+    {
+      "id": "silo-sysbench-01",
+      "a_source": "/work_dir/TuxBot/results/silo-sysbench-01/run-02/A/results.json",
+      "c_source": "/work_dir/TuxBot/results/silo-sysbench-01/run-02/C/results.json",
+      "a_sha256": "5853fcbb4a6c5faf23883ca9d57d507d9357f3416b54b2dda55a25890e9494d8",
+      "c_sha256": "9cd96c3943b0d049ee81f5f08a38fda1d20ee6af8dfab256b1f0513f316faa8f",
+      "a_dedicated_workload_cgroups": false,
+      "workload_equivalence": {
+        "method": "matching recorded workload_conditions",
+        "conditions": {
+          "silo": {
+            "program": "TailBench Silo",
+            "revision": "2f3098b539a9a3413086fc77e29637937bafd116",
+            "executable_sha256": "f6e1a79b2883c0622e33fd55f248e040901f6d0f654087c6c2c10be2910c5265",
+            "workload": "tpcc",
+            "scale_factor": 4,
+            "threads": 4,
+            "offered_qps": 1000,
+            "warmup_requests": 1000,
+            "interval_seconds": 1,
+            "metric": "maximum interval sojourn p99 in window, ms",
+            "cpu_affinity": null
+          },
+          "sysbench_cpu": {
+            "program": "sysbench",
+            "version": "sysbench 1.0.20",
+            "workload": "cpu",
+            "threads": 8,
+            "cpu_max_prime": 50000,
+            "rand_seed": 1,
+            "interval_seconds": 1,
+            "metric": "mean interval events/s in window",
+            "cpu_affinity": null
+          }
+        }
+      },
+      "a_reference": {
+        "silo": 0.38933333333333336,
+        "sysbench_cpu": 611.4290476190477
+      },
+      "reference_policy": "initial_mean",
+      "a_selected_reference_windows": [
+        -1,
+        -2,
+        -3
+      ],
+      "warmup_seconds": {
+        "a": 20,
+        "c": 20
+      },
+      "window_seconds": {
+        "a": 8,
+        "c": 8
+      },
+      "a_selected_stable_windows": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "c_selected_stable_windows": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "phase_counts": {
+        "a": {
+          "warmup": 0,
+          "baseline": 3,
+          "tuning": 30,
+          "stable": 20,
+          "measurement": 0
+        },
+        "c": {
+          "warmup": 0,
+          "baseline": 3,
+          "tuning": 30,
+          "stable": 20,
+          "measurement": 0
+        }
+      },
+      "notes": [
+        "Unmodified control series omitted: application/silo/cpu.max, application/sysbench_cpu/cpu.max, host//max_perf_pct",
+        "Steps use measurement-window-start readbacks, not exact write timestamps; gaps are not filled"
+      ]
+    }
+  ],
+  "generated_figures": [
+    "relative_improvement",
+    "stable_performance",
+    "applied_parameters",
+    "pareto_tradeoffs",
+    "resource_telemetry"
+  ],
+  "skipped_figures": [],
+  "retired_outputs": [
+    "retired/relative_improvement.png",
+    "retired/relative_improvement.pdf",
+    "retired/stable_performance.png",
+    "retired/stable_performance.pdf",
+    "retired/applied_parameters.png",
+    "retired/applied_parameters.pdf",
+    "retired/pareto_tradeoffs.png",
+    "retired/pareto_tradeoffs.pdf",
+    "retired/resource_telemetry.png",
+    "retired/resource_telemetry.pdf"
+  ],
+  "telemetry_policy": "Optional; host counters are shared, A per-app cgroup data are never plotted; A process data require explicit process-tree scope, C data require child-cgroup mapping. Unavailable A process metrics are not synthesized. IPC may be rounded by the original perf parser."
+}

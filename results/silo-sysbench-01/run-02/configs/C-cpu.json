@@ -1,0 +1,6 @@
+{
+  "workload": "cpu",
+  "threads": 8,
+  "cpu_max_prime": 50000,
+  "metrics_file": "/work_dir/TuxBot/results/silo-sysbench-01/run-02/C/cpu.intervals.jsonl"
+}

@@ -1,0 +1,30 @@
+{
+  "hostname": "bart",
+  "initial_host": {
+    "min_granularity_ns": "3000000",
+    "latency_ns": "24000000",
+    "wakeup_granularity_ns": "4000000",
+    "migration_cost_ns": "500000",
+    "min_perf_pct": "45",
+    "max_perf_pct": "100"
+  },
+  "parent_controllers_before": [
+    "memory",
+    "pids"
+  ],
+  "started": 1795800177.0912573,
+  "errors": [],
+  "parent_controllers_after": [
+    "memory",
+    "pids"
+  ],
+  "host_after": {
+    "min_granularity_ns": "3000000",
+    "latency_ns": "24000000",
+    "wakeup_granularity_ns": "4000000",
+    "migration_cost_ns": "500000",
+    "min_perf_pct": "45",
+    "max_perf_pct": "100"
+  },
+  "finished": 1795800852.0454638
+}

@@ -1,0 +1,154 @@
+{
+  "reference": {
+    "silo": 0.38933333333333336,
+    "sysbench_cpu": 611.4290476190477
+  },
+  "runs": {
+    "A": {
+      "completed": true,
+      "phase_counts": {
+        "baseline": 3,
+        "tuning": 30,
+        "stable": 20
+      },
+      "initial_values": {
+        "silo": [
+          0.404,
+          0.4,
+          0.364
+        ],
+        "sysbench_cpu": [
+          611.7157142857143,
+          611.2857142857143,
+          611.2857142857143
+        ]
+      },
+      "stable_means": {
+        "silo": 0.45635,
+        "sysbench_cpu": 611.6257857142857
+      },
+      "telemetry_positive_windows": {
+        "instructions_per_cycle": 53,
+        "instructions": 53,
+        "cycles": 53,
+        "power_socket0_watts": 53
+      },
+      "stable_constraint_violations": {
+        "silo": 15,
+        "sysbench_cpu": 4
+      },
+      "frozen_configuration": {
+        "application_updates": {},
+        "host_updates": {}
+      },
+      "restoration_errors": []
+    },
+    "C": {
+      "completed": true,
+      "phase_counts": {
+        "baseline": 3,
+        "tuning": 30,
+        "stable": 20
+      },
+      "initial_values": {
+        "silo": [
+          0.342,
+          0.356,
+          0.345
+        ],
+        "sysbench_cpu": [
+          611.52,
+          611.8571428571429,
+          611.7157142857143
+        ]
+      },
+      "stable_means": {
+        "silo": 0.50415,
+        "sysbench_cpu": 611.3424285714286
+      },
+      "telemetry_positive_windows": {
+        "instructions_per_cycle": 53,
+        "instructions": 53,
+        "cycles": 53,
+        "power_socket0_watts": 53
+      },
+      "stable_constraint_violations": {
+        "silo": 15,
+        "sysbench_cpu": 9
+      },
+      "frozen_configuration": {
+        "application_updates": {
+          "silo": {
+            "cpu.weight": "500",
+            "cpu.max": "max 100000"
+          },
+          "sysbench_cpu": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "1000000",
+          "min_perf_pct": "100",
+          "max_perf_pct": "100"
+        }
+      },
+      "restoration_errors": []
+    }
+  },
+  "summary": [
+    {
+      "pair": "silo-sysbench-01",
+      "application": "silo",
+      "metric": "latency_p99",
+      "objective": "minimize",
+      "reference": "0.38933333333333336",
+      "coordinated": "0.50415",
+      "improvement_pct": "-29.490582191780806",
+      "a_stable_windows": "20",
+      "c_stable_windows": "20",
+      "a_reference_windows": "3",
+      "aggregate": "mean of complete joint C stable-window metrics"
+    },
+    {
+      "pair": "silo-sysbench-01",
+      "application": "sysbench_cpu",
+      "metric": "events_per_second",
+      "objective": "maximize",
+      "reference": "611.4290476190477",
+      "coordinated": "611.3424285714286",
+      "improvement_pct": "-0.014166655633441914",
+      "a_stable_windows": "20",
+      "c_stable_windows": "20",
+      "a_reference_windows": "3",
+      "aggregate": "mean of complete joint C stable-window metrics"
+    }
+  ],
+  "usage": {
+    "input_tokens": 3297881,
+    "output_tokens": 18635,
+    "thinking_tokens": 59951,
+    "cached_content_token_count": 0,
+    "api_total_tokens": 3376467,
+    "billable_output_tokens": 78586,
+    "billable_total_tokens": 3376467,
+    "thinking_tokens_inferred_from_api_total": 0
+  },
+  "roles": {
+    "Speculator": 30,
+    "Actor": 31
+  },
+  "host_after": {
+    "min_granularity_ns": "3000000",
+    "latency_ns": "24000000",
+    "wakeup_granularity_ns": "4000000",
+    "migration_cost_ns": "500000",
+    "min_perf_pct": "45",
+    "max_perf_pct": "100"
+  },
+  "parent_after": "memory pids",
+  "leftover_groups": []
+}

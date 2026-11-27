@@ -1,0 +1,3 @@
+pair,application,metric,objective,reference,coordinated,improvement_pct,a_stable_windows,c_stable_windows,a_reference_windows,aggregate
+silo-sysbench-01,silo,latency_p99,minimize,0.38933333333333336,0.50415,-29.490582191780806,20,20,3,mean of complete joint C stable-window metrics
+silo-sysbench-01,sysbench_cpu,events_per_second,maximize,611.4290476190477,611.3424285714286,-0.014166655633441914,20,20,3,mean of complete joint C stable-window metrics

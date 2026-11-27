@@ -1,0 +1,40 @@
+{
+  "started": 1795799170.302861,
+  "completed": false,
+  "initial_host": {
+    "min_granularity_ns": "3000000",
+    "latency_ns": "24000000",
+    "wakeup_granularity_ns": "4000000",
+    "migration_cost_ns": "500000",
+    "min_perf_pct": "45",
+    "max_perf_pct": "100"
+  },
+  "workload_conditions": {
+    "silo": {
+      "program": "TailBench Silo",
+      "revision": "2f3098b539a9a3413086fc77e29637937bafd116",
+      "executable_sha256": "f6e1a79b2883c0622e33fd55f248e040901f6d0f654087c6c2c10be2910c5265",
+      "workload": "tpcc",
+      "scale_factor": 4,
+      "threads": 4,
+      "offered_qps": 10000,
+      "warmup_requests": 10000,
+      "interval_seconds": 1,
+      "metric": "maximum interval sojourn p99 in window, ms",
+      "cpu_affinity": null
+    },
+    "sysbench_cpu": {
+      "program": "sysbench",
+      "version": "sysbench 1.0.20",
+      "workload": "cpu",
+      "threads": 8,
+      "cpu_max_prime": 50000,
+      "rand_seed": 1,
+      "interval_seconds": 1,
+      "metric": "mean interval events/s in window",
+      "cpu_affinity": null
+    }
+  },
+  "relationship": "hypothesized conflicting, not asserted in advance",
+  "baseline_policy": "arithmetic mean of A initial three concurrent windows; common tuner/report reference"
+}

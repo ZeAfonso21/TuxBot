@@ -60,7 +60,7 @@ def bounds_rows(pair):
                 rows.append(dict(pair=pair['id'], configuration=DISPLAY[run['mode']], application=app,
                                  window=window['window'], phase=window['phase'], metric=specification['metric'],
                                  objective=specification['objective'], value=value, bound=bound, violation=violation,
-                                 bound_source='own run measured initial baseline; NOT the A evaluation reference' if origin == 'default' else 'explicit or recorded run bound'))
+                                 bound_source=('shared A initial mean' if run['data'].get('baseline_reference') or pair['reference_policy'] == 'initial_mean' else 'own run measured initial baseline; NOT the A evaluation reference') if origin == 'default' else 'explicit or recorded run bound'))
     return rows
 
 
@@ -77,9 +77,9 @@ def export(files, output, plots=False, *, pairs_manifest=None, allow_legacy_a=Fa
                     comparison_status='historical_nonconforming_A' if any(p['historical'] for p in pairs) else 'protocol_compatible_recorded_data',
                     data_kind='synthetic' if any(p['synthetic'] for p in pairs) else 'measured',
                     all_runs_completed=all(p[side]['data'].get('completed') is True for p in pairs for side in ('a', 'c')),
-                    reference_strategy='fixed per-pair A median from complete joint stable windows; warmup/baseline/tuning excluded',
+                    reference_strategy=pairs[0]['reference_description'],
                     formulas=dict(minimize='100 * (A - C) / A', maximize='100 * (C - A) / A'),
-                    aggregation='median of raw window-level metrics; NOT pooled request p99',
+                    aggregation=pairs[0]['stable_aggregation'] + ' of complete joint C stable-window metrics; NOT pooled request p99',
                     repetition_unit='explicitly paired independent runs, never individual windows',
                     no_window_index_pairing=True, pairs=[], generated_figures=[], skipped_figures=[],
                     retired_outputs=retire_figures(output) if plots else [])
@@ -89,6 +89,7 @@ def export(files, output, plots=False, *, pairs_manifest=None, allow_legacy_a=Fa
                                       a_sha256=pair['a']['sha256'], c_sha256=pair['c']['sha256'],
                                       a_dedicated_workload_cgroups=pair['a']['dedicated_cgroups'],
                                       workload_equivalence=pair['conditions'], a_reference=pair['reference'],
+                                      reference_policy=pair['reference_policy'], a_selected_reference_windows=pair['reference_windows'],
                                       warmup_seconds={side: pair[side]['data'].get('config', {}).get('warmup_seconds') for side in ('a', 'c')},
                                       window_seconds={side: pair[side]['data'].get('config', {}).get('window_seconds') for side in ('a', 'c')},
                                       a_selected_stable_windows=pair['a_stable_windows'], c_selected_stable_windows=pair['c_stable_windows'],
@@ -103,7 +104,8 @@ def export(files, output, plots=False, *, pairs_manifest=None, allow_legacy_a=Fa
                                          improvement_pct=row['improvements'][index]))
         for row in pair['summary']:
             summary.append(dict(pair=pair['id'], **row, a_stable_windows=len(pair['a_stable_windows']),
-                                c_stable_windows=len(pair['c_stable_windows']), aggregate='median of complete joint stable window metrics'))
+                                c_stable_windows=len(pair['c_stable_windows']), a_reference_windows=len(pair['reference_windows']),
+                                aggregate=pair['stable_aggregation'] + ' of complete joint C stable-window metrics'))
         for index, point in enumerate(pair['pareto']):
             pareto.append(dict(pair=pair['id'], window=point['window'], phase=point['phase'], start=point['start'], end=point['end'],
                                x_application=pair['apps'][0], y_application=pair['apps'][1],
@@ -147,15 +149,15 @@ def export(files, output, plots=False, *, pairs_manifest=None, allow_legacy_a=Fa
                                     'Unavailable A process metrics are not synthesized. IPC may be rounded by the original perf parser.')
     (output / 'evaluation.json').write_text(json.dumps(metadata, indent=2, allow_nan=False) + '\n')
     lines = ['# Configuration A vs C evaluation', '', f"Status: **{metadata['comparison_status']}**; data: **{metadata['data_kind']}**.",
-             '', 'Reference: median of complete joint Configuration A stable windows, fixed for every C window of its run pair.',
+             '', 'Reference: ' + metadata['reference_strategy'] + ', fixed for every C window of its run pair.',
              'Latency uses 100 × (A − C) / A; throughput uses 100 × (C − A) / A. These are ordinary reductions/increases, not speedup-factor percentages.',
-             'Warmup, initial baseline and tuning windows are excluded from the A reference; no A/C index pairing occurs.',
-             'Stable summary: compute raw A and C stable medians first, then improvement. Window-level p99 aggregates are not pooled request percentiles.',
+             'Reference selection follows the declared policy; no A/C window-index pairing occurs.',
+             'C stable aggregation: ' + metadata['aggregation'] + '. Percentages are calculated after raw aggregation.',
              'Each summary point is one A/C run pair. With multiple pairs the displayed range is descriptive run-pair variability, not a confidence interval.',
              '', '## Sources and quality notes']
     for pair in metadata['pairs']:
         lines.extend(['', f"### {pair['id']}", f"A: `{pair['a_source']}`", f"C: `{pair['c_source']}`",
-                      f"A reference: `{pair['a_reference']}`; selected A windows: {pair['a_selected_stable_windows']}; C windows: {pair['c_selected_stable_windows']}."])
+                      f"A reference: `{pair['a_reference']}`; selected A reference windows: {pair['a_selected_reference_windows']}; C windows: {pair['c_selected_stable_windows']}."])
         lines.append('Workload equivalence: ' + pair['workload_equivalence']['method'] + '.')
         if 'evidence' in pair['workload_equivalence']:
             lines.append(pair['workload_equivalence']['evidence'])

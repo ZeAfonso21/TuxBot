@@ -1,0 +1,27 @@
+{
+  "source_url": "https://github.com/gliargovas/Tailbench.git",
+  "commit": "2f3098b539a9a3413086fc77e29637937bafd116",
+  "sparse_directories": [
+    "tailbench/harness",
+    "tailbench/silo"
+  ],
+  "binary": "/work_dir/tailbench-src/tailbench/silo/out-perf.masstree/benchmarks/dbtest_integrated",
+  "binary_sha256": "f6e1a79b2883c0622e33fd55f248e040901f6d0f654087c6c2c10be2910c5265",
+  "compiler": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0",
+  "dynamic_dependencies": "\tlinux-vdso.so.1 (0x00007ffe93193000)\n\tliblz4.so => /work_dir/tailbench-src/tailbench/silo/third-party/lz4/liblz4.so (0x00007f3bc0524000)\n\tlibnuma.so.1 => /lib/x86_64-linux-gnu/libnuma.so.1 (0x00007f3bc0512000)\n\tlibjemalloc.so.2 => /lib/x86_64-linux-gnu/libjemalloc.so.2 (0x00007f3bc0238000)\n\tlibdb_cxx-5.3.so => /lib/x86_64-linux-gnu/libdb_cxx-5.3.so (0x00007f3bc0062000)\n\tlibstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f3bbfe36000)\n\tlibm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f3bbfd4d000)\n\tlibgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f3bbfd2d000)\n\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f3bbfb05000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007f3bc0a38000)\n",
+  "dependency_packages": "autoconf\t2.71-2\nautomake\t1:1.16.5-1.3\nlibaio-dev:amd64\t0.3.112-13build1\nlibdb5.3++-dev\t5.3.28+dfsg1-0.8ubuntu3\nlibjemalloc-dev\t5.2.1-4ubuntu1\nlibnuma-dev:amd64\t2.0.14-3ubuntu2\nlibssl-dev:amd64\t3.0.2-0ubuntu1.30\nlibtool\t2.4.6-15build2\nzlib1g-dev:amd64\t1:1.2.11.dfsg-2ubuntu9.2\n",
+  "host_after": {
+    "min_granularity_ns": "3000000",
+    "latency_ns": "24000000",
+    "wakeup_granularity_ns": "4000000",
+    "migration_cost_ns": "500000",
+    "min_perf_pct": "45",
+    "max_perf_pct": "100"
+  },
+  "parent_delegation_after": "memory pids",
+  "smoke_completed": true,
+  "smoke_three_window_arithmetic_means": {
+    "silo": 0.31233333333333335,
+    "sysbench_cpu": 370.33238095238096
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "benchmark": "tailbench",
+  "tailbench_app": "silo",
+  "tailbench_root": "/work_dir/TuxBot/results/silo-sysbench-01/workloads/A",
+  "tailbench_output_dir": "/work_dir/TuxBot/results/silo-sysbench-01/workloads/A/silo",
+  "results_dir": "/work_dir/TuxBot/results/silo-sysbench-01/workloads/A/collector",
+  "tailbench_threads": 4,
+  "tailbench_qps": 10000,
+  "tailbench_silo_scale_factor": 4,
+  "tailbench_warmupreqs": 10000,
+  "tailbench_maxreqs": 1000000000,
+  "tailbench_metrics_interval_sec": 1
+}

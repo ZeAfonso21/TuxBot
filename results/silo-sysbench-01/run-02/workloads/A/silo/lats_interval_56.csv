@@ -1,0 +1,2 @@
+interval,timestamp,elapsed_sec,count,svc_mean_ms,svc_p50_ms,svc_p95_ms,svc_p99_ms,svc_max_ms,queue_mean_ms,queue_p50_ms,queue_p95_ms,queue_p99_ms,queue_max_ms,sojourn_mean_ms,sojourn_p50_ms,sojourn_p95_ms,sojourn_p99_ms,sojourn_max_ms
+56,2026-11-27 18:16:16,57.018,1013,0.077,0.064,0.188,0.220,0.852,0.064,0.057,0.127,0.215,0.562,0.141,0.123,0.253,0.347,1.370

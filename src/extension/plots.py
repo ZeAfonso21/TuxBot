@@ -13,7 +13,12 @@ LABELS = {'latency_p99_ms': 'Sysbench CPU p99 latency (ms)',
 
 
 def label(pair, app):
-    return LABELS.get(pair['specs'][app]['metric'], f"{app}: {pair['specs'][app]['metric']}")
+    metric = pair['specs'][app]['metric']
+    if metric == 'latency_p99':
+        return f'{app}: p99 latency (ms)'
+    if metric == 'events_per_second':
+        return f'{app}: CPU throughput (events/s)'
+    return LABELS.get(metric, f'{app}: {metric}')
 
 
 def finish(fig, output, name, pairs):
@@ -91,7 +96,7 @@ def relative_figure(pairs, output):
         ax.legend(fontsize=8, loc='best')
     axes[-1].set_xlabel('Recorded measurement window ID (triangles = initial C samples; shaded = stable phase)')
     fig.suptitle('Coordinated tuning improvement relative to untuned Configuration A')
-    fig.text(.5, .045, 'Reference: A stable-window medians; CPU uses window-level p99 summaries, not pooled request p99.\nNo A/C window-index pairing.', ha='center', fontsize=8)
+    fig.text(.5, .045, 'Reference: ' + pairs[0]['reference_description'] + '; latency summaries are not pooled request p99.\nNo A/C window-index pairing.', ha='center', fontsize=8)
     finish(fig, output, 'relative_improvement', pairs)
     return True
 
@@ -114,7 +119,7 @@ def stable_figure(pairs, output):
             ax.scatter(offsets, values, color='black', s=22, zorder=3, label='One point per A/C run pair')
             ax.text(.98, .97, f'{center:+.2f}%', transform=ax.transAxes, ha='right', va='top', fontsize=13)
             if len(points) == 1:
-                unit = 'ms' if pairs[0]['specs'][app]['metric'] == 'latency_p99_ms' else 'MiB/s' if pairs[0]['specs'][app]['metric'] == 'throughput_mib_s' else 'raw units'
+                unit = {'latency_p99_ms': 'ms', 'latency_p99': 'ms', 'throughput_mib_s': 'MiB/s', 'events_per_second': 'events/s'}.get(pairs[0]['specs'][app]['metric'], 'raw units')
                 ax.text(.5, -.20, f"A: {points[0]['reference']:.3f} → C: {points[0]['coordinated']:.3f} {unit}", transform=ax.transAxes, ha='center', fontsize=9)
         zero_scale(ax, values)
         ax.set(title=label(pairs[0], app), ylabel='Improvement over Configuration A (%)',

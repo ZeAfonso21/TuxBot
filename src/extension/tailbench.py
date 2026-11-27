@@ -6,6 +6,7 @@ This module never constructs an optimizer or modifies host controls.
 import argparse
 import json
 import os
+import signal
 from pathlib import Path
 
 from .controls import decode
@@ -21,6 +22,10 @@ def bridge(action, filename):
     if action == 'serve':
         if not benchmark.output_dir:
             raise ValueError('A unique tailbench_output_dir is mandatory for each workload/run')
+        # EXTENSION: parent termination must enter finally and stop native Silo too.
+        def terminate(signum, frame):
+            raise SystemExit(0)
+        previous = signal.signal(signal.SIGTERM, terminate)
         try:
             if not benchmark.pre_execute():
                 raise RuntimeError('TailBench startup failed')
@@ -30,7 +35,10 @@ def bridge(action, filename):
             status = benchmark.benchmark_process.wait()
             raise RuntimeError(f'TailBench unexpectedly exited: {status}')
         finally:
-            benchmark.cleanup()
+            try:
+                benchmark.cleanup()
+            finally:
+                signal.signal(signal.SIGTERM, previous)
     else:
         start = float(os.environ['TUXBOT_WINDOW_START'])
         end = float(os.environ['TUXBOT_WINDOW_END'])

@@ -2,7 +2,9 @@
 
 **Local checkout = source of truth. All execution is remote via `ssh bart 'COMMAND'`.**
 
-**Latest live stage:** [005 — Relationship batch](../../progress/005-relationship-batch.md), [complete results](../../results/relationships-01/README.md). All three screened relationships qualified; all six no-cgroup-A/scoped-C runs completed with 3/30/20 windows. 48 extension tests passed before execution. All 318 full-run windows passed the final phase/control/telemetry audit; restoration succeeded with no leftover workloads/groups. Stable C gains were negative in every metric; no statistical improvement is claimed. Actual inference usage is recorded with the results.
+**Latest live stage:** [006 — Silo/Sysbench](../../progress/006-silo-sysbench.md), [results](../../results/silo-sysbench-01/README.md). TailBench harness/Silo installed; concurrent smoke validated. The first overloaded A candidate was retained and rejected before paid tuning. The completed 1000-request/s pair uses a common A initial-three **arithmetic mean** for both C targets and reporting, with 30/20 windows. **52 extension tests pass**; all 106 successful full-run windows passed the control/telemetry audit, and all workloads/settings/groups were cleaned up/restored. Stable results were negative; no Pareto gain or statistical significance is claimed.
+
+**Previous live stage:** [005 — Relationship batch](../../progress/005-relationship-batch.md), [complete results](../../results/relationships-01/README.md). All three screened relationships qualified; all six no-cgroup-A/scoped-C runs completed with 3/30/20 windows. 48 extension tests passed before execution. All 318 full-run windows passed the final phase/control/telemetry audit; restoration succeeded with no leftover workloads/groups. Stable C gains were negative in every metric; no statistical improvement is claimed. Actual inference usage is recorded with the results.
 
 The sections below retain the **previous offline plotting stage** for historical context. Statements there that no measured no-cgroup A exists or that the runner still groups default A are superseded by stage 005.
 

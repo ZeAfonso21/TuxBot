@@ -1,0 +1,10 @@
+{
+  "pairs": [
+    {
+      "id": "silo-sysbench-01",
+      "a": "/work_dir/TuxBot/results/silo-sysbench-01/run-02/A/results.json",
+      "c": "/work_dir/TuxBot/results/silo-sysbench-01/run-02/C/results.json",
+      "reference_policy": "initial_mean"
+    }
+  ]
+}

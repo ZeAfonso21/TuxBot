@@ -1,0 +1,27 @@
+{
+  "perf_start_time": 1795799832.40337,
+  "perf_end_time": 1795799838.40337,
+  "perf_output_file": "/work_dir/TuxBot/results/silo-sysbench-01/run-02/A/telemetry/window_11_perf_stat.txt",
+  "perf_metrics": {
+    "msec_task_clock": 48047.22,
+    "cpus_utilized": 8.0,
+    "context_switches": 17077.0,
+    "context_switches_per_sec": 355.421,
+    "cpu_migrations": 36.0,
+    "cpu_migrations_per_sec": 0.749,
+    "page_faults": 6319.0,
+    "page_faults_per_sec": 131.516,
+    "cycles": 147347532583.0,
+    "ghz": 3.067,
+    "instructions": 44037680119.0,
+    "instructions_per_cycle": 0.3,
+    "branches": 12126472605.0,
+    "branches_per_sec": 252.387,
+    "branch_misses": 87835670.0,
+    "branch_miss_rate_pct": 0.72,
+    "cache_references": 215425392.0,
+    "cache_references_per_sec": 4.484,
+    "cache_misses": 49970583.0,
+    "time_elapsed_seconds": 6.005743046
+  }
+}

@@ -1,12 +1,15 @@
 # TuxBot extension progress
 
-The local checkout is the source of truth; source/results are mirrored with bart. All Python execution/installations/workloads/tuning occur only through `ssh bart 'COMMAND'`. **Latest stage: three real relationship screens and six full A/C runs completed on bart in the foreground.**
+The local checkout is the source of truth; source/results are mirrored with bart. All Python execution/installations/workloads/tuning occur only through `ssh bart 'COMMAND'`. **Latest stage: real Silo/Sysbench A/C experiment completed on bart in the foreground, with a shared A initial-three-window mean and 30/20 windows.**
 
 - [001 — Initial remote validation](001-remote-validation.md)
 - [002 — Historical grouped-A/C Sysbench pilot](002-sysbench-pilot.md)
 - [003 — Run counts, colors and next study](003-clarifications-and-experiment-plan.md)
 - [004 — Evaluation redesign and provenance](004-evaluation-redesign.md)
 - [005 — Completed real relationship batch](005-relationship-batch.md)
+- [006 — TailBench/Silo installation and Silo/Sysbench results](006-silo-sysbench.md)
+
+**Latest measured results:** [Silo/Sysbench](../results/silo-sysbench-01/README.md). The completed pair did not show a stable Pareto gain. Older experiments below retain their original baseline policies.
 
 **Current measured results:** [relationships-01 summary](../results/relationships-01/README.md). This batch has real no-cgroup A runs and 30/20 A/C sessions. The historical qualification and diagnostic figures below refer to the older pilot only.
 

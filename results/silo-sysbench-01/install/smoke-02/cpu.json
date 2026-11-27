@@ -1,0 +1,6 @@
+{
+  "workload": "cpu",
+  "threads": 4,
+  "cpu_max_prime": 50000,
+  "metrics_file": "/work_dir/TuxBot/results/silo-sysbench-01/install/smoke-02/cpu.intervals.jsonl"
+}

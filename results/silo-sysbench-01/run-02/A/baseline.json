@@ -1,0 +1,406 @@
+{
+  "applications": {
+    "silo": {
+      "metric": "latency_p99",
+      "objective": "minimize",
+      "baseline": 0.38933333333333336,
+      "current": 0.38933333333333336,
+      "bound": 0.38933333333333336,
+      "priority": 1,
+      "improvement": 1.0,
+      "constraint_violation": false,
+      "significant_regression": false
+    },
+    "sysbench_cpu": {
+      "metric": "events_per_second",
+      "objective": "maximize",
+      "baseline": 611.4290476190477,
+      "current": 611.4290476190477,
+      "bound": 611.4290476190477,
+      "priority": 1,
+      "improvement": 1.0,
+      "constraint_violation": false,
+      "significant_regression": false
+    }
+  },
+  "windows": [
+    {
+      "window": -1,
+      "phase": "baseline",
+      "start": 1795799741.4279983,
+      "end": 1795799749.4389534,
+      "applications": {
+        "silo": {
+          "metric": "latency_p99",
+          "objective": "minimize",
+          "current": 0.404,
+          "raw": {
+            "window_start": 1795799741.4279983,
+            "window_end": 1795799749.4389534,
+            "latency_p99": 0.404,
+            "throughput": 999.875,
+            "intervals": 8,
+            "percentile_semantics": "maximum of interval p99s, not pooled request p99"
+          }
+        },
+        "sysbench_cpu": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 611.7157142857143,
+          "raw": {
+            "window_start": 1795799741.4279983,
+            "window_end": 1795799749.4389534,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 14.73,
+            "events_per_second": 611.7157142857143,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795799741.4279983,
+          "window_end_time": 1795799749.4389534,
+          "perf_start_time": 1795799742.4284356,
+          "perf_end_time": 1795799748.4284356,
+          "system_metrics_start_time": 1795799742.4309623,
+          "system_metrics_end_time": 1795799748.4298077,
+          "power_socket0_watts": 32.99634583333333,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48046.98,
+            "cpus_utilized": 8.0,
+            "context_switches": 16898.0,
+            "context_switches_per_sec": 351.697,
+            "cpu_migrations": 52.0,
+            "cpu_migrations_per_sec": 1.082,
+            "page_faults": 8161.0,
+            "page_faults_per_sec": 169.855,
+            "cycles": 147342355534.0,
+            "ghz": 3.067,
+            "instructions": 44061978400.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12130161145.0,
+            "branches_per_sec": 252.465,
+            "branch_misses": 88159746.0,
+            "branch_miss_rate_pct": 0.73,
+            "cache_references": 218341930.0,
+            "cache_references_per_sec": 4.544,
+            "cache_misses": 55782116.0,
+            "time_elapsed_seconds": 6.005711256
+          }
+        },
+        "msec_task_clock": 48046.98,
+        "cpus_utilized": 8.0,
+        "context_switches": 16898.0,
+        "context_switches_per_sec": 351.697,
+        "cpu_migrations": 52.0,
+        "cpu_migrations_per_sec": 1.082,
+        "page_faults": 8161.0,
+        "page_faults_per_sec": 169.855,
+        "cycles": 147342355534.0,
+        "ghz": 3.067,
+        "instructions": 44061978400.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12130161145.0,
+        "branches_per_sec": 252.465,
+        "branch_misses": 88159746.0,
+        "branch_miss_rate_pct": 0.73,
+        "cache_references": 218341930.0,
+        "cache_references_per_sec": 4.544,
+        "cache_misses": 55782116.0,
+        "time_elapsed_seconds": 6.005711256,
+        "power_socket0_watts": 32.99634583333333,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {},
+        "host_updates": {}
+      },
+      "configuration_end": {
+        "application_updates": {},
+        "host_updates": {}
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": -2,
+      "phase": "baseline",
+      "start": 1795799749.5880854,
+      "end": 1795799757.5969546,
+      "applications": {
+        "silo": {
+          "metric": "latency_p99",
+          "objective": "minimize",
+          "current": 0.4,
+          "raw": {
+            "window_start": 1795799749.5880854,
+            "window_end": 1795799757.5969546,
+            "latency_p99": 0.4,
+            "throughput": 1005.25,
+            "intervals": 8,
+            "percentile_semantics": "maximum of interval p99s, not pooled request p99"
+          }
+        },
+        "sysbench_cpu": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 611.2857142857143,
+          "raw": {
+            "window_start": 1795799749.5880854,
+            "window_end": 1795799757.5969546,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 14.73,
+            "events_per_second": 611.2857142857143,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795799749.5880854,
+          "window_end_time": 1795799757.5969546,
+          "perf_start_time": 1795799750.5883684,
+          "perf_end_time": 1795799756.5883684,
+          "system_metrics_start_time": 1795799750.5899644,
+          "system_metrics_end_time": 1795799756.5890048,
+          "power_socket0_watts": 32.922578333333334,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48046.42,
+            "cpus_utilized": 8.0,
+            "context_switches": 17161.0,
+            "context_switches_per_sec": 357.175,
+            "cpu_migrations": 35.0,
+            "cpu_migrations_per_sec": 0.728,
+            "page_faults": 5334.0,
+            "page_faults_per_sec": 111.018,
+            "cycles": 147343564347.0,
+            "ghz": 3.067,
+            "instructions": 44033416400.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12123163927.0,
+            "branches_per_sec": 252.322,
+            "branch_misses": 88322097.0,
+            "branch_miss_rate_pct": 0.73,
+            "cache_references": 221723809.0,
+            "cache_references_per_sec": 4.615,
+            "cache_misses": 45684088.0,
+            "time_elapsed_seconds": 6.005636025
+          }
+        },
+        "msec_task_clock": 48046.42,
+        "cpus_utilized": 8.0,
+        "context_switches": 17161.0,
+        "context_switches_per_sec": 357.175,
+        "cpu_migrations": 35.0,
+        "cpu_migrations_per_sec": 0.728,
+        "page_faults": 5334.0,
+        "page_faults_per_sec": 111.018,
+        "cycles": 147343564347.0,
+        "ghz": 3.067,
+        "instructions": 44033416400.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12123163927.0,
+        "branches_per_sec": 252.322,
+        "branch_misses": 88322097.0,
+        "branch_miss_rate_pct": 0.73,
+        "cache_references": 221723809.0,
+        "cache_references_per_sec": 4.615,
+        "cache_misses": 45684088.0,
+        "time_elapsed_seconds": 6.005636025,
+        "power_socket0_watts": 32.922578333333334,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {},
+        "host_updates": {}
+      },
+      "configuration_end": {
+        "application_updates": {},
+        "host_updates": {}
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": -3,
+      "phase": "baseline",
+      "start": 1795799757.7570798,
+      "end": 1795799765.7659569,
+      "applications": {
+        "silo": {
+          "metric": "latency_p99",
+          "objective": "minimize",
+          "current": 0.364,
+          "raw": {
+            "window_start": 1795799757.7570798,
+            "window_end": 1795799765.7659569,
+            "latency_p99": 0.364,
+            "throughput": 998.125,
+            "intervals": 8,
+            "percentile_semantics": "maximum of interval p99s, not pooled request p99"
+          }
+        },
+        "sysbench_cpu": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 611.2857142857143,
+          "raw": {
+            "window_start": 1795799757.7570798,
+            "window_end": 1795799765.7659569,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 14.73,
+            "events_per_second": 611.2857142857143,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795799757.7570798,
+          "window_end_time": 1795799765.7659569,
+          "perf_start_time": 1795799758.757361,
+          "perf_end_time": 1795799764.757361,
+          "system_metrics_start_time": 1795799758.7589645,
+          "system_metrics_end_time": 1795799764.7580798,
+          "power_socket0_watts": 32.93840816666666,
+          "power_ram_watts": null,
+          "cstate_poll_pct": 0.0,
+          "cstate_c1_pct": 76.77419354838709,
+          "cstate_c1e_pct": 0.0,
+          "cstate_c6_pct": 16.7741935483871,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48054.27,
+            "cpus_utilized": 8.001,
+            "context_switches": 16997.0,
+            "context_switches_per_sec": 353.704,
+            "cpu_migrations": 29.0,
+            "cpu_migrations_per_sec": 0.603,
+            "page_faults": 7335.0,
+            "page_faults_per_sec": 152.64,
+            "cycles": 147369467207.0,
+            "ghz": 3.067,
+            "instructions": 44039997461.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12125074785.0,
+            "branches_per_sec": 252.32,
+            "branch_misses": 88233049.0,
+            "branch_miss_rate_pct": 0.73,
+            "cache_references": 217426776.0,
+            "cache_references_per_sec": 4.525,
+            "cache_misses": 44920028.0,
+            "time_elapsed_seconds": 6.005888232
+          }
+        },
+        "msec_task_clock": 48054.27,
+        "cpus_utilized": 8.001,
+        "context_switches": 16997.0,
+        "context_switches_per_sec": 353.704,
+        "cpu_migrations": 29.0,
+        "cpu_migrations_per_sec": 0.603,
+        "page_faults": 7335.0,
+        "page_faults_per_sec": 152.64,
+        "cycles": 147369467207.0,
+        "ghz": 3.067,
+        "instructions": 44039997461.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12125074785.0,
+        "branches_per_sec": 252.32,
+        "branch_misses": 88233049.0,
+        "branch_miss_rate_pct": 0.73,
+        "cache_references": 217426776.0,
+        "cache_references_per_sec": 4.525,
+        "cache_misses": 44920028.0,
+        "time_elapsed_seconds": 6.005888232,
+        "power_socket0_watts": 32.93840816666666,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {},
+        "host_updates": {}
+      },
+      "configuration_end": {
+        "application_updates": {},
+        "host_updates": {}
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    }
+  ],
+  "aggregation": "mean of three window metrics, NOT pooled request p99",
+  "measured_initial_baselines": {
+    "silo": 0.38933333333333336,
+    "sysbench_cpu": 611.4290476190477
+  },
+  "reference": null
+}

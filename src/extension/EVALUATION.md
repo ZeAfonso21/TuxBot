@@ -2,15 +2,21 @@
 
 This is a **read-only plotting/data-validation pipeline**. It never imports an optimizer, launches a workload, creates a cgroup, changes kernel parameters or calls an LLM. All execution, including plotting tests, is performed on bart through SSH. The local checkout remains the source of truth.
 
-## Critical baseline/protocol finding
+## Current initial-mean protocol (Silo/Sysbench run-02)
+
+The completed [Silo/Sysbench experiment](../../results/silo-sysbench-01/README.md) uses `baseline_aggregation: "mean"` in A/C and `reference_run: ".../A/results.json"` in C. The loader validates a completed untuned no-cgroup A, matching workload conditions/metrics and unchanged captured host settings. C records A's source hash and the arithmetic means of its three initial windows. Those same values set C's default bounds and every report reference; C's own initial measurements remain separately recorded diagnostics.
+
+Reports detect this proof automatically, or accept `reference_policy: "initial_mean"` in an explicit pair manifest. They reject mismatched hashes/values or a request to silently substitute a stable-median reference. C's stable summary uses the mean of its complete joint stable windows before calculating percentages. Historical experiments without this opt-in retain the original stable-median policy described below; no raw history was rewritten.
+
+## Historical baseline/protocol finding
 
 The requested A is **untuned concurrent workloads without dedicated workload cgroups**. The existing pilot A JSON instead contains `cgroup_root`, two initial `application_updates` maps and per-child cgroup samples. Its groups had default values, but that does **not** make it a no-cgroup baseline. The report refuses it by default.
 
-No protocol-conforming measured A is currently available. Consequently:
+At the offline-redesign stage, no protocol-conforming measured A was available. Outputs from that stage:
 
 - `results/evaluation-redesign/historical/`: four main figures and an explicitly requested optional diagnostic, generated from the real old pilot using `--allow-legacy-a`. Every figure is marked **HISTORICAL DIAGNOSTIC ONLY** and metadata says `historical_nonconforming_A`. These are not evidence for the new no-cgroup comparison.
 - `results/evaluation-redesign/synthetic/`: four main figures from explicitly synthetic fixtures with a no-cgroup A schema. Every figure is marked **SYNTHETIC**. These demonstrate rendering/validation, not experiment results.
-- No raw historical measurement was edited, relabelled, or replaced by synthetic data. No new experiments were run.
+- No raw historical measurement was edited, relabelled, or replaced by synthetic data. No new experiments were run during that offline stage.
 
 The current `runner.py` still creates per-app groups in default mode. It was **not changed** in this plotting task, per the execution-logic restriction. Implementing the true no-cgroup A path requires a separate execution change before future live evaluation. The A template remains disabled (`defaults_verified=false`). Changing JSON provenance alone cannot make old grouped data compliant: contradictory declarations are rejected.
 

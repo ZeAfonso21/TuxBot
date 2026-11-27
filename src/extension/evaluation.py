@@ -1,11 +1,11 @@
-"""Read-only A/C evaluation. References are raw A stable medians, never tuner rewards.
+"""Read-only A/C evaluation. References are recorded A aggregates, never tuner rewards.
 
 No optimizer, provider client, process launcher or privileged interface is imported.
 """
 import hashlib
 import math
 from pathlib import Path
-from statistics import median
+from statistics import mean, median
 from .controls import decode
 
 DISPLAY = {'default': 'Configuration A — Untuned', 'coordinated': 'Configuration C — Coordinated'}
@@ -110,13 +110,13 @@ def load_run(filename):
                 data_kind=data.get('data_kind', config.get('data_kind', 'measured')))
 
 
-def stable_aggregate(run):
+def stable_aggregate(run, aggregation='median'):
     """Use complete *joint* stable windows; never select each app's best/mismatched window."""
     windows = [w for w in run['windows'] if w['phase'] == 'stable' and all(v is not None for v in w['values'].values())]
     all_stable = [w for w in run['windows'] if w['phase'] == 'stable']
     if len(windows) != len(all_stable):
         run['notes'].append('Incomplete joint stable windows excluded from both app aggregates')
-    return ({app: median(w['values'][app] for w in windows) for app in run['apps']} if windows else {},
+    return ({app: (mean if aggregation == 'mean' else median)(w['values'][app] for w in windows) for app in run['apps']} if windows else {},
             [w['window'] for w in windows])
 
 
@@ -245,7 +245,24 @@ def evaluate_pair(a, c, pair_id='pair-1', review=None, allow_legacy_a=False):
     historical = a['dedicated_cgroups'] is not False
     conditions = check_conditions(a, c, review)
     reference, a_windows = stable_aggregate(a)
-    stable_c, c_windows = stable_aggregate(c)
+    reference_windows = a_windows
+    reference_policy = review.get('reference_policy', 'initial_mean' if c['data'].get('baseline_reference') else 'stable_median')
+    if c['data'].get('baseline_reference') and reference_policy != 'initial_mean':
+        raise ValueError('Report must retain the shared A reference actually used by the tuner')
+    if reference_policy not in ('stable_median', 'initial_mean'):
+        raise ValueError('Unknown A reference policy')
+    if reference_policy == 'initial_mean':
+        # EXTENSION: the requested A reference also governs C's actual tuning targets.
+        from .baseline import initial_mean_reference
+        reference = initial_mean_reference(a)
+        reference_windows = [w['window'] for w in a['windows'] if w['phase'] == 'baseline']
+        proof = c['data'].get('baseline_reference', {})
+        if proof.get('sha256') != a['sha256'] or proof.get('values') != reference:
+            raise ValueError('C did not record the same A initial-mean tuning reference')
+    aggregate = 'mean' if reference_policy == 'initial_mean' else 'median'
+    stable_c, c_windows = stable_aggregate(c, aggregate)
+    reference_description = ('fixed A initial-three-window arithmetic mean' if reference_policy == 'initial_mean'
+                             else 'fixed A complete joint stable-window median')
     for app, value in reference.items():
         improvement(value, value, a['apps'][app]['objective'])  # reject zero/invalid A references
     notes = a['notes'] + c['notes']
@@ -274,7 +291,9 @@ def evaluate_pair(a, c, pair_id='pair-1', review=None, allow_legacy_a=False):
     notes.extend(control_notes)
     return dict(id=pair_id, apps=apps, specs=a['apps'], a=a, c=c, historical=historical,
                 synthetic=a['data_kind'] == 'synthetic' or c['data_kind'] == 'synthetic', conditions=conditions,
-                reference=reference, a_stable_windows=a_windows, c_stable_windows=c_windows,
+                reference=reference, reference_policy=reference_policy, reference_description=reference_description,
+                reference_windows=reference_windows, stable_aggregation=aggregate,
+                a_stable_windows=a_windows, c_stable_windows=c_windows,
                 curves=curves, pareto=joint, frontier_indices=frontier, summary=summary, controls=controls, notes=notes)
 
 
@@ -306,7 +325,7 @@ def load_pairs(files=None, manifest=None, allow_legacy_a=False):
         seen_a.add(a['sha256'])
         seen_c.add(c['sha256'])
         pair = evaluate_pair(a, c, definition['id'], definition, allow_legacy_a)
-        if pairs and (pair['specs'] != pairs[0]['specs'] or pair['conditions']['conditions'] != pairs[0]['conditions']['conditions']):
+        if pairs and (pair['reference_policy'] != pairs[0]['reference_policy'] or pair['specs'] != pairs[0]['specs'] or pair['conditions']['conditions'] != pairs[0]['conditions']['conditions']):
             raise ValueError('Different workload pairs/conditions must be evaluated separately')
         pairs.append(pair)
     if len(pairs) > 1 and not all(d.get('independent_repetition') is True for d in definitions):
@@ -323,5 +342,5 @@ def repetition_summary(pairs):
                          minimum_improvement_pct=min(values) if values else None,
                          maximum_improvement_pct=max(values) if values else None,
                          variability='observed paired-run range, not a confidence interval',
-                         statistical_unit='A/C run pair after within-run stable medians'))
+                         statistical_unit='A/C run pair after the declared within-run aggregation'))
     return rows
