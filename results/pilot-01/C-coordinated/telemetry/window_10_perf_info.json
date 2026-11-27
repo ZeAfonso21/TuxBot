@@ -1,0 +1,27 @@
+{
+  "perf_start_time": 1795721199.6696904,
+  "perf_end_time": 1795721205.6696904,
+  "perf_output_file": "/work_dir/TuxBot/results/pilot-01/C-coordinated/telemetry/window_10_perf_stat.txt",
+  "perf_metrics": {
+    "msec_task_clock": 48049.44,
+    "cpus_utilized": 8.0,
+    "context_switches": 6602.0,
+    "context_switches_per_sec": 137.4,
+    "cpu_migrations": 26.0,
+    "cpu_migrations_per_sec": 0.541,
+    "page_faults": 1.0,
+    "page_faults_per_sec": 0.021,
+    "cycles": 146392434945.0,
+    "ghz": 3.047,
+    "instructions": 49414147790.0,
+    "instructions_per_cycle": 0.34,
+    "branches": 9324384744.0,
+    "branches_per_sec": 194.058,
+    "branch_misses": 71295183.0,
+    "branch_miss_rate_pct": 0.76,
+    "cache_references": 1436241104.0,
+    "cache_references_per_sec": 29.891,
+    "cache_misses": 623012043.0,
+    "time_elapsed_seconds": 6.005990985
+  }
+}

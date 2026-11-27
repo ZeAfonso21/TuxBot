@@ -1,0 +1,5 @@
+run,mode,application,completed,metric,objective,stable_median,baseline,improvement,bound,constraint_violation,stable_regression,measured_windows,expected_windows
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,cpu_latency,True,latency_p99_ms,minimize,3.89,3.89,1.0,3.89,False,False,3,3
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,memory_bandwidth,True,throughput_mib_s,maximize,21577.16285714286,21211.454285714288,1.0172410890126884,21211.454285714288,False,False,3,3
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,cpu_latency,True,latency_p99_ms,minimize,3.36,3.89,1.1577380952380953,3.89,False,False,3,3
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,memory_bandwidth,True,throughput_mib_s,maximize,21760.088571428572,21540.66285714286,1.010186581338789,21540.66285714286,False,False,3,3

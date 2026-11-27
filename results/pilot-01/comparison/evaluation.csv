@@ -1,0 +1,3 @@
+run,mode,complete,experimental_success,all_user_bounds_satisfied,bound_evaluation,windows_with_bound_violation,all_windows_bounds_satisfied
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,True,True,True,stable_window_median,4,False
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,True,True,True,stable_window_median,0,True

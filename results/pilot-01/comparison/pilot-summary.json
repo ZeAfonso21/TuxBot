@@ -1,0 +1,83 @@
+{
+  "A-default-02": {
+    "metrics": {
+      "cpu_latency": {
+        "objective": "minimize",
+        "baseline": 3.89,
+        "stable_median": 3.89,
+        "bound_violating_windows": 4,
+        "significantly_regressed_windows": 0
+      },
+      "memory_bandwidth": {
+        "objective": "maximize",
+        "baseline": 21211.454285714288,
+        "stable_median": 21577.16285714286,
+        "bound_violating_windows": 2,
+        "significantly_regressed_windows": 0
+      }
+    },
+    "decisions": 0,
+    "tokens": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "thinking_tokens": 0,
+      "billable_total_tokens": 0
+    },
+    "model_seconds_sum": 0,
+    "decisions_by_role": {},
+    "telemetry_present_windows": {
+      "instructions_per_cycle": 14,
+      "cycles": 14,
+      "instructions": 14,
+      "cache_misses": 14,
+      "power_socket0_watts": 14,
+      "cpu_load_socket0_pct": 14
+    },
+    "configuration_constant_within_windows": true,
+    "stable_configuration_constant": true
+  },
+  "C-coordinated": {
+    "metrics": {
+      "cpu_latency": {
+        "objective": "minimize",
+        "baseline": 3.89,
+        "stable_median": 3.36,
+        "bound_violating_windows": 0,
+        "significantly_regressed_windows": 0,
+        "factor_vs_A_stable": 1.1577380952380953,
+        "change_raw_percent_vs_A_stable": -13.624678663239076
+      },
+      "memory_bandwidth": {
+        "objective": "maximize",
+        "baseline": 21540.66285714286,
+        "stable_median": 21760.088571428572,
+        "bound_violating_windows": 0,
+        "significantly_regressed_windows": 0,
+        "factor_vs_A_stable": 1.0084777463792074,
+        "change_raw_percent_vs_A_stable": 0.8477746379207396
+      }
+    },
+    "decisions": 17,
+    "tokens": {
+      "input_tokens": 445546,
+      "output_tokens": 4876,
+      "thinking_tokens": 12748,
+      "billable_total_tokens": 463170
+    },
+    "model_seconds_sum": 103.05702471733093,
+    "decisions_by_role": {
+      "Speculator": 8,
+      "Actor": 9
+    },
+    "telemetry_present_windows": {
+      "instructions_per_cycle": 14,
+      "cycles": 14,
+      "instructions": 14,
+      "cache_misses": 14,
+      "power_socket0_watts": 14,
+      "cpu_load_socket0_pct": 14
+    },
+    "configuration_constant_within_windows": true,
+    "stable_configuration_constant": true
+  }
+}

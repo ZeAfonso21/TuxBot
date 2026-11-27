@@ -1,0 +1,281 @@
+run,mode,phase,window,scope,application,parameter,value
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-1,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-1,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-1,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-1,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-1,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-1,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-1,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-1,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-1,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-1,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-2,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-2,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-2,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-2,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-2,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-2,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-2,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-2,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-2,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-2,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-3,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-3,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-3,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-3,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-3,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-3,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-3,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-3,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-3,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,baseline,-3,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,1,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,1,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,1,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,1,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,1,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,1,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,1,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,1,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,1,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,1,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,2,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,2,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,2,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,2,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,2,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,2,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,2,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,2,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,2,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,2,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,3,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,3,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,3,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,3,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,3,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,3,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,3,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,3,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,3,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,3,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,4,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,4,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,4,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,4,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,4,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,4,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,4,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,4,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,4,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,4,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,5,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,5,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,5,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,5,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,5,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,5,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,5,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,5,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,5,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,5,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,6,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,6,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,6,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,6,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,6,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,6,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,6,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,6,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,6,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,6,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,7,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,7,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,7,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,7,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,7,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,7,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,7,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,7,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,7,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,7,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,8,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,8,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,8,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,8,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,8,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,8,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,8,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,8,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,8,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,tuning,8,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,9,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,9,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,9,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,9,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,9,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,9,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,9,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,9,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,9,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,9,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,10,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,10,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,10,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,10,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,10,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,10,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,10,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,10,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,10,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,10,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,11,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,11,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,11,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,11,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,11,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,11,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,11,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,11,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,11,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/A-default-02,default,stable,11,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-1,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-1,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-1,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-1,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-1,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-1,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-1,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-1,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-1,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-1,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-2,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-2,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-2,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-2,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-2,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-2,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-2,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-2,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-2,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-2,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-3,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-3,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-3,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-3,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-3,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-3,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-3,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-3,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-3,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,baseline,-3,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,1,application,cpu_latency,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,1,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,1,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,1,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,1,host,,min_granularity_ns,3000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,1,host,,latency_ns,24000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,1,host,,wakeup_granularity_ns,4000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,1,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,1,host,,min_perf_pct,45
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,1,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,2,application,cpu_latency,cpu.weight,400
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,2,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,2,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,2,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,2,host,,min_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,2,host,,latency_ns,10000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,2,host,,wakeup_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,2,host,,migration_cost_ns,250000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,2,host,,min_perf_pct,80
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,2,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,3,application,cpu_latency,cpu.weight,1000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,3,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,3,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,3,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,3,host,,min_granularity_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,3,host,,latency_ns,6000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,3,host,,wakeup_granularity_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,3,host,,migration_cost_ns,250000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,3,host,,min_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,3,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,4,application,cpu_latency,cpu.weight,500
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,4,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,4,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,4,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,4,host,,min_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,4,host,,latency_ns,8000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,4,host,,wakeup_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,4,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,4,host,,min_perf_pct,85
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,4,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,5,application,cpu_latency,cpu.weight,500
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,5,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,5,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,5,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,5,host,,min_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,5,host,,latency_ns,8000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,5,host,,wakeup_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,5,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,5,host,,min_perf_pct,85
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,5,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,6,application,cpu_latency,cpu.weight,600
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,6,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,6,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,6,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,6,host,,min_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,6,host,,latency_ns,8000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,6,host,,wakeup_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,6,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,6,host,,min_perf_pct,90
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,6,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,7,application,cpu_latency,cpu.weight,600
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,7,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,7,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,7,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,7,host,,min_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,7,host,,latency_ns,8000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,7,host,,wakeup_granularity_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,7,host,,migration_cost_ns,750000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,7,host,,min_perf_pct,90
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,7,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,8,application,cpu_latency,cpu.weight,500
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,8,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,8,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,8,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,8,host,,min_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,8,host,,latency_ns,8000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,8,host,,wakeup_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,8,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,8,host,,min_perf_pct,90
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,tuning,8,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,9,application,cpu_latency,cpu.weight,500
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,9,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,9,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,9,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,9,host,,min_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,9,host,,latency_ns,8000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,9,host,,wakeup_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,9,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,9,host,,min_perf_pct,95
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,9,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,10,application,cpu_latency,cpu.weight,500
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,10,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,10,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,10,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,10,host,,min_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,10,host,,latency_ns,8000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,10,host,,wakeup_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,10,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,10,host,,min_perf_pct,95
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,10,host,,max_perf_pct,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,11,application,cpu_latency,cpu.weight,500
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,11,application,cpu_latency,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,11,application,memory_bandwidth,cpu.weight,100
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,11,application,memory_bandwidth,cpu.max,max 100000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,11,host,,min_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,11,host,,latency_ns,8000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,11,host,,wakeup_granularity_ns,1000000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,11,host,,migration_cost_ns,500000
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,11,host,,min_perf_pct,95
+/work_dir/TuxBot/results/pilot-01/C-coordinated,coordinated,stable,11,host,,max_perf_pct,100

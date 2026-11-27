@@ -69,7 +69,6 @@ wheels/
 *.egg
 
 # Project specific
-results/
 plots/
 /node_modules/
 /package.json
