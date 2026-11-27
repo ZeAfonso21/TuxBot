@@ -1,0 +1,4 @@
+{
+  "root": "/sys/fs/cgroup/tuxbot-rel01-cpu-cpu-frequency-C",
+  "initial_controllers": []
+}

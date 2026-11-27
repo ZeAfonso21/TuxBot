@@ -1,0 +1,9 @@
+pair,window,phase,start,end,x_application,y_application,x_improvement_pct,y_improvement_pct,observed_nondominated
+pair-1,-1,baseline,0,1,cpu_latency,memory_bandwidth,-100.0,-50.0,False
+pair-1,-2,baseline,1,2,cpu_latency,memory_bandwidth,-100.0,-50.0,False
+pair-1,-3,baseline,2,3,cpu_latency,memory_bandwidth,-100.0,-50.0,False
+pair-1,1,tuning,3,4,cpu_latency,memory_bandwidth,-25.0,10.0,False
+pair-1,2,tuning,4,5,cpu_latency,memory_bandwidth,25.0,-10.0,False
+pair-1,3,stable,5,6,cpu_latency,memory_bandwidth,-25.0,-20.0,False
+pair-1,4,stable,6,7,cpu_latency,memory_bandwidth,19.999999999999996,20.0,True
+pair-1,5,stable,7,8,cpu_latency,memory_bandwidth,25.0,18.0,True

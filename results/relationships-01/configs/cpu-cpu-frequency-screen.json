@@ -1,0 +1,126 @@
+{
+  "mode": "coordinated",
+  "defaults_verified": true,
+  "cgroup_root": "/sys/fs/cgroup/tuxbot-rel01-cpu-cpu-frequency-screen",
+  "results_dir": "results/relationships-01/cpu-cpu-frequency/screen",
+  "warmup_seconds": 10,
+  "window_seconds": 8,
+  "tuning_windows": 30,
+  "stable_windows": 20,
+  "require_perf_metrics": true,
+  "regression_tolerance": 0.05,
+  "regression_windows": 3,
+  "approved_host_parameters": [
+    "min_granularity_ns",
+    "latency_ns",
+    "wakeup_granularity_ns",
+    "migration_cost_ns",
+    "min_perf_pct",
+    "max_perf_pct"
+  ],
+  "expected_initial_host": {
+    "min_granularity_ns": 3000000,
+    "latency_ns": 24000000,
+    "wakeup_granularity_ns": 4000000,
+    "migration_cost_ns": 500000,
+    "min_perf_pct": 45,
+    "max_perf_pct": 100
+  },
+  "host_limits": {
+    "min_granularity_ns": [
+      500000,
+      6000000
+    ],
+    "latency_ns": [
+      6000000,
+      48000000
+    ],
+    "wakeup_granularity_ns": [
+      0,
+      8000000
+    ],
+    "migration_cost_ns": [
+      0,
+      2000000
+    ],
+    "min_perf_pct": [
+      45,
+      100
+    ],
+    "max_perf_pct": [
+      80,
+      100
+    ]
+  },
+  "actor_model": "gemini-3.5-flash",
+  "instant_model": "gemini-3.5-flash-lite",
+  "llm_timeout_seconds": 90,
+  "applications": [
+    {
+      "id": "prime_10000",
+      "metric": "events_per_second",
+      "objective": "maximize",
+      "bound": "default",
+      "priority": 1,
+      "ready_signal": true,
+      "start": [
+        "/work_dir/tuxbot-venv/bin/python",
+        "-m",
+        "extension.sysbench",
+        "serve",
+        "results/relationships-01/configs/cpu-cpu-frequency-screen-prime_10000.json"
+      ],
+      "measure": [
+        "/work_dir/tuxbot-venv/bin/python",
+        "-m",
+        "extension.sysbench",
+        "measure",
+        "results/relationships-01/configs/cpu-cpu-frequency-screen-prime_10000.json"
+      ]
+    },
+    {
+      "id": "prime_20000",
+      "metric": "events_per_second",
+      "objective": "maximize",
+      "bound": "default",
+      "priority": 1,
+      "ready_signal": true,
+      "start": [
+        "/work_dir/tuxbot-venv/bin/python",
+        "-m",
+        "extension.sysbench",
+        "serve",
+        "results/relationships-01/configs/cpu-cpu-frequency-screen-prime_20000.json"
+      ],
+      "measure": [
+        "/work_dir/tuxbot-venv/bin/python",
+        "-m",
+        "extension.sysbench",
+        "measure",
+        "results/relationships-01/configs/cpu-cpu-frequency-screen-prime_20000.json"
+      ]
+    }
+  ],
+  "workload_conditions": {
+    "prime_10000": {
+      "program": "sysbench",
+      "version": "sysbench 1.0.20",
+      "workload": "cpu",
+      "threads": 4,
+      "rand_seed": 1,
+      "report_interval_seconds": 1,
+      "cpu_affinity": null,
+      "cpu_max_prime": 10000
+    },
+    "prime_20000": {
+      "program": "sysbench",
+      "version": "sysbench 1.0.20",
+      "workload": "cpu",
+      "threads": 4,
+      "rand_seed": 1,
+      "report_interval_seconds": 1,
+      "cpu_affinity": null,
+      "cpu_max_prime": 20000
+    }
+  }
+}

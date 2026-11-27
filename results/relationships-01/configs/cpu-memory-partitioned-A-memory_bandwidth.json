@@ -1,0 +1,5 @@
+{
+  "workload": "memory",
+  "threads": 1,
+  "metrics_file": "results/relationships-01/cpu-memory-partitioned/A/memory_bandwidth.intervals.jsonl"
+}

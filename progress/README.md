@@ -1,23 +1,31 @@
-# TuxBot extension progress logs
+# TuxBot extension progress
 
-The local checkout is the source of truth. Code/configuration changes are synchronized to `/work_dir/TuxBot` on **bart** before execution. All installations, tests, workloads, plots and system changes execute through `ssh bart 'COMMAND'`, never locally. Results may be copied back for inspection.
+The local checkout is the source of truth; source/results are mirrored with bart. All Python execution/installations/workloads/tuning occur only through `ssh bart 'COMMAND'`. **Latest stage: three real relationship screens and six full A/C runs completed on bart in the foreground.**
 
-- [001 — First remote validation](001-remote-validation.md): original 16 tests, Gemini schema/model fixes and isolated cgroup smoke check.
-- [002 — Real Sysbench A/C pilot](002-sysbench-pilot.md): workload selection, provisioning, failed setup attempt, 23 tests, concurrent default and coordinated runs, telemetry validation, costs/tokens, plots and limitations.
+- [001 — Initial remote validation](001-remote-validation.md)
+- [002 — Historical grouped-A/C Sysbench pilot](002-sysbench-pilot.md)
+- [003 — Run counts, colors and next study](003-clarifications-and-experiment-plan.md)
+- [004 — Evaluation redesign and provenance](004-evaluation-redesign.md)
+- [005 — Completed real relationship batch](005-relationship-batch.md)
 
-- [003 — Clarifications and next experiment plan](003-clarifications-and-experiment-plan.md): short-run versus 30/20 distinction, clearer plot colors, 24 tests and proposed workload-coupling study.
+**Current measured results:** [relationships-01 summary](../results/relationships-01/README.md). This batch has real no-cgroup A runs and 30/20 A/C sessions. The historical qualification and diagnostic figures below refer to the older pilot only.
 
-Current test summary: [`src/extension/TESTING.md`](../src/extension/TESTING.md).
+Current status: [TESTING.md](../src/extension/TESTING.md). Data contract/commands: [EVALUATION.md](../src/extension/EVALUATION.md).
 
-## Retained pilot artifacts
+## Important protocol qualification
 
-Copied locally from bart, excluded from Git by the existing `results/` rule:
+The newly requested A has **no dedicated workload cgroups**. Historical A used dedicated default-valued groups. There is no measured conforming A yet, and the execution path was not changed during plotting work. Old measurements are not silently relabelled.
 
-- [Per-window relative improvement](../results/pilot-01/comparison/improvement_per_window.png)
-- [Common Configuration A reference](../results/pilot-01/comparison/improvement_vs_configuration_A.png)
-- [Effective control trajectory](../results/pilot-01/comparison/control_trajectory.png)
-- [Shared host telemetry](../results/pilot-01/comparison/host_telemetry.png)
-- [Per-application resource telemetry](../results/pilot-01/comparison/application_resources.png)
-- [Full result/plot directory](../results/pilot-01/)
+## Four current figures
 
-These are the first real pilot data, not the temporary mocked-test graphs. Negative windows and the failed setup attempt are retained. A future checkout without the ignored result artifacts will need the remote results copied back separately.
+**Historical diagnostics only**, marked on every figure:
+
+- [C improvement relative to A](../results/evaluation-redesign/historical/relative_improvement.png)
+- [Stable performance summary](../results/evaluation-redesign/historical/stable_performance.png)
+- [Actual applied C parameters](../results/evaluation-redesign/historical/applied_parameters.png)
+- [Joint/Pareto trade-offs](../results/evaluation-redesign/historical/pareto_tradeoffs.png)
+- [Optional scoped diagnostics](../results/evaluation-redesign/historical/resource_telemetry.png)
+
+Separate [synthetic demonstration](../results/evaluation-redesign/synthetic/evaluation.md), marked synthetic and not experimental evidence. Both report sets include PNG/PDF figures, explicit source/reference metadata and CSVs. Data artifacts are copied locally from bart. This checkout tracks some historical result files; their retired images and all new outputs are visible for review without changing the existing Git ignore policy.
+
+Old own-baseline/factor/bound-marker/A-cgroup figures are **retired** under [the historical comparison archive](../results/pilot-01/comparison/retired/). Historical CSV/JSON data remain unchanged for compatibility; use the new evaluation report, not old normalization semantics, for current analysis.

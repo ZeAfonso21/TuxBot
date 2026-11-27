@@ -1,0 +1,780 @@
+{
+  "data_kind": "synthetic",
+  "mode": "coordinated",
+  "completed": true,
+  "applications": [
+    {
+      "id": "cpu_latency",
+      "metric": "latency_p99_ms",
+      "objective": "minimize",
+      "baseline": 8,
+      "bound": "default"
+    },
+    {
+      "id": "memory_bandwidth",
+      "metric": "throughput_mib_s",
+      "objective": "maximize",
+      "baseline": 50,
+      "bound": "default"
+    }
+  ],
+  "provenance": {
+    "dedicated_workload_cgroups": true,
+    "concurrent_workloads": true
+  },
+  "config": {
+    "tuning_windows": 2,
+    "stable_windows": 3,
+    "window_seconds": 1,
+    "warmup_seconds": 0,
+    "workload_conditions": {
+      "cpu_latency": {
+        "program": "SYNTHETIC CPU"
+      },
+      "memory_bandwidth": {
+        "program": "SYNTHETIC memory"
+      }
+    },
+    "cgroup_root": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED"
+  },
+  "windows": [
+    {
+      "window": -1,
+      "phase": "baseline",
+      "start": 0,
+      "end": 1,
+      "applications": {
+        "cpu_latency": {
+          "metric": "latency_p99_ms",
+          "objective": "minimize",
+          "current": 8,
+          "raw": {
+            "window_start": 0,
+            "window_end": 1
+          },
+          "bound": 8,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/cpu_latency"
+          }
+        },
+        "memory_bandwidth": {
+          "metric": "throughput_mib_s",
+          "objective": "maximize",
+          "current": 50,
+          "raw": {
+            "window_start": 0,
+            "window_end": 1
+          },
+          "bound": 50,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/memory_bandwidth"
+          }
+        }
+      },
+      "shared": {
+        "cpu_load_socket0_pct": 50,
+        "instructions_per_cycle": 1.2,
+        "power_socket0_watts": 45
+      },
+      "configuration_start": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "max"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "24000000",
+          "min_perf_pct": "45",
+          "custom_knob": "5"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "max"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "24000000",
+          "min_perf_pct": "45",
+          "custom_knob": "5"
+        }
+      },
+      "observed_host_start": {
+        "latency_ns": "24000000",
+        "min_perf_pct": "45",
+        "custom_knob": "5"
+      }
+    },
+    {
+      "window": -2,
+      "phase": "baseline",
+      "start": 1,
+      "end": 2,
+      "applications": {
+        "cpu_latency": {
+          "metric": "latency_p99_ms",
+          "objective": "minimize",
+          "current": 8,
+          "raw": {
+            "window_start": 1,
+            "window_end": 2
+          },
+          "bound": 8,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/cpu_latency"
+          }
+        },
+        "memory_bandwidth": {
+          "metric": "throughput_mib_s",
+          "objective": "maximize",
+          "current": 50,
+          "raw": {
+            "window_start": 1,
+            "window_end": 2
+          },
+          "bound": 50,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/memory_bandwidth"
+          }
+        }
+      },
+      "shared": {
+        "cpu_load_socket0_pct": 50,
+        "instructions_per_cycle": 1.2,
+        "power_socket0_watts": 45
+      },
+      "configuration_start": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "max"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "24000000",
+          "min_perf_pct": "45",
+          "custom_knob": "5"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "max"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "24000000",
+          "min_perf_pct": "45",
+          "custom_knob": "5"
+        }
+      },
+      "observed_host_start": {
+        "latency_ns": "24000000",
+        "min_perf_pct": "45",
+        "custom_knob": "5"
+      }
+    },
+    {
+      "window": -3,
+      "phase": "baseline",
+      "start": 2,
+      "end": 3,
+      "applications": {
+        "cpu_latency": {
+          "metric": "latency_p99_ms",
+          "objective": "minimize",
+          "current": 8,
+          "raw": {
+            "window_start": 2,
+            "window_end": 3
+          },
+          "bound": 8,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/cpu_latency"
+          }
+        },
+        "memory_bandwidth": {
+          "metric": "throughput_mib_s",
+          "objective": "maximize",
+          "current": 50,
+          "raw": {
+            "window_start": 2,
+            "window_end": 3
+          },
+          "bound": 50,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/memory_bandwidth"
+          }
+        }
+      },
+      "shared": {
+        "cpu_load_socket0_pct": 50,
+        "instructions_per_cycle": 1.2,
+        "power_socket0_watts": 45
+      },
+      "configuration_start": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "max"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "24000000",
+          "min_perf_pct": "45",
+          "custom_knob": "5"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "max"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "24000000",
+          "min_perf_pct": "45",
+          "custom_knob": "5"
+        }
+      },
+      "observed_host_start": {
+        "latency_ns": "24000000",
+        "min_perf_pct": "45",
+        "custom_knob": "5"
+      }
+    },
+    {
+      "window": 1,
+      "phase": "tuning",
+      "start": 3,
+      "end": 4,
+      "applications": {
+        "cpu_latency": {
+          "metric": "latency_p99_ms",
+          "objective": "minimize",
+          "current": 5,
+          "raw": {
+            "window_start": 3,
+            "window_end": 4
+          },
+          "bound": 8,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/cpu_latency"
+          }
+        },
+        "memory_bandwidth": {
+          "metric": "throughput_mib_s",
+          "objective": "maximize",
+          "current": 110,
+          "raw": {
+            "window_start": 3,
+            "window_end": 4
+          },
+          "bound": 50,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/memory_bandwidth"
+          }
+        }
+      },
+      "shared": {
+        "cpu_load_socket0_pct": 50,
+        "instructions_per_cycle": 1.2,
+        "power_socket0_watts": 45
+      },
+      "configuration_start": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "max"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "24000000",
+          "min_perf_pct": "45",
+          "custom_knob": "5"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "max"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "24000000",
+          "min_perf_pct": "45",
+          "custom_knob": "5"
+        }
+      },
+      "observed_host_start": {
+        "latency_ns": "24000000",
+        "min_perf_pct": "45",
+        "custom_knob": "5"
+      }
+    },
+    {
+      "window": 2,
+      "phase": "tuning",
+      "start": 4,
+      "end": 5,
+      "applications": {
+        "cpu_latency": {
+          "metric": "latency_p99_ms",
+          "objective": "minimize",
+          "current": 3,
+          "raw": {
+            "window_start": 4,
+            "window_end": 5
+          },
+          "bound": 8,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/cpu_latency"
+          }
+        },
+        "memory_bandwidth": {
+          "metric": "throughput_mib_s",
+          "objective": "maximize",
+          "current": 90,
+          "raw": {
+            "window_start": 4,
+            "window_end": 5
+          },
+          "bound": 50,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/memory_bandwidth"
+          }
+        }
+      },
+      "shared": {
+        "cpu_load_socket0_pct": 50,
+        "instructions_per_cycle": 1.2,
+        "power_socket0_watts": 45
+      },
+      "configuration_start": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "400",
+            "cpu.max": "400000 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "2147483648"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "12000000",
+          "min_perf_pct": "80",
+          "custom_knob": "7"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "400",
+            "cpu.max": "400000 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "2147483648"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "12000000",
+          "min_perf_pct": "80",
+          "custom_knob": "7"
+        }
+      },
+      "observed_host_start": {
+        "latency_ns": "12000000",
+        "min_perf_pct": "80",
+        "custom_knob": "7"
+      }
+    },
+    {
+      "window": 3,
+      "phase": "stable",
+      "start": 5,
+      "end": 6,
+      "applications": {
+        "cpu_latency": {
+          "metric": "latency_p99_ms",
+          "objective": "minimize",
+          "current": 5,
+          "raw": {
+            "window_start": 5,
+            "window_end": 6
+          },
+          "bound": 8,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/cpu_latency"
+          }
+        },
+        "memory_bandwidth": {
+          "metric": "throughput_mib_s",
+          "objective": "maximize",
+          "current": 80,
+          "raw": {
+            "window_start": 5,
+            "window_end": 6
+          },
+          "bound": 50,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/memory_bandwidth"
+          }
+        }
+      },
+      "shared": {
+        "cpu_load_socket0_pct": 50,
+        "instructions_per_cycle": 1.2,
+        "power_socket0_watts": 45
+      },
+      "configuration_start": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "400",
+            "cpu.max": "400000 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "2147483648"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "12000000",
+          "min_perf_pct": "80",
+          "custom_knob": "7"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "400",
+            "cpu.max": "400000 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "2147483648"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "12000000",
+          "min_perf_pct": "80",
+          "custom_knob": "7"
+        }
+      },
+      "observed_host_start": {
+        "latency_ns": "12000000",
+        "min_perf_pct": "80",
+        "custom_knob": "7"
+      }
+    },
+    {
+      "window": 4,
+      "phase": "stable",
+      "start": 6,
+      "end": 7,
+      "applications": {
+        "cpu_latency": {
+          "metric": "latency_p99_ms",
+          "objective": "minimize",
+          "current": 3.2,
+          "raw": {
+            "window_start": 6,
+            "window_end": 7
+          },
+          "bound": 8,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/cpu_latency"
+          }
+        },
+        "memory_bandwidth": {
+          "metric": "throughput_mib_s",
+          "objective": "maximize",
+          "current": 120,
+          "raw": {
+            "window_start": 6,
+            "window_end": 7
+          },
+          "bound": 50,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/memory_bandwidth"
+          }
+        }
+      },
+      "shared": {
+        "cpu_load_socket0_pct": 50,
+        "instructions_per_cycle": 1.2,
+        "power_socket0_watts": 45
+      },
+      "configuration_start": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "400",
+            "cpu.max": "400000 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "2147483648"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "12000000",
+          "min_perf_pct": "80",
+          "custom_knob": "7"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "400",
+            "cpu.max": "400000 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "2147483648"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "12000000",
+          "min_perf_pct": "80",
+          "custom_knob": "7"
+        }
+      },
+      "observed_host_start": {
+        "latency_ns": "12000000",
+        "min_perf_pct": "80",
+        "custom_knob": "7"
+      }
+    },
+    {
+      "window": 5,
+      "phase": "stable",
+      "start": 7,
+      "end": 8,
+      "applications": {
+        "cpu_latency": {
+          "metric": "latency_p99_ms",
+          "objective": "minimize",
+          "current": 3,
+          "raw": {
+            "window_start": 7,
+            "window_end": 8
+          },
+          "bound": 8,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/cpu_latency"
+          }
+        },
+        "memory_bandwidth": {
+          "metric": "throughput_mib_s",
+          "objective": "maximize",
+          "current": 118,
+          "raw": {
+            "window_start": 7,
+            "window_end": 8
+          },
+          "bound": 50,
+          "cgroup_window": {
+            "cpu_usage_cores": 1.5,
+            "memory_current_bytes": 536870912
+          },
+          "resource_scope": {
+            "kind": "cgroup",
+            "path": "/sys/fs/cgroup/SYNTHETIC-NOT-CREATED/memory_bandwidth"
+          }
+        }
+      },
+      "shared": {
+        "cpu_load_socket0_pct": 50,
+        "instructions_per_cycle": 1.2,
+        "power_socket0_watts": 45
+      },
+      "configuration_start": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "400",
+            "cpu.max": "400000 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "2147483648"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "12000000",
+          "min_perf_pct": "80",
+          "custom_knob": "7"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "cpu_latency": {
+            "cpu.weight": "400",
+            "cpu.max": "400000 100000"
+          },
+          "memory_bandwidth": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000",
+            "memory.high": "2147483648"
+          }
+        },
+        "host_updates": {
+          "latency_ns": "12000000",
+          "min_perf_pct": "80",
+          "custom_knob": "7"
+        }
+      },
+      "observed_host_start": {
+        "latency_ns": "12000000",
+        "min_perf_pct": "80",
+        "custom_knob": "7"
+      }
+    }
+  ],
+  "initial_configuration": {
+    "application_updates": {
+      "cpu_latency": {
+        "cpu.weight": "100",
+        "cpu.max": "max 100000"
+      },
+      "memory_bandwidth": {
+        "cpu.weight": "100",
+        "cpu.max": "max 100000",
+        "memory.high": "max"
+      }
+    },
+    "host_updates": {
+      "latency_ns": "24000000",
+      "min_perf_pct": "45",
+      "custom_knob": "5"
+    }
+  }
+}

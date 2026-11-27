@@ -1,0 +1,94 @@
+{
+  "report_version": 2,
+  "comparison_status": "protocol_compatible_recorded_data",
+  "data_kind": "synthetic",
+  "all_runs_completed": true,
+  "reference_strategy": "fixed per-pair A median from complete joint stable windows; warmup/baseline/tuning excluded",
+  "formulas": {
+    "minimize": "100 * (A - C) / A",
+    "maximize": "100 * (C - A) / A"
+  },
+  "aggregation": "median of raw window-level metrics; NOT pooled request p99",
+  "repetition_unit": "explicitly paired independent runs, never individual windows",
+  "no_window_index_pairing": true,
+  "pairs": [
+    {
+      "id": "pair-1",
+      "a_source": "/work_dir/TuxBot/results/evaluation-redesign/synthetic-input/A-synthetic.json",
+      "c_source": "/work_dir/TuxBot/results/evaluation-redesign/synthetic-input/C-synthetic.json",
+      "a_sha256": "477fa96ca7ae930509933bd52292729eb917401109353efd4820a71926356d6a",
+      "c_sha256": "cee158aca2ac642b151b6ee7b850de381802d821809451b1fe94a325a8c6a9e8",
+      "a_dedicated_workload_cgroups": false,
+      "workload_equivalence": {
+        "method": "matching recorded workload_conditions",
+        "conditions": {
+          "cpu_latency": {
+            "program": "SYNTHETIC CPU"
+          },
+          "memory_bandwidth": {
+            "program": "SYNTHETIC memory"
+          }
+        }
+      },
+      "a_reference": {
+        "cpu_latency": 4,
+        "memory_bandwidth": 100
+      },
+      "warmup_seconds": {
+        "a": 0,
+        "c": 0
+      },
+      "window_seconds": {
+        "a": 1,
+        "c": 1
+      },
+      "a_selected_stable_windows": [
+        3,
+        4,
+        5
+      ],
+      "c_selected_stable_windows": [
+        3,
+        4,
+        5
+      ],
+      "phase_counts": {
+        "a": {
+          "warmup": 0,
+          "baseline": 3,
+          "tuning": 2,
+          "stable": 3,
+          "measurement": 0
+        },
+        "c": {
+          "warmup": 0,
+          "baseline": 3,
+          "tuning": 2,
+          "stable": 3,
+          "measurement": 0
+        }
+      },
+      "notes": [
+        "Steps use measurement-window-start readbacks, not exact write timestamps; gaps are not filled"
+      ]
+    }
+  ],
+  "generated_figures": [
+    "relative_improvement",
+    "stable_performance",
+    "applied_parameters",
+    "pareto_tradeoffs"
+  ],
+  "skipped_figures": [],
+  "retired_outputs": [
+    "retired/relative_improvement.2.png",
+    "retired/relative_improvement.2.pdf",
+    "retired/stable_performance.2.png",
+    "retired/stable_performance.2.pdf",
+    "retired/applied_parameters.2.png",
+    "retired/applied_parameters.2.pdf",
+    "retired/pareto_tradeoffs.2.png",
+    "retired/pareto_tradeoffs.2.pdf"
+  ],
+  "telemetry_policy": "Optional; host counters are shared, A per-app cgroup data are never plotted; A process data require explicit process-tree scope, C data require child-cgroup mapping. Unavailable A process metrics are not synthesized. IPC may be rounded by the original perf parser."
+}

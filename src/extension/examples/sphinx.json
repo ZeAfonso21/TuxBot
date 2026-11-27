@@ -1,0 +1,13 @@
+{
+  "benchmark": "tailbench",
+  "tailbench_app": "sphinx",
+  "tailbench_root": "deps/Tailbench/tailbench",
+  "tailbench_data_root": "deps/Tailbench/tailbench.inputs",
+  "tailbench_output_dir": "results/planned-workloads/sphinx",
+  "results_dir": "results/planned-workloads/sphinx/collector",
+  "tailbench_qps": 1,
+  "tailbench_threads": 4,
+  "tailbench_warmupreqs": 1,
+  "tailbench_maxreqs": 1000000000,
+  "tailbench_metrics_interval_sec": 1
+}

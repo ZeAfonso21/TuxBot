@@ -1,0 +1,27 @@
+{
+  "perf_start_time": 1795787255.711987,
+  "perf_end_time": 1795787261.711987,
+  "perf_output_file": "/work_dir/TuxBot/results/relationships-01/cpu-cpu-frequency/A/telemetry/window_21_perf_stat.txt",
+  "perf_metrics": {
+    "msec_task_clock": 48049.26,
+    "cpus_utilized": 8.0,
+    "context_switches": 4073.0,
+    "context_switches_per_sec": 84.767,
+    "cpu_migrations": 37.0,
+    "cpu_migrations_per_sec": 0.77,
+    "page_faults": 2.0,
+    "page_faults_per_sec": 0.042,
+    "cycles": 147409278985.0,
+    "ghz": 3.068,
+    "instructions": 44833179440.0,
+    "instructions_per_cycle": 0.3,
+    "branches": 12496454817.0,
+    "branches_per_sec": 260.076,
+    "branch_misses": 141052885.0,
+    "branch_miss_rate_pct": 1.13,
+    "cache_references": 6250458.0,
+    "cache_references_per_sec": 130.084,
+    "cache_misses": 122149.0,
+    "time_elapsed_seconds": 6.006009334
+  }
+}

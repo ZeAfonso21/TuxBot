@@ -1,0 +1,6 @@
+{
+  "workload": "cpu",
+  "threads": 4,
+  "metrics_file": "results/relationships-01/cpu-cpu-frequency/C/prime_20000.intervals.jsonl",
+  "cpu_max_prime": 20000
+}

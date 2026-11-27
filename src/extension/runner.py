@@ -28,6 +28,15 @@ def child_exec(group, command):
     os.execvp(command[0], command)
 
 
+def baseline_membership(apps, processes):
+    """Verify the untuned launch inherited its cgroup without writing membership."""
+    inherited = Path('/proc/self/cgroup').read_text()
+    memberships = {a.id: Path(f'/proc/{p.pid}/cgroup').read_text() for a, p in zip(apps, processes)}
+    if any(value != inherited for value in memberships.values()):
+        raise RuntimeError('A workload did not inherit baseline cgroup membership')
+    return dict(inherited_cgroup=inherited, workload_cgroup_membership=memberships)
+
+
 def run(data):
     from optimizer.config import SimpleConfig
     from .host import resolve_host, limit_host
@@ -35,6 +44,8 @@ def run(data):
     mode = data['mode']
     if mode not in ('default', 'independent', 'coordinated'):
         raise ValueError('Unknown experiment mode')
+    if mode == 'default' and data.get('cgroup_root'):
+        raise ValueError('No-cgroup A requires omitting cgroup_root from its configuration')
     if data.get('defaults_verified') is not True:
         raise ValueError('Operator must verify default kernel/ancestor settings and set defaults_verified=true')
     apps = [Application.load(a) for a in data['applications']]
@@ -54,20 +65,24 @@ def run(data):
         raise ValueError('Future tuning execution requires GEMINI_API_KEY; no workload has been started')
     output = Path(data['results_dir']).resolve()
     output.mkdir(parents=True, exist_ok=False)  # never mix/overwrite experimental runs
-    groups = Cgroups(data['cgroup_root'], [a.id for a in apps])
+    # EXTENSION: A inherits the caller's cgroup; only B/C create workload groups.
+    groups = Cgroups(data['cgroup_root'], [a.id for a in apps]) if mode != 'default' else None
     controllers, processes, logs = [], [], []
     windows, master = None, None
-    result = dict(mode=mode, config=data, completed=False)
+    result = dict(mode=mode, config=data, completed=False,
+                  provenance=dict(dedicated_workload_cgroups=groups is not None, concurrent_workloads=True),
+                  data_kind=data.get('data_kind', 'measured'))
     try:
-        groups.create()
-        result['cgroup_parent_initial_controllers'] = groups.original_subtree
-        save(output / 'cgroup_state.json', dict(root=str(groups.root), initial_controllers=groups.original_subtree))
+        if groups is not None:
+            groups.create()
+            result['cgroup_parent_initial_controllers'] = groups.original_subtree
+            save(output / 'cgroup_state.json', dict(root=str(groups.root), initial_controllers=groups.original_subtree))
         host, report = resolve_host(data.get('approved_host_parameters', []))
         limit_host(host, data.get('host_limits', {}))
         save(output / 'host_compatibility.json', report)
         if mode == 'coordinated' and not host:
             raise RuntimeError('Coordinated experiments require at least one verified writable host control')
-        controls = {a.id: cgroup_controls(groups.paths[a.id], data.get('cgroup_policy', {}).get(a.id, {})) for a in apps}
+        controls = {a.id: cgroup_controls(groups.paths[a.id], data.get('cgroup_policy', {}).get(a.id, {})) for a in apps} if groups is not None else {}
         master = Actuator(controls, host if mode == 'coordinated' else {})
         result['initial_configuration'] = master.initial
         result['initial_host_observations'] = {k: c.read() for k, c in host.items()}
@@ -83,7 +98,7 @@ def run(data):
         for app in apps:
             log = (output / f'{app.id}.log').open('w')
             logs.append(log)
-            command = [sys.executable, '-m', 'extension.runner', '--child', str(groups.paths[app.id]), *app.start]
+            command = [sys.executable, '-m', 'extension.runner', '--child', str(groups.paths[app.id]), *app.start] if groups is not None else app.start
             env = dict(os.environ, TUXBOT_READY_FILE=str(output / f'{app.id}.ready'))
             processes.append(subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT, start_new_session=True, env=env))
         deadline = time.monotonic() + data.get('startup_timeout_seconds', 300)
@@ -91,6 +106,9 @@ def run(data):
             if any(p.poll() is not None for p in processes) or time.monotonic() > deadline:
                 raise RuntimeError('Workload readiness failed or timed out')
             time.sleep(0.1)
+        if groups is None:
+            # EXTENSION: record and verify inherited membership; no cgroup write in A.
+            result.update(baseline_membership(apps, processes))
         time.sleep(warmup)
         baseline = [windows.collect(-i, duration) for i in range(1, 4)]
         for app in apps:
@@ -157,7 +175,7 @@ def run(data):
     finally:
         errors = []
         # Kill all descendants in our freshly created groups (not just original leaders).
-        for group in groups.created:
+        for group in groups.created if groups is not None else []:
             try:
                 kill = group / 'cgroup.kill'
                 if kill.is_file():
@@ -177,10 +195,11 @@ def run(data):
                 errors.append(str(exc))
         for log in logs:
             log.close()
-        try:
-            errors.extend(groups.await_empty())
-        except OSError as exc:
-            errors.append(f'Could not verify empty cgroups: {exc}')
+        if groups is not None:
+            try:
+                errors.extend(groups.await_empty())
+            except OSError as exc:
+                errors.append(f'Could not verify empty cgroups: {exc}')
         result['scoped_actuation_audits'] = {
             str(i): c.param_manager.audit for i, c in enumerate(controllers)
         }
@@ -196,8 +215,9 @@ def run(data):
             result['actuation_audit'] = master.audit
         if windows:
             result['windows'] = windows.rows
-        result['cgroup_parent_initial_controllers'] = groups.original_subtree
-        errors.extend(groups.cleanup())
+        result['cgroup_parent_initial_controllers'] = groups.original_subtree if groups is not None else None
+        if groups is not None:
+            errors.extend(groups.cleanup())
         result['restoration_errors'] = errors
         if errors:
             result['completed'] = False

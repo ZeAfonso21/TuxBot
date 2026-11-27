@@ -1,0 +1,6 @@
+{
+  "workload": "cpu",
+  "threads": 4,
+  "cpu_max_prime": 20000,
+  "metrics_file": "/work_dir/TuxBot/results/planned-workloads/sysbench-cpu-throughput/intervals.jsonl"
+}

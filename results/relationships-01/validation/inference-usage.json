@@ -1,0 +1,64 @@
+{
+  "cpu-cpu-frequency": {
+    "roles": {
+      "Speculator": 30,
+      "Actor": 31
+    },
+    "token_totals": {
+      "input_tokens": 3466107,
+      "output_tokens": 22064,
+      "thinking_tokens": 73616,
+      "cached_content_token_count": 0,
+      "api_total_tokens": 3561787,
+      "billable_output_tokens": 95680,
+      "billable_total_tokens": 3561787,
+      "thinking_tokens_inferred_from_api_total": 0
+    },
+    "errors": []
+  },
+  "cpu-memory-contention": {
+    "roles": {
+      "Speculator": 30,
+      "Actor": 31
+    },
+    "token_totals": {
+      "input_tokens": 3334865,
+      "output_tokens": 19375,
+      "thinking_tokens": 57395,
+      "cached_content_token_count": 0,
+      "api_total_tokens": 3411635,
+      "billable_output_tokens": 76770,
+      "billable_total_tokens": 3411635,
+      "thinking_tokens_inferred_from_api_total": 0
+    },
+    "errors": []
+  },
+  "cpu-memory-partitioned": {
+    "roles": {
+      "Speculator": 30,
+      "Actor": 31
+    },
+    "token_totals": {
+      "input_tokens": 3156130,
+      "output_tokens": 14443,
+      "thinking_tokens": 61281,
+      "cached_content_token_count": 0,
+      "api_total_tokens": 3231854,
+      "billable_output_tokens": 75724,
+      "billable_total_tokens": 3231854,
+      "thinking_tokens_inferred_from_api_total": 0
+    },
+    "errors": []
+  },
+  "all_token_totals": {
+    "input_tokens": 9957102,
+    "output_tokens": 55882,
+    "thinking_tokens": 192292,
+    "cached_content_token_count": 0,
+    "api_total_tokens": 10205276,
+    "billable_output_tokens": 248174,
+    "billable_total_tokens": 10205276,
+    "thinking_tokens_inferred_from_api_total": 0
+  },
+  "billing_note": "Provider usage counts only; monetary spend not independently verified. No pricing assumption is applied."
+}

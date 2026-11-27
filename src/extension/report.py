@@ -1,113 +1,189 @@
-"""Offline CSV summaries and optional plots. Never starts workloads or provider clients."""
+"""Offline A/C evaluation; no workloads, optimizers, APIs or privileged writes."""
 import argparse
 import csv
 import json
+import math
 from pathlib import Path
-from statistics import median
-from .controls import decode
+from .evaluation import DISPLAY, load_pairs, repetition_summary
+
+REPORT_VERSION = 2
+FIGURES = ('relative_improvement', 'stable_performance', 'applied_parameters', 'pareto_tradeoffs', 'resource_telemetry')
+OBSOLETE = ('improvement_per_window', 'improvement_vs_configuration_A', 'cpu_latency', 'memory_bandwidth',
+            'host_telemetry', 'application_resources', 'control_trajectory')
 
 
-def export(files, output, plots=False):
-    output = Path(output)
-    output.mkdir(parents=True, exist_ok=True)
-    trajectories, summary, decisions, evaluations, results, controls = [], [], [], [], [], []
-    for filename in files:
-        result = decode(Path(filename).read_text())
-        results.append(result)
-        mode = result['mode']
-        run_id = str(Path(filename).resolve().parent)
-        for row in result.get('windows', []):
-            for app, values in (row.get('configuration_start') or {}).get('application_updates', {}).items():
-                for parameter, value in values.items():
-                    controls.append(dict(run=run_id, mode=mode, phase=row['phase'], window=row['window'],
-                                         scope='application', application=app, parameter=parameter, value=value))
-            for parameter, value in row.get('observed_host_start', {}).items():
-                controls.append(dict(run=run_id, mode=mode, phase=row['phase'], window=row['window'],
-                                     scope='host', application='', parameter=parameter, value=value))
-            for app, observation in row['applications'].items():
-                trajectories.append(dict(run=run_id, completed=result['completed'], mode=mode, application=app,
-                                         phase=row['phase'], window=row['window'], start=row['start'], end=row['end'],
-                                         metric=observation['metric'], objective=observation.get('objective'), value=observation['current'],
-                                         improvement=observation.get('improvement', ''),
-                                         improvement_pct=(observation['improvement'] - 1) * 100 if 'improvement' in observation else '',
-                                         constraint_violation=observation.get('constraint_violation', ''),
-                                         significant_regression=observation.get('significant_regression', '')))
-        for app in result.get('applications', []):
-            selected = [r for r in trajectories if r['run'] == run_id and r['application'] == app['id'] and r['phase'] == 'stable']
-            if not selected:
+def write_csv(path, rows):
+    with Path(path).open('w', newline='') as stream:
+        if rows:
+            writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+            writer.writeheader()
+            writer.writerows(rows)
+
+
+def retire_figures(output):
+    """Archive only known generated figures; never delete raw results or arbitrary files."""
+    retired = []
+    for name in OBSOLETE + FIGURES:
+        for suffix in ('png', 'pdf'):
+            source = output / f'{name}.{suffix}'
+            if not source.exists():
                 continue
-            value = median(r['value'] for r in selected)
-            baseline = app['baseline']
-            factor = baseline / value if app['objective'] == 'minimize' else value / baseline
-            bound = baseline if app['bound'] == 'default' else app['bound']
-            violated = value > bound if app['objective'] == 'minimize' else value < bound
-            tolerance = result['config'].get('regression_tolerance', 0.05)
-            regressed = value > baseline * (1 + tolerance) if app['objective'] == 'minimize' else value < baseline * (1 - tolerance)
-            summary.append(dict(run=run_id, mode=mode, application=app['id'], completed=result['completed'],
-                                metric=app['metric'], objective=app['objective'], stable_median=value, baseline=baseline, improvement=factor,
-                                bound=bound, constraint_violation=violated, stable_regression=regressed,
-                                measured_windows=len(selected), expected_windows=result['config'].get('stable_windows', 3)))
-        for controller, records in result.get('decisions', {}).items():
-            for record in records:
-                decisions.append(dict(run=run_id, mode=mode, controller=controller, timestamp=record['timestamp'],
-                                      role=record['role'], response_seconds=record.get('response_time'),
-                                      tokens=json.dumps(record.get('token_metrics')), error=record.get('error', ''),
-                                      proposal=json.dumps(record['proposal'])))
-    for run in sorted({r['run'] for r in summary}):
-        rows = [r for r in summary if r['run'] == run]
-        complete = len(rows) == 2 and all(r['completed'] and r['measured_windows'] == r['expected_windows'] for r in rows)
-        observations = [r for r in trajectories if r['run'] == run and r['phase'] != 'baseline']
-        violating_windows = {r['window'] for r in observations if r['constraint_violation']}
-        evaluations.append(dict(run=run, mode=rows[0]['mode'], complete=complete,
-                                experimental_success=complete and not any(r['stable_regression'] for r in rows),
-                                all_user_bounds_satisfied=complete and not any(r['constraint_violation'] for r in rows),
-                                bound_evaluation='stable_window_median',
-                                windows_with_bound_violation=len(violating_windows),
-                                all_windows_bounds_satisfied=complete and not violating_windows))
-    for name, rows in (('trajectories', trajectories), ('stable', summary), ('decisions', decisions), ('evaluation', evaluations), ('controls', controls)):
-        with (output / f'{name}.csv').open('w', newline='') as stream:
-            if rows:
-                writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
-                writer.writeheader()
-                writer.writerows(rows)
-    if plots:
-        import matplotlib.pyplot as plt
-        for app in sorted({r['application'] for r in trajectories}):
-            fig, axes = plt.subplots(1, 3, figsize=(15, 4))
-            selected = [r for r in summary if r['application'] == app]
-            axes[0].bar([f"{r['mode']}\n{Path(r['run']).name}" + (' (incomplete)' if not r['completed'] else '') for r in selected], [r['stable_median'] for r in selected])
-            axes[0].set_title(f'{app}: stable window-metric median')
-            for run in sorted({r['run'] for r in trajectories}):
-                rows = [r for r in trajectories if r['application'] == app and r['run'] == run and r['phase'] != 'baseline']
-                if not rows:
+            destination = output / 'retired' / source.name
+            destination.parent.mkdir(exist_ok=True)
+            index = 1
+            while destination.exists():
+                destination = destination.with_name(f'{source.stem}.{index}.{suffix}')
+                index += 1
+            source.rename(destination)
+            retired.append(str(destination.relative_to(output)))
+    return retired
+
+
+def bounds_rows(pair):
+    rows = []
+    for side in ('a', 'c'):
+        run = pair[side]
+        specs = {a['id']: a for a in run['data'].get('applications', [])}
+        for window in run['windows']:
+            if window['phase'] in ('baseline', 'warmup'):
+                continue
+            for app, specification in run['apps'].items():
+                observation = (window['raw'].get('applications') or {}).get(app) or {}
+                if not isinstance(observation, dict):
                     continue
-                label = f"{rows[0]['mode']} / {Path(run).name}" + (' (incomplete)' if not rows[0]['completed'] else '')
-                axes[1].plot([r['window'] for r in rows], [r['value'] for r in rows], label=label)
-                axes[2].plot([r['window'] for r in rows], [r['improvement'] for r in rows], label=label)
-                violations = [r for r in rows if r['constraint_violation']]
-                axes[1].scatter([r['window'] for r in violations], [r['value'] for r in violations], marker='x')
-            axes[1].set_title('Trajectory (x = bound violation)')
-            axes[2].set_title('Default-relative factor')
-            axes[2].axhline(1, color='gray', linestyle='--')
-            for ax in axes[1:]:
-                ax.set_xlabel('Window')
-                ax.legend(fontsize=7)
-            fig.tight_layout()
-            fig.savefig(output / f'{app}.png')
-            plt.close(fig)
-        from .plots import improvement_plots, telemetry_plots, control_plots
-        improvement_plots(trajectories, summary, output)
-        telemetry_plots(results, output)
-        control_plots(results, output)
+                bound = observation.get('bound')
+                origin = specs.get(app, {}).get('bound')
+                value = window['values'][app]
+                if type(bound) not in (int, float) or not math.isfinite(bound) or value is None:
+                    continue
+                violation = value > bound if specification['objective'] == 'minimize' else value < bound
+                rows.append(dict(pair=pair['id'], configuration=DISPLAY[run['mode']], application=app,
+                                 window=window['window'], phase=window['phase'], metric=specification['metric'],
+                                 objective=specification['objective'], value=value, bound=bound, violation=violation,
+                                 bound_source='own run measured initial baseline; NOT the A evaluation reference' if origin == 'default' else 'explicit or recorded run bound'))
+    return rows
+
+
+def export(files, output, plots=False, *, pairs_manifest=None, allow_legacy_a=False, telemetry=False):
+    """Historical JSON stays readable; no-cgroup A validation is strict unless explicitly waived."""
+    if telemetry and not plots:
+        raise ValueError('--telemetry requires plot generation (--plots)')
+    pairs = load_pairs(files, pairs_manifest, allow_legacy_a)
+    output = Path(output).resolve()
+    if any(output == Path(p[side]['source']).parent for p in pairs for side in ('a', 'c')):
+        raise ValueError('Report output must be separate from raw run directories')
+    output.mkdir(parents=True, exist_ok=True)
+    metadata = dict(report_version=REPORT_VERSION,
+                    comparison_status='historical_nonconforming_A' if any(p['historical'] for p in pairs) else 'protocol_compatible_recorded_data',
+                    data_kind='synthetic' if any(p['synthetic'] for p in pairs) else 'measured',
+                    all_runs_completed=all(p[side]['data'].get('completed') is True for p in pairs for side in ('a', 'c')),
+                    reference_strategy='fixed per-pair A median from complete joint stable windows; warmup/baseline/tuning excluded',
+                    formulas=dict(minimize='100 * (A - C) / A', maximize='100 * (C - A) / A'),
+                    aggregation='median of raw window-level metrics; NOT pooled request p99',
+                    repetition_unit='explicitly paired independent runs, never individual windows',
+                    no_window_index_pairing=True, pairs=[], generated_figures=[], skipped_figures=[],
+                    retired_outputs=retire_figures(output) if plots else [])
+    trajectories, summary, pareto, controls, bounds, inference, raw_metrics = [], [], [], [], [], [], []
+    for pair in pairs:
+        metadata['pairs'].append(dict(id=pair['id'], a_source=pair['a']['source'], c_source=pair['c']['source'],
+                                      a_sha256=pair['a']['sha256'], c_sha256=pair['c']['sha256'],
+                                      a_dedicated_workload_cgroups=pair['a']['dedicated_cgroups'],
+                                      workload_equivalence=pair['conditions'], a_reference=pair['reference'],
+                                      warmup_seconds={side: pair[side]['data'].get('config', {}).get('warmup_seconds') for side in ('a', 'c')},
+                                      window_seconds={side: pair[side]['data'].get('config', {}).get('window_seconds') for side in ('a', 'c')},
+                                      a_selected_stable_windows=pair['a_stable_windows'], c_selected_stable_windows=pair['c_stable_windows'],
+                                      phase_counts={side: {phase: sum(w['phase'] == phase for w in pair[side]['windows']) for phase in ('warmup', 'baseline', 'tuning', 'stable', 'measurement')} for side in ('a', 'c')},
+                                      notes=pair['notes']))
+        for row in pair['curves']:
+            for index, app in enumerate(pair['apps']):
+                trajectories.append(dict(pair=pair['id'], configuration=DISPLAY['coordinated'], window=row['window'],
+                                         phase=row['phase'], start=row['start'], end=row['end'], application=app,
+                                         metric=pair['specs'][app]['metric'], objective=pair['specs'][app]['objective'],
+                                         a_reference=pair['reference'].get(app), current=row['current'][index],
+                                         improvement_pct=row['improvements'][index]))
+        for row in pair['summary']:
+            summary.append(dict(pair=pair['id'], **row, a_stable_windows=len(pair['a_stable_windows']),
+                                c_stable_windows=len(pair['c_stable_windows']), aggregate='median of complete joint stable window metrics'))
+        for index, point in enumerate(pair['pareto']):
+            pareto.append(dict(pair=pair['id'], window=point['window'], phase=point['phase'], start=point['start'], end=point['end'],
+                               x_application=pair['apps'][0], y_application=pair['apps'][1],
+                               x_improvement_pct=point['improvements'][0], y_improvement_pct=point['improvements'][1],
+                               observed_nondominated=index in pair['frontier_indices']))
+        for series in pair['controls']:
+            for point in series['points']:
+                controls.append(dict(pair=pair['id'], configuration=DISPLAY['coordinated'], scope=series['scope'],
+                                     application=series['application'], parameter=series['parameter'],
+                                     initial=series['initial'], modified=series['changed'], **point, source='actual window-start readback'))
+        bounds.extend(bounds_rows(pair))
+        for records in pair['c']['data'].get('decisions', {}).values():
+            for record in records:
+                inference.append(dict(pair=pair['id'], timestamp=record.get('timestamp'), role=record.get('role'),
+                                      response_seconds=record.get('response_time'), token_metrics=json.dumps(record.get('token_metrics')),
+                                      error=record.get('error'), proposed_updates=json.dumps(record.get('proposal'))))
+        for side in ('a', 'c'):
+            for window in pair[side]['windows']:
+                for app, value in window['values'].items():
+                    raw_metrics.append(dict(pair=pair['id'], configuration=DISPLAY[pair[side]['mode']], window=window['window'],
+                                            phase=window['phase'], start=window['start'], end=window['end'], application=app,
+                                            metric=pair['specs'][app]['metric'], value=value))
+    for name, rows in (('relative_improvement', trajectories), ('stable_summary', summary), ('pareto_points', pareto),
+                       ('applied_controls', controls), ('performance_bounds', bounds), ('inference', inference),
+                       ('raw_metrics', raw_metrics), ('paired_summary', repetition_summary(pairs))):
+        write_csv(output / f'{name}.csv', rows)
+    if plots:
+        from .plots import relative_figure, stable_figure, parameter_figure, pareto_figure, telemetry_figure
+        for name, function in zip(FIGURES[:4], (relative_figure, stable_figure, parameter_figure, pareto_figure)):
+            if function(pairs, output):
+                metadata['generated_figures'].append(name)
+            else:
+                metadata['skipped_figures'].append(name + ': required complete stable references or actual control history unavailable; see pair notes')
+        if telemetry:
+            if telemetry_figure(pairs, output):
+                metadata['generated_figures'].append('resource_telemetry')
+            else:
+                metadata['skipped_figures'].append('resource_telemetry: insufficient reliably scoped observations')
+    metadata['telemetry_policy'] = ('Optional; host counters are shared, A per-app cgroup data are never plotted; '
+                                    'A process data require explicit process-tree scope, C data require child-cgroup mapping. '
+                                    'Unavailable A process metrics are not synthesized. IPC may be rounded by the original perf parser.')
+    (output / 'evaluation.json').write_text(json.dumps(metadata, indent=2, allow_nan=False) + '\n')
+    lines = ['# Configuration A vs C evaluation', '', f"Status: **{metadata['comparison_status']}**; data: **{metadata['data_kind']}**.",
+             '', 'Reference: median of complete joint Configuration A stable windows, fixed for every C window of its run pair.',
+             'Latency uses 100 × (A − C) / A; throughput uses 100 × (C − A) / A. These are ordinary reductions/increases, not speedup-factor percentages.',
+             'Warmup, initial baseline and tuning windows are excluded from the A reference; no A/C index pairing occurs.',
+             'Stable summary: compute raw A and C stable medians first, then improvement. Window-level p99 aggregates are not pooled request percentiles.',
+             'Each summary point is one A/C run pair. With multiple pairs the displayed range is descriptive run-pair variability, not a confidence interval.',
+             '', '## Sources and quality notes']
+    for pair in metadata['pairs']:
+        lines.extend(['', f"### {pair['id']}", f"A: `{pair['a_source']}`", f"C: `{pair['c_source']}`",
+                      f"A reference: `{pair['a_reference']}`; selected A windows: {pair['a_selected_stable_windows']}; C windows: {pair['c_selected_stable_windows']}."])
+        lines.append('Workload equivalence: ' + pair['workload_equivalence']['method'] + '.')
+        if 'evidence' in pair['workload_equivalence']:
+            lines.append(pair['workload_equivalence']['evidence'])
+        lines.append(f"Recorded warmup seconds: {pair['warmup_seconds']}; measurement seconds per window: {pair['window_seconds']}.")
+        lines.extend('- ' + note for note in pair['notes'])
+    lines.extend(['', '## Figures', *['- ' + name for name in metadata['generated_figures']],
+                  *['- SKIPPED: ' + note for note in metadata['skipped_figures']], '', 'Bounds are separate in performance_bounds.csv; they never set the A normalization reference.',
+                  metadata['telemetry_policy'], '', 'Historical own-baseline/factor/bound-marker/resource plots are not generated by this report. Known pre-existing figure outputs are archived under retired/ when regenerating.'])
+    (output / 'evaluation.md').write_text('\n'.join(lines) + '\n')
+    return metadata
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('results', nargs='+')
+    parser.add_argument('results', nargs='*')
+    parser.add_argument('--pairs', help='JSON manifest with explicit A/C run pairs and optional audited workload equivalence')
     parser.add_argument('--output', required=True)
     parser.add_argument('--plots', action='store_true')
+    parser.add_argument('--telemetry', action='store_true', help='Opt-in scoped diagnostic figure')
+    parser.add_argument('--allow-legacy-a', action='store_true', help='HISTORICAL DIAGNOSTICS ONLY: allow an A run with dedicated default cgroups/unknown provenance')
     args = parser.parse_args()
-    export(args.results, args.output, args.plots)
+    if args.pairs and args.results:
+        parser.error('Use either result paths or --pairs, not both')
+    try:
+        export(args.results, args.output, args.plots, pairs_manifest=args.pairs,
+               allow_legacy_a=args.allow_legacy_a, telemetry=args.telemetry)
+    except ValueError as exc:
+        parser.error(str(exc))
 
 
 if __name__ == '__main__':

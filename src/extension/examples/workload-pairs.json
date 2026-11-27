@@ -1,0 +1,49 @@
+{
+  "status": "PLANNED ONLY — not executed; relationship classifications remain unmeasured",
+  "budget": {"concurrent_baseline_windows": 3, "tuning_windows": 30, "stable_windows": 20},
+  "execution_note": "This is a study/template manifest, not an experiment runner input. Copy the referenced workload definitions into uniquely identified run directories, calibrate offered loads, and supply actual command/measurement argv. The no-cgroup Configuration A path is not yet implemented by the current runner. Do not run these during plotting work.",
+  "pairs": [
+    {
+      "id": "silo-imgdnn",
+      "applications": [
+        {"id": "silo", "program": "TailBench", "definition": "silo.json", "bridge": "extension.tailbench", "metric": "latency_p99", "objective": "minimize"},
+        {"id": "imgdnn", "program": "TailBench", "definition": "img-dnn.json", "bridge": "extension.tailbench", "metric": "throughput", "objective": "maximize"}
+      ],
+      "relationship": "unmeasured",
+      "hypothesis": "Potentially different compute/cache responses; CPU contention can still couple both apps. A shared control may be aligned while resource redistribution conflicts.",
+      "prerequisites": "Build modified TailBench and provision datasets; calibrate img-dnn offered load so throughput is not just a fixed arrival rate."
+    },
+    {
+      "id": "xapian-sysbench-cpu",
+      "applications": [
+        {"id": "xapian", "program": "TailBench", "definition": "xapian.json", "bridge": "extension.tailbench", "metric": "latency_p99", "objective": "minimize"},
+        {"id": "cpu_throughput", "program": "Sysbench", "definition": "sysbench-cpu-throughput.json", "bridge": "extension.sysbench", "metric": "events_per_second", "objective": "maximize"}
+      ],
+      "relationship": "unmeasured",
+      "hypothesis": "Candidate cache/search-latency versus CPU-throughput interaction. Classify only from measured responses to the same control at a documented contention level.",
+      "prerequisites": "Xapian Chert-compatible index, query terms, build dependencies and sufficient target storage; CPU/thread/load calibration."
+    },
+    {
+      "id": "sphinx-sysbench-cpu",
+      "applications": [
+        {"id": "sphinx", "program": "TailBench", "definition": "sphinx.json", "bridge": "extension.tailbench", "metric": "throughput", "objective": "maximize"},
+        {"id": "cpu_throughput", "program": "Sysbench", "definition": "sysbench-cpu-throughput.json", "bridge": "extension.sysbench", "metric": "events_per_second", "objective": "maximize"}
+      ],
+      "relationship": "unmeasured",
+      "hypothesis": "Potential shared CPU response, or conflicting CPU allocation under saturation. Neither classification is guaranteed by the benchmark names.",
+      "prerequisites": "Sphinx/corpus provisioning and warmup/arrival-rate calibration. Template QPS is a starting value, not an evaluation load."
+    },
+    {
+      "id": "memcached-cpu-network-hypothesis",
+      "applications": [
+        {"id": "memcached", "program": "Memcached + Mutilate", "metric": "latency_p99", "objective": "minimize"},
+        {"id": "cpu_throughput", "program": "Sysbench", "definition": "sysbench-cpu-throughput.json", "metric": "events_per_second", "objective": "maximize"}
+      ],
+      "relationship": "unmeasured",
+      "readiness": "Not integrated into the continuous two-app reader contract yet",
+      "hypothesis": "Network busy polling and idle-state policy might trade off with CPU throughput, but only if real sockets/NIC/driver support exercise busy polling.",
+      "prerequisites": "Separately authorized load-generator host/setup, native client/server measurement alignment, verify actual socket polling behavior. cstate_max remains excluded until a reversible verified mapping is implemented; existing tests do not establish this relationship."
+    }
+  ],
+  "classification_rule": "Aligned/conflicting/weakly coupled describe measured per-control response vectors under fixed load, not predetermined app labels or latency-versus-throughput objective directions. Retain negative outcomes."
+}

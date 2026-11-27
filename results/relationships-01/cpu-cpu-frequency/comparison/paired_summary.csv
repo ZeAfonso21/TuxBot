@@ -1,0 +1,3 @@
+application,n_pairs,median_improvement_pct,minimum_improvement_pct,maximum_improvement_pct,variability,statistical_unit
+prime_10000,1,-0.09886628423829259,-0.09886628423829259,-0.09886628423829259,"observed paired-run range, not a confidence interval",A/C run pair after within-run stable medians
+prime_20000,1,-0.026792506703028504,-0.026792506703028504,-0.026792506703028504,"observed paired-run range, not a confidence interval",A/C run pair after within-run stable medians

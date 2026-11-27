@@ -1,0 +1,16 @@
+{
+  "description": "OFFLINE HISTORICAL DIAGNOSTICS ONLY. The old A used dedicated default-valued cgroups, so it is NOT the newly required no-cgroup A. Requires --allow-legacy-a. No experiments are executed by this manifest.",
+  "pairs": [
+    {
+      "id": "historical-sysbench-pilot",
+      "a": "../../../results/pilot-01/A-default-02/results.json",
+      "c": "../../../results/pilot-01/C-coordinated/results.json",
+      "conditions_verified": true,
+      "conditions_evidence": "Offline review of both runs' cpu.intervals.sysbench.log and memory.intervals.sysbench.log: Sysbench 1.0.20, seed 1, four threads each; CPU prime limit 20000; memory 262144 KiB blocks, local scope, reads, total transfer target 1024000000 MiB. Both producer logs and combined windows show concurrent continuous workloads. See progress/002-sysbench-pilot.md. These are reviewed native logs, not embedded workload fingerprints.",
+      "workload_conditions": {
+        "cpu_latency": {"program": "sysbench", "version": "1.0.20", "workload": "cpu", "threads": 4, "cpu_max_prime": 20000, "seed": 1, "report_interval_seconds": 1},
+        "memory_bandwidth": {"program": "sysbench", "version": "1.0.20", "workload": "memory", "threads": 4, "block_size_kib": 262144, "scope": "local", "operation": "read", "total_transfer_mib": 1024000000, "seed": 1, "report_interval_seconds": 1}
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "perf_start_time": 1795786752.6846828,
+  "perf_end_time": 1795786758.6846828,
+  "perf_output_file": "/work_dir/TuxBot/results/relationships-01/cpu-memory-contention/screen/telemetry/window_2_perf_stat.txt",
+  "perf_metrics": {
+    "msec_task_clock": 48048.76,
+    "cpus_utilized": 8.0,
+    "context_switches": 13608.0,
+    "context_switches_per_sec": 283.212,
+    "cpu_migrations": 97.0,
+    "cpu_migrations_per_sec": 2.019,
+    "page_faults": 0.0,
+    "page_faults_per_sec": 0.0,
+    "cycles": 146528137936.0,
+    "ghz": 3.05,
+    "instructions": 46754382815.0,
+    "instructions_per_cycle": 0.32,
+    "branches": 8688612515.0,
+    "branches_per_sec": 180.829,
+    "branch_misses": 66079958.0,
+    "branch_miss_rate_pct": 0.76,
+    "cache_references": 1419178368.0,
+    "cache_references_per_sec": 29.536,
+    "cache_misses": 600213106.0,
+    "time_elapsed_seconds": 6.005956752
+  }
+}

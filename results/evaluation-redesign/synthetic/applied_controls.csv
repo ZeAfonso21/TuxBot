@@ -1,0 +1,41 @@
+pair,configuration,scope,application,parameter,initial,modified,window,phase,value,source
+pair-1,Configuration C — Coordinated,application,cpu_latency,cpu.max,max 100000,True,1,tuning,max 100000,actual window-start readback
+pair-1,Configuration C — Coordinated,application,cpu_latency,cpu.max,max 100000,True,2,tuning,400000 100000,actual window-start readback
+pair-1,Configuration C — Coordinated,application,cpu_latency,cpu.max,max 100000,True,3,stable,400000 100000,actual window-start readback
+pair-1,Configuration C — Coordinated,application,cpu_latency,cpu.max,max 100000,True,4,stable,400000 100000,actual window-start readback
+pair-1,Configuration C — Coordinated,application,cpu_latency,cpu.max,max 100000,True,5,stable,400000 100000,actual window-start readback
+pair-1,Configuration C — Coordinated,application,cpu_latency,cpu.weight,100,True,1,tuning,100,actual window-start readback
+pair-1,Configuration C — Coordinated,application,cpu_latency,cpu.weight,100,True,2,tuning,400,actual window-start readback
+pair-1,Configuration C — Coordinated,application,cpu_latency,cpu.weight,100,True,3,stable,400,actual window-start readback
+pair-1,Configuration C — Coordinated,application,cpu_latency,cpu.weight,100,True,4,stable,400,actual window-start readback
+pair-1,Configuration C — Coordinated,application,cpu_latency,cpu.weight,100,True,5,stable,400,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,cpu.max,max 100000,False,1,tuning,max 100000,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,cpu.max,max 100000,False,2,tuning,max 100000,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,cpu.max,max 100000,False,3,stable,max 100000,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,cpu.max,max 100000,False,4,stable,max 100000,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,cpu.max,max 100000,False,5,stable,max 100000,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,cpu.weight,100,False,1,tuning,100,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,cpu.weight,100,False,2,tuning,100,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,cpu.weight,100,False,3,stable,100,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,cpu.weight,100,False,4,stable,100,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,cpu.weight,100,False,5,stable,100,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,memory.high,max,True,1,tuning,max,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,memory.high,max,True,2,tuning,2147483648,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,memory.high,max,True,3,stable,2147483648,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,memory.high,max,True,4,stable,2147483648,actual window-start readback
+pair-1,Configuration C — Coordinated,application,memory_bandwidth,memory.high,max,True,5,stable,2147483648,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,custom_knob,5,True,1,tuning,5,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,custom_knob,5,True,2,tuning,7,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,custom_knob,5,True,3,stable,7,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,custom_knob,5,True,4,stable,7,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,custom_knob,5,True,5,stable,7,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,latency_ns,24000000,True,1,tuning,24000000,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,latency_ns,24000000,True,2,tuning,12000000,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,latency_ns,24000000,True,3,stable,12000000,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,latency_ns,24000000,True,4,stable,12000000,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,latency_ns,24000000,True,5,stable,12000000,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,min_perf_pct,45,True,1,tuning,45,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,min_perf_pct,45,True,2,tuning,80,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,min_perf_pct,45,True,3,stable,80,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,min_perf_pct,45,True,4,stable,80,actual window-start readback
+pair-1,Configuration C — Coordinated,host,,min_perf_pct,45,True,5,stable,80,actual window-start readback

@@ -87,15 +87,20 @@ class RunnerTests(unittest.TestCase):
                 stack.enter_context(patch('extension.telemetry.Windows', FakeWindows))
                 stack.enter_context(patch('extension.runner.subprocess.Popen', return_value=process))
                 stack.enter_context(patch('extension.runner.os.killpg'))
+                stack.enter_context(patch('extension.runner.baseline_membership', return_value=dict(inherited_cgroup='0::/\n', workload_cgroup_membership={'A': '0::/\n', 'B': '0::/\n'})))
                 stack.enter_context(patch('optimizer.tuners.llm.genai.Client'))
                 stack.enter_context(patch.dict('os.environ', {'GEMINI_API_KEY': 'mock-not-a-real-key'}))
                 stack.enter_context(patch.object(ScopedTuner, '_call_llm_with_retries', transport))
                 for mode in ('default', 'independent', 'coordinated'):
                     output = root / mode
-                    data = dict(mode=mode, defaults_verified=True, cgroup_root=str(root / (mode + '-cgroups')),
+                    data = dict(mode=mode, defaults_verified=True, data_kind='synthetic',
+                                workload_conditions={'A': {'program': 'SYNTHETIC latency'}, 'B': {'program': 'SYNTHETIC throughput'}},
+                                cgroup_root=str(root / (mode + '-cgroups')),
                                 results_dir=str(output), warmup_seconds=0, window_seconds=1, tuning_windows=2, stable_windows=3,
                                 applications=[dict(id='A', metric='latency', objective='minimize', start=['fake'], measure=['fake']),
                                               dict(id='B', metric='throughput', objective='maximize', start=['fake'], measure=['fake'])])
+                    if mode == 'default':
+                        del data['cgroup_root']
                     run(data)
                     filename = output / 'results.json'
                     result_files.append(filename)
@@ -104,20 +109,25 @@ class RunnerTests(unittest.TestCase):
                     self.assertEqual(result['restoration_errors'], [])
                     self.assertEqual(len(result['windows']), 8)
                     self.assertEqual(result['initial_configuration'], result['effective_after_restore'])
+                    self.assertEqual(result['provenance']['dedicated_workload_cgroups'], mode != 'default')
+                    if mode == 'default':
+                        self.assertFalse((root / 'default-cgroups').exists())
+                        self.assertEqual(result['initial_configuration']['application_updates'], {})
                     self.assertEqual([a['baseline'] for a in result['applications']], [4, 100])
                     self.assertEqual(host.read_text().strip(), '0')
                     if mode != 'default':
                         self.assertTrue(all(r['history_file'] for r in result['controllers']))
-            export(result_files, root / 'report', plots=True)
-            with (root / 'report' / 'evaluation.csv').open() as stream:
-                evaluations = list(csv.DictReader(stream))
-            self.assertEqual(len(evaluations), 3)
-            self.assertTrue(all(r['experimental_success'] == 'True' for r in evaluations))
-            self.assertTrue((root / 'report' / 'A.png').is_file())
-            self.assertTrue((root / 'report' / 'B.png').is_file())
-            for name in ('improvement_per_window', 'improvement_vs_configuration_A', 'host_telemetry', 'application_resources'):
+            metadata = export([result_files[0], result_files[2]], root / 'report', plots=True)
+            self.assertEqual(metadata['data_kind'], 'synthetic')
+            with (root / 'report' / 'paired_summary.csv').open() as stream:
+                summaries = list(csv.DictReader(stream))
+            self.assertEqual(len(summaries), 2)
+            self.assertTrue(all(r['n_pairs'] == '1' for r in summaries))
+            for name in ('relative_improvement', 'stable_performance', 'pareto_tradeoffs'):
                 self.assertTrue((root / 'report' / (name + '.png')).is_file())
                 self.assertTrue((root / 'report' / (name + '.pdf')).is_file())
+            self.assertFalse((root / 'report' / 'applied_parameters.png').exists())  # fake collector recorded no readbacks
+            self.assertFalse((root / 'report' / 'resource_telemetry.png').exists())  # opt-in only
 
 
 if __name__ == '__main__':

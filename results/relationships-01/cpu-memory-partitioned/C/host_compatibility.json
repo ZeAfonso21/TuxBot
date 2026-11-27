@@ -1,0 +1,88 @@
+{
+  "min_granularity_ns": {
+    "scope": "host",
+    "candidates": [
+      "/sys/kernel/debug/sched/min_granularity_ns",
+      "/proc/sys/kernel/sched_min_granularity_ns"
+    ],
+    "approved": true,
+    "available": true,
+    "path": "/sys/kernel/debug/sched/min_granularity_ns",
+    "initial": 3000000,
+    "writable": true
+  },
+  "latency_ns": {
+    "scope": "host",
+    "candidates": [
+      "/sys/kernel/debug/sched/latency_ns",
+      "/proc/sys/kernel/sched_latency_ns"
+    ],
+    "approved": true,
+    "available": true,
+    "path": "/sys/kernel/debug/sched/latency_ns",
+    "initial": 24000000,
+    "writable": true
+  },
+  "wakeup_granularity_ns": {
+    "scope": "host",
+    "candidates": [
+      "/sys/kernel/debug/sched/wakeup_granularity_ns",
+      "/proc/sys/kernel/sched_wakeup_granularity_ns"
+    ],
+    "approved": true,
+    "available": true,
+    "path": "/sys/kernel/debug/sched/wakeup_granularity_ns",
+    "initial": 4000000,
+    "writable": true
+  },
+  "migration_cost_ns": {
+    "scope": "host",
+    "candidates": [
+      "/sys/kernel/debug/sched/migration_cost_ns",
+      "/proc/sys/kernel/sched_migration_cost_ns"
+    ],
+    "approved": true,
+    "available": true,
+    "path": "/sys/kernel/debug/sched/migration_cost_ns",
+    "initial": 500000,
+    "writable": true
+  },
+  "napi_busy_poll": {
+    "scope": "host",
+    "candidates": [
+      "/proc/sys/net/core/busy_poll"
+    ],
+    "approved": false,
+    "available": true,
+    "path": "/proc/sys/net/core/busy_poll",
+    "initial": 0,
+    "writable": true
+  },
+  "min_perf_pct": {
+    "scope": "host",
+    "candidates": [
+      "/sys/devices/system/cpu/intel_pstate/min_perf_pct"
+    ],
+    "approved": true,
+    "available": true,
+    "path": "/sys/devices/system/cpu/intel_pstate/min_perf_pct",
+    "initial": 45,
+    "writable": true
+  },
+  "max_perf_pct": {
+    "scope": "host",
+    "candidates": [
+      "/sys/devices/system/cpu/intel_pstate/max_perf_pct"
+    ],
+    "approved": true,
+    "available": true,
+    "path": "/sys/devices/system/cpu/intel_pstate/max_perf_pct",
+    "initial": 100,
+    "writable": true
+  },
+  "cstate_max": {
+    "scope": "per-CPU idle-state masks",
+    "available": false,
+    "reason": "No scalar reversible interface; legacy name-based masks are not semantic verification. Excluded."
+  }
+}

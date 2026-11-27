@@ -31,8 +31,9 @@ def execute(filename, expected_host):
     initial_host = {k: c.read() for k, c in host.items()}
     if initial_host != {k: str(v) for k, v in expected.items()}:
         raise ValueError(f'Host is not in the expected initial state: {initial_host}')
-    root = Path(data['cgroup_root'])
-    if root.parent != Path('/sys/fs/cgroup') or root.exists():
+    # EXTENSION: default A must not create groups or alter controller delegation.
+    root = Path(data['cgroup_root']) if data['mode'] != 'default' else None
+    if root is not None and (root.parent != Path('/sys/fs/cgroup') or root.exists()):
         raise ValueError('Pilot requires a fresh direct child of /sys/fs/cgroup')
     parent = Path('/sys/fs/cgroup/cgroup.subtree_control')
     before = parent.read_text().split()
@@ -43,13 +44,14 @@ def execute(filename, expected_host):
     save(evidence, report)
     created = False
     try:
-        if 'cpu' not in before:
-            parent.write_text('+cpu')
-        root.mkdir()
-        created = True
-        for name, value in (('cpu.max', 'max 100000'), ('cpu.weight', '100'), ('memory.high', 'max'), ('memory.max', 'max')):
-            if (root / name).read_text().strip() != value:
-                raise ValueError(f'New experiment parent has non-default {name}')
+        if root is not None:
+            if 'cpu' not in before:
+                parent.write_text('+cpu')
+            root.mkdir()
+            created = True
+            for name, value in (('cpu.max', 'max 100000'), ('cpu.weight', '100'), ('memory.high', 'max'), ('memory.max', 'max')):
+                if (root / name).read_text().strip() != value:
+                    raise ValueError(f'New experiment parent has non-default {name}')
         if data.get('defaults_verified') is not True:
             raise ValueError('Review initial-state requirements before setting defaults_verified')
         env = dict(os.environ, OS_PARAM_TUNING_ROOT=str(Path(__file__).resolve().parents[2]), LC_ALL='C')
@@ -70,7 +72,7 @@ def execute(filename, expected_host):
             except OSError as exc:
                 report['errors'].append(f'Experiment root removal: {exc}')
         try:
-            if 'cpu' not in before and 'cpu' in parent.read_text().split():
+            if root is not None and 'cpu' not in before and 'cpu' in parent.read_text().split():
                 parent.write_text('-cpu')
             report['parent_controllers_after'] = parent.read_text().split()
             if set(report['parent_controllers_after']) != set(before):

@@ -1,0 +1,4071 @@
+{
+  "case": "cpu-cpu-frequency",
+  "config": {
+    "mode": "coordinated",
+    "defaults_verified": true,
+    "cgroup_root": "/sys/fs/cgroup/tuxbot-rel01-cpu-cpu-frequency-screen",
+    "results_dir": "results/relationships-01/cpu-cpu-frequency/screen",
+    "warmup_seconds": 10,
+    "window_seconds": 8,
+    "tuning_windows": 30,
+    "stable_windows": 20,
+    "require_perf_metrics": true,
+    "regression_tolerance": 0.05,
+    "regression_windows": 3,
+    "approved_host_parameters": [
+      "min_granularity_ns",
+      "latency_ns",
+      "wakeup_granularity_ns",
+      "migration_cost_ns",
+      "min_perf_pct",
+      "max_perf_pct"
+    ],
+    "expected_initial_host": {
+      "min_granularity_ns": 3000000,
+      "latency_ns": 24000000,
+      "wakeup_granularity_ns": 4000000,
+      "migration_cost_ns": 500000,
+      "min_perf_pct": 45,
+      "max_perf_pct": 100
+    },
+    "host_limits": {
+      "min_granularity_ns": [
+        500000,
+        6000000
+      ],
+      "latency_ns": [
+        6000000,
+        48000000
+      ],
+      "wakeup_granularity_ns": [
+        0,
+        8000000
+      ],
+      "migration_cost_ns": [
+        0,
+        2000000
+      ],
+      "min_perf_pct": [
+        45,
+        100
+      ],
+      "max_perf_pct": [
+        80,
+        100
+      ]
+    },
+    "actor_model": "gemini-3.5-flash",
+    "instant_model": "gemini-3.5-flash-lite",
+    "llm_timeout_seconds": 90,
+    "applications": [
+      {
+        "id": "prime_10000",
+        "metric": "events_per_second",
+        "objective": "maximize",
+        "bound": "default",
+        "priority": 1,
+        "ready_signal": true,
+        "start": [
+          "/work_dir/tuxbot-venv/bin/python",
+          "-m",
+          "extension.sysbench",
+          "serve",
+          "results/relationships-01/configs/cpu-cpu-frequency-screen-prime_10000.json"
+        ],
+        "measure": [
+          "/work_dir/tuxbot-venv/bin/python",
+          "-m",
+          "extension.sysbench",
+          "measure",
+          "results/relationships-01/configs/cpu-cpu-frequency-screen-prime_10000.json"
+        ]
+      },
+      {
+        "id": "prime_20000",
+        "metric": "events_per_second",
+        "objective": "maximize",
+        "bound": "default",
+        "priority": 1,
+        "ready_signal": true,
+        "start": [
+          "/work_dir/tuxbot-venv/bin/python",
+          "-m",
+          "extension.sysbench",
+          "serve",
+          "results/relationships-01/configs/cpu-cpu-frequency-screen-prime_20000.json"
+        ],
+        "measure": [
+          "/work_dir/tuxbot-venv/bin/python",
+          "-m",
+          "extension.sysbench",
+          "measure",
+          "results/relationships-01/configs/cpu-cpu-frequency-screen-prime_20000.json"
+        ]
+      }
+    ],
+    "workload_conditions": {
+      "prime_10000": {
+        "program": "sysbench",
+        "version": "sysbench 1.0.20",
+        "workload": "cpu",
+        "threads": 4,
+        "rand_seed": 1,
+        "report_interval_seconds": 1,
+        "cpu_affinity": null,
+        "cpu_max_prime": 10000
+      },
+      "prime_20000": {
+        "program": "sysbench",
+        "version": "sysbench 1.0.20",
+        "workload": "cpu",
+        "threads": 4,
+        "rand_seed": 1,
+        "report_interval_seconds": 1,
+        "cpu_affinity": null,
+        "cpu_max_prime": 20000
+      }
+    }
+  },
+  "intervention": {
+    "host_updates": {
+      "max_perf_pct": 80
+    }
+  },
+  "initial_host": {
+    "min_granularity_ns": "3000000",
+    "latency_ns": "24000000",
+    "wakeup_granularity_ns": "4000000",
+    "migration_cost_ns": "500000",
+    "min_perf_pct": "45",
+    "max_perf_pct": "100"
+  },
+  "completed": true,
+  "classification_note": "Control- and load-specific descriptive screen, not an intrinsic app label or statistical significance claim",
+  "actuation_audit": [
+    {
+      "proposal": {
+        "host_updates": {
+          "max_perf_pct": 80
+        }
+      },
+      "effective": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      }
+    },
+    {
+      "proposal": {
+        "host_updates": {
+          "max_perf_pct": 80
+        }
+      },
+      "effective": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      }
+    }
+  ],
+  "windows": [
+    {
+      "window": 1,
+      "phase": "0-before",
+      "start": 1795786558.8289754,
+      "end": 1795786566.8409472,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2820.7157142857145,
+          "raw": {
+            "window_start": 1795786558.8289754,
+            "window_end": 1795786566.8409472,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.44,
+            "events_per_second": 2820.7157142857145,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 56460976\nuser_usec 56454978\nsystem_usec 5998\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=17798\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=17175",
+            "memory.current": "10383360",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 88450052\nuser_usec 88442054\nsystem_usec 7997\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=35349\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=34725",
+            "memory.current": "10354688",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.992659628545518,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10354688,
+            "cpu_pressure_some_seconds": 0.017551,
+            "cpu_pressure_full_seconds": 0.01755,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 1093.4285714285713,
+          "raw": {
+            "window_start": 1795786558.8289754,
+            "window_end": 1795786566.8409472,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 3.75,
+            "events_per_second": 1093.4285714285713,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 56497069\nuser_usec 56487071\nsystem_usec 9998\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=8542\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=8541",
+            "memory.current": "10379264",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 88440710\nuser_usec 88430712\nsystem_usec 9998\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=37637\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=37635",
+            "memory.current": "10354688",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9869887398264137,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10354688,
+            "cpu_pressure_some_seconds": 0.029095,
+            "cpu_pressure_full_seconds": 0.029094,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786558.8289754,
+          "window_end_time": 1795786566.8409472,
+          "perf_start_time": 1795786559.8306756,
+          "perf_end_time": 1795786565.8306756,
+          "system_metrics_start_time": 1795786559.8329487,
+          "system_metrics_end_time": 1795786565.8318822,
+          "power_socket0_watts": 32.583667500000004,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48045.56,
+            "cpus_utilized": 8.0,
+            "context_switches": 3850.0,
+            "context_switches_per_sec": 80.132,
+            "cpu_migrations": 33.0,
+            "cpu_migrations_per_sec": 0.687,
+            "page_faults": 4.0,
+            "page_faults_per_sec": 0.083,
+            "cycles": 147383343526.0,
+            "ghz": 3.068,
+            "instructions": 44877822396.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12508404875.0,
+            "branches_per_sec": 260.345,
+            "branch_misses": 138495709.0,
+            "branch_miss_rate_pct": 1.11,
+            "cache_references": 5895238.0,
+            "cache_references_per_sec": 122.701,
+            "cache_misses": 118971.0,
+            "time_elapsed_seconds": 6.005536084
+          }
+        },
+        "msec_task_clock": 48045.56,
+        "cpus_utilized": 8.0,
+        "context_switches": 3850.0,
+        "context_switches_per_sec": 80.132,
+        "cpu_migrations": 33.0,
+        "cpu_migrations_per_sec": 0.687,
+        "page_faults": 4.0,
+        "page_faults_per_sec": 0.083,
+        "cycles": 147383343526.0,
+        "ghz": 3.068,
+        "instructions": 44877822396.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12508404875.0,
+        "branches_per_sec": 260.345,
+        "branch_misses": 138495709.0,
+        "branch_miss_rate_pct": 1.11,
+        "cache_references": 5895238.0,
+        "cache_references_per_sec": 122.701,
+        "cache_misses": 118971.0,
+        "time_elapsed_seconds": 6.005536084,
+        "power_socket0_watts": 32.583667500000004,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": 2,
+      "phase": "0-before",
+      "start": 1795786566.9532788,
+      "end": 1795786574.9659472,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2821.43,
+          "raw": {
+            "window_start": 1795786566.9532788,
+            "window_end": 1795786574.9659472,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.44,
+            "events_per_second": 2821.43,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 88792886\nuser_usec 88784888\nsystem_usec 7997\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=59617\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=56024",
+            "memory.current": "10354688",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 120791562\nuser_usec 120782565\nsystem_usec 8997\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.09 avg60=0.02 avg300=0.00 total=75961\nfull avg10=0.09 avg60=0.02 avg300=0.00 total=72367",
+            "memory.current": "10354688",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9935105906804855,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10354688,
+            "cpu_pressure_some_seconds": 0.016344,
+            "cpu_pressure_full_seconds": 0.016343,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 1093.4285714285713,
+          "raw": {
+            "window_start": 1795786566.9532788,
+            "window_end": 1795786574.9659472,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 3.68,
+            "events_per_second": 1093.4285714285713,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 88833163\nuser_usec 88823165\nsystem_usec 9998\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=44718\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=44717",
+            "memory.current": "10354688",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 120783444\nuser_usec 120772447\nsystem_usec 10996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=73262\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=73260",
+            "memory.current": "10354688",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9874707800009443,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10354688,
+            "cpu_pressure_some_seconds": 0.028544,
+            "cpu_pressure_full_seconds": 0.028543,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786566.9532788,
+          "window_end_time": 1795786574.9659472,
+          "perf_start_time": 1795786567.9548829,
+          "perf_end_time": 1795786573.9548829,
+          "system_metrics_start_time": 1795786567.9579537,
+          "system_metrics_end_time": 1795786573.9559953,
+          "power_socket0_watts": 32.56016266666667,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48044.33,
+            "cpus_utilized": 8.0,
+            "context_switches": 4030.0,
+            "context_switches_per_sec": 83.881,
+            "cpu_migrations": 33.0,
+            "cpu_migrations_per_sec": 0.687,
+            "page_faults": 4.0,
+            "page_faults_per_sec": 0.083,
+            "cycles": 147378716202.0,
+            "ghz": 3.068,
+            "instructions": 44873568289.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12506989121.0,
+            "branches_per_sec": 260.322,
+            "branch_misses": 137735375.0,
+            "branch_miss_rate_pct": 1.1,
+            "cache_references": 5972940.0,
+            "cache_references_per_sec": 124.321,
+            "cache_misses": 95802.0,
+            "time_elapsed_seconds": 6.005381431
+          }
+        },
+        "msec_task_clock": 48044.33,
+        "cpus_utilized": 8.0,
+        "context_switches": 4030.0,
+        "context_switches_per_sec": 83.881,
+        "cpu_migrations": 33.0,
+        "cpu_migrations_per_sec": 0.687,
+        "page_faults": 4.0,
+        "page_faults_per_sec": 0.083,
+        "cycles": 147378716202.0,
+        "ghz": 3.068,
+        "instructions": 44873568289.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12506989121.0,
+        "branches_per_sec": 260.322,
+        "branch_misses": 137735375.0,
+        "branch_miss_rate_pct": 1.1,
+        "cache_references": 5972940.0,
+        "cache_references_per_sec": 124.321,
+        "cache_misses": 95802.0,
+        "time_elapsed_seconds": 6.005381431,
+        "power_socket0_watts": 32.56016266666667,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": 3,
+      "phase": "0-before",
+      "start": 1795786575.0823774,
+      "end": 1795786583.0959473,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2822.5714285714284,
+          "raw": {
+            "window_start": 1795786575.0823774,
+            "window_end": 1795786583.0959473,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.44,
+            "events_per_second": 2822.5714285714284,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 121175825\nuser_usec 121166828\nsystem_usec 8997\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.09 avg60=0.02 avg300=0.00 total=95699\nfull avg10=0.09 avg60=0.02 avg300=0.00 total=92105",
+            "memory.current": "10354688",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 153204442\nuser_usec 153195444\nsystem_usec 8997\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.14 avg60=0.05 avg300=0.01 total=105714\nfull avg10=0.14 avg60=0.05 avg300=0.01 total=101324",
+            "memory.current": "10354688",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9967976410100543,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10354688,
+            "cpu_pressure_some_seconds": 0.010015,
+            "cpu_pressure_full_seconds": 0.009219,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 1092.5842857142857,
+          "raw": {
+            "window_start": 1795786575.0823774,
+            "window_end": 1795786583.0959473,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 3.68,
+            "events_per_second": 1092.5842857142857,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 121166928\nuser_usec 121155931\nsystem_usec 10996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=92887\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=78207",
+            "memory.current": "10354688",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 153086888\nuser_usec 153075891\nsystem_usec 10996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.09 avg60=0.02 avg300=0.00 total=129818\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=113390",
+            "memory.current": "10354688",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.983238515391885,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10354688,
+            "cpu_pressure_some_seconds": 0.036931,
+            "cpu_pressure_full_seconds": 0.035183,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786575.0823774,
+          "window_end_time": 1795786583.0959473,
+          "perf_start_time": 1795786576.0840244,
+          "perf_end_time": 1795786582.0840244,
+          "system_metrics_start_time": 1795786576.0869536,
+          "system_metrics_end_time": 1795786582.0849981,
+          "power_socket0_watts": 32.6079125,
+          "power_ram_watts": null,
+          "cstate_poll_pct": 0.0,
+          "cstate_c1_pct": 0.0,
+          "cstate_c1e_pct": 5.648484848484848,
+          "cstate_c6_pct": 94.35151515151516,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48044.74,
+            "cpus_utilized": 8.0,
+            "context_switches": 3742.0,
+            "context_switches_per_sec": 77.886,
+            "cpu_migrations": 35.0,
+            "cpu_migrations_per_sec": 0.728,
+            "page_faults": 4.0,
+            "page_faults_per_sec": 0.083,
+            "cycles": 147366361153.0,
+            "ghz": 3.067,
+            "instructions": 44858480676.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12503449116.0,
+            "branches_per_sec": 260.246,
+            "branch_misses": 139265134.0,
+            "branch_miss_rate_pct": 1.11,
+            "cache_references": 5941821.0,
+            "cache_references_per_sec": 123.673,
+            "cache_misses": 103099.0,
+            "time_elapsed_seconds": 6.005433314
+          }
+        },
+        "msec_task_clock": 48044.74,
+        "cpus_utilized": 8.0,
+        "context_switches": 3742.0,
+        "context_switches_per_sec": 77.886,
+        "cpu_migrations": 35.0,
+        "cpu_migrations_per_sec": 0.728,
+        "page_faults": 4.0,
+        "page_faults_per_sec": 0.083,
+        "cycles": 147366361153.0,
+        "ghz": 3.067,
+        "instructions": 44858480676.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12503449116.0,
+        "branches_per_sec": 260.246,
+        "branch_misses": 139265134.0,
+        "branch_miss_rate_pct": 1.11,
+        "cache_references": 5941821.0,
+        "cache_references_per_sec": 123.673,
+        "cache_misses": 103099.0,
+        "time_elapsed_seconds": 6.005433314,
+        "power_socket0_watts": 32.6079125,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": 4,
+      "phase": "0-intervention",
+      "start": 1795786586.2159803,
+      "end": 1795786594.2269485,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2545.43,
+          "raw": {
+            "window_start": 1795786586.2159803,
+            "window_end": 1795786594.2269485,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.58,
+            "events_per_second": 2545.43,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 165603808\nuser_usec 165594811\nsystem_usec 8997\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.29 avg60=0.08 avg300=0.01 total=127024\nfull avg10=0.11 avg60=0.05 avg300=0.01 total=109209",
+            "memory.current": "10358784",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 197606697\nuser_usec 197595700\nsystem_usec 10996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.13 avg60=0.07 avg300=0.01 total=140238\nfull avg10=0.05 avg60=0.04 avg300=0.00 total=122421",
+            "memory.current": "10358784",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9948840349647843,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10358784,
+            "cpu_pressure_some_seconds": 0.013214,
+            "cpu_pressure_full_seconds": 0.013212,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 985.4271428571428,
+          "raw": {
+            "window_start": 1795786586.2159803,
+            "window_end": 1795786594.2269485,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 4.1,
+            "events_per_second": 985.4271428571428,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 165442834\nuser_usec 165431838\nsystem_usec 10996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.26 avg60=0.06 avg300=0.01 total=161876\nfull avg10=0.18 avg60=0.03 avg300=0.00 total=141377",
+            "memory.current": "10485760",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 197346328\nuser_usec 197334332\nsystem_usec 11995\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.11 avg60=0.05 avg300=0.01 total=200143\nfull avg10=0.08 avg60=0.02 avg300=0.00 total=178546",
+            "memory.current": "10358784",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.982476670784153,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10358784,
+            "cpu_pressure_some_seconds": 0.038267,
+            "cpu_pressure_full_seconds": 0.037169,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786586.2159803,
+          "window_end_time": 1795786594.2269485,
+          "perf_start_time": 1795786587.217857,
+          "perf_end_time": 1795786593.217857,
+          "system_metrics_start_time": 1795786587.21895,
+          "system_metrics_end_time": 1795786593.2183776,
+          "power_socket0_watts": 28.953351833333333,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48045.93,
+            "cpus_utilized": 8.0,
+            "context_switches": 4347.0,
+            "context_switches_per_sec": 90.476,
+            "cpu_migrations": 43.0,
+            "cpu_migrations_per_sec": 0.895,
+            "page_faults": 1.0,
+            "page_faults_per_sec": 0.021,
+            "cycles": 132973946848.0,
+            "ghz": 2.768,
+            "instructions": 40500604717.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 11284425966.0,
+            "branches_per_sec": 234.867,
+            "branch_misses": 125446231.0,
+            "branch_miss_rate_pct": 1.11,
+            "cache_references": 6068870.0,
+            "cache_references_per_sec": 126.314,
+            "cache_misses": 119886.0,
+            "time_elapsed_seconds": 6.005565378
+          }
+        },
+        "msec_task_clock": 48045.93,
+        "cpus_utilized": 8.0,
+        "context_switches": 4347.0,
+        "context_switches_per_sec": 90.476,
+        "cpu_migrations": 43.0,
+        "cpu_migrations_per_sec": 0.895,
+        "page_faults": 1.0,
+        "page_faults_per_sec": 0.021,
+        "cycles": 132973946848.0,
+        "ghz": 2.768,
+        "instructions": 40500604717.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 11284425966.0,
+        "branches_per_sec": 234.867,
+        "branch_misses": 125446231.0,
+        "branch_miss_rate_pct": 1.11,
+        "cache_references": 6068870.0,
+        "cache_references_per_sec": 126.314,
+        "cache_misses": 119886.0,
+        "time_elapsed_seconds": 6.005565378,
+        "power_socket0_watts": 28.953351833333333,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "80"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "80"
+      }
+    },
+    {
+      "window": 5,
+      "phase": "0-intervention",
+      "start": 1795786594.3449106,
+      "end": 1795786602.3579483,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2545.1428571428573,
+          "raw": {
+            "window_start": 1795786594.3449106,
+            "window_end": 1795786602.3579483,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.58,
+            "events_per_second": 2545.1428571428573,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 198044168\nuser_usec 198033171\nsystem_usec 10996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.13 avg60=0.07 avg300=0.01 total=148803\nfull avg10=0.05 avg60=0.04 avg300=0.00 total=130986",
+            "memory.current": "10358784",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 230052906\nuser_usec 230041909\nsystem_usec 10996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.05 avg60=0.06 avg300=0.01 total=163065\nfull avg10=0.02 avg60=0.03 avg300=0.00 total=145247",
+            "memory.current": "10358784",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9945822385912204,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10358784,
+            "cpu_pressure_some_seconds": 0.014262,
+            "cpu_pressure_full_seconds": 0.014261,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 985.14,
+          "raw": {
+            "window_start": 1795786594.3449106,
+            "window_end": 1795786602.3579483,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 4.18,
+            "events_per_second": 985.14,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 197674841\nuser_usec 197662846\nsystem_usec 11995\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.11 avg60=0.05 avg300=0.01 total=227829\nfull avg10=0.08 avg60=0.02 avg300=0.00 total=193193",
+            "memory.current": "10358784",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 229592592\nuser_usec 229579597\nsystem_usec 12994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.15 avg60=0.07 avg300=0.01 total=264776\nfull avg10=0.03 avg60=0.02 avg300=0.00 total=230138",
+            "memory.current": "10358784",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9832273687384103,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10358784,
+            "cpu_pressure_some_seconds": 0.036947,
+            "cpu_pressure_full_seconds": 0.036945,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786594.3449106,
+          "window_end_time": 1795786602.3579483,
+          "perf_start_time": 1795786595.3467083,
+          "perf_end_time": 1795786601.3467083,
+          "system_metrics_start_time": 1795786595.3499515,
+          "system_metrics_end_time": 1795786601.3480043,
+          "power_socket0_watts": 28.931197333333333,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48046.03,
+            "cpus_utilized": 8.0,
+            "context_switches": 4414.0,
+            "context_switches_per_sec": 91.87,
+            "cpu_migrations": 35.0,
+            "cpu_migrations_per_sec": 0.728,
+            "page_faults": 4.0,
+            "page_faults_per_sec": 0.083,
+            "cycles": 132974580759.0,
+            "ghz": 2.768,
+            "instructions": 40499862125.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 11284776091.0,
+            "branches_per_sec": 234.874,
+            "branch_misses": 125568952.0,
+            "branch_miss_rate_pct": 1.11,
+            "cache_references": 6056690.0,
+            "cache_references_per_sec": 126.06,
+            "cache_misses": 117285.0,
+            "time_elapsed_seconds": 6.005578931
+          }
+        },
+        "msec_task_clock": 48046.03,
+        "cpus_utilized": 8.0,
+        "context_switches": 4414.0,
+        "context_switches_per_sec": 91.87,
+        "cpu_migrations": 35.0,
+        "cpu_migrations_per_sec": 0.728,
+        "page_faults": 4.0,
+        "page_faults_per_sec": 0.083,
+        "cycles": 132974580759.0,
+        "ghz": 2.768,
+        "instructions": 40499862125.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 11284776091.0,
+        "branches_per_sec": 234.874,
+        "branch_misses": 125568952.0,
+        "branch_miss_rate_pct": 1.11,
+        "cache_references": 6056690.0,
+        "cache_references_per_sec": 126.06,
+        "cache_misses": 117285.0,
+        "time_elapsed_seconds": 6.005578931,
+        "power_socket0_watts": 28.931197333333333,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "80"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "80"
+      }
+    },
+    {
+      "window": 6,
+      "phase": "0-intervention",
+      "start": 1795786602.4736373,
+      "end": 1795786610.483948,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2542.1414285714286,
+          "raw": {
+            "window_start": 1795786602.4736373,
+            "window_end": 1795786610.483948,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.58,
+            "events_per_second": 2542.1414285714286,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 230427292\nuser_usec 230416295\nsystem_usec 10996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.05 avg60=0.06 avg300=0.01 total=177007\nfull avg10=0.02 avg60=0.03 avg300=0.00 total=159189",
+            "memory.current": "10358784",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 262454139\nuser_usec 262443143\nsystem_usec 10996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.02 avg60=0.05 avg300=0.01 total=183590\nfull avg10=0.00 avg60=0.03 avg300=0.00 total=165771",
+            "memory.current": "10362880",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.998202866266175,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10362880,
+            "cpu_pressure_some_seconds": 0.006583,
+            "cpu_pressure_full_seconds": 0.006582,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 984.4271428571428,
+          "raw": {
+            "window_start": 1795786602.4736373,
+            "window_end": 1795786610.483948,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 4.18,
+            "events_per_second": 984.4271428571428,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 229963067\nuser_usec 229950072\nsystem_usec 12994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.15 avg60=0.07 avg300=0.01 total=279877\nfull avg10=0.03 avg60=0.02 avg300=0.00 total=245240",
+            "memory.current": "10358784",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 261837907\nuser_usec 261823913\nsystem_usec 13994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.06 avg60=0.06 avg300=0.01 total=321085\nfull avg10=0.01 avg60=0.02 avg300=0.00 total=284491",
+            "memory.current": "10362880",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.979226448665887,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10362880,
+            "cpu_pressure_some_seconds": 0.041208,
+            "cpu_pressure_full_seconds": 0.039251,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786602.4736373,
+          "window_end_time": 1795786610.483948,
+          "perf_start_time": 1795786603.475439,
+          "perf_end_time": 1795786609.475439,
+          "system_metrics_start_time": 1795786603.4769547,
+          "system_metrics_end_time": 1795786609.476014,
+          "power_socket0_watts": 28.950755499999996,
+          "power_ram_watts": null,
+          "cstate_poll_pct": 0.0,
+          "cstate_c1_pct": 0.0,
+          "cstate_c1e_pct": 0.0,
+          "cstate_c6_pct": 100.0,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48047.13,
+            "cpus_utilized": 8.0,
+            "context_switches": 4720.0,
+            "context_switches_per_sec": 98.237,
+            "cpu_migrations": 41.0,
+            "cpu_migrations_per_sec": 0.853,
+            "page_faults": 5.0,
+            "page_faults_per_sec": 0.104,
+            "cycles": 132986634358.0,
+            "ghz": 2.768,
+            "instructions": 40464755374.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 11274480988.0,
+            "branches_per_sec": 234.655,
+            "branch_misses": 130315471.0,
+            "branch_miss_rate_pct": 1.16,
+            "cache_references": 6368189.0,
+            "cache_references_per_sec": 132.54,
+            "cache_misses": 133407.0,
+            "time_elapsed_seconds": 6.005718772
+          }
+        },
+        "msec_task_clock": 48047.13,
+        "cpus_utilized": 8.0,
+        "context_switches": 4720.0,
+        "context_switches_per_sec": 98.237,
+        "cpu_migrations": 41.0,
+        "cpu_migrations_per_sec": 0.853,
+        "page_faults": 5.0,
+        "page_faults_per_sec": 0.104,
+        "cycles": 132986634358.0,
+        "ghz": 2.768,
+        "instructions": 40464755374.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 11274480988.0,
+        "branches_per_sec": 234.655,
+        "branch_misses": 130315471.0,
+        "branch_miss_rate_pct": 1.16,
+        "cache_references": 6368189.0,
+        "cache_references_per_sec": 132.54,
+        "cache_misses": 133407.0,
+        "time_elapsed_seconds": 6.005718772,
+        "power_socket0_watts": 28.950755499999996,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "80"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "80"
+      }
+    },
+    {
+      "window": 7,
+      "phase": "0-after",
+      "start": 1795786613.5989778,
+      "end": 1795786621.6099477,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2817.852857142857,
+          "raw": {
+            "window_start": 1795786613.5989778,
+            "window_end": 1795786621.6099477,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.44,
+            "events_per_second": 2817.852857142857,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 274819794\nuser_usec 274807798\nsystem_usec 11996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.16 avg60=0.08 avg300=0.01 total=208553\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=172382",
+            "memory.current": "10362880",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 306830233\nuser_usec 306818236\nsystem_usec 11996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.07 avg60=0.07 avg300=0.01 total=219979\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=181086",
+            "memory.current": "10366976",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9958256603776325,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10366976,
+            "cpu_pressure_some_seconds": 0.011426,
+            "cpu_pressure_full_seconds": 0.008704,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 1092.8414285714287,
+          "raw": {
+            "window_start": 1795786613.5989778,
+            "window_end": 1795786621.6099477,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 3.68,
+            "events_per_second": 1092.8414285714287,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 274186944\nuser_usec 274172950\nsystem_usec 13994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.19 avg60=0.09 avg300=0.02 total=348688\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=300357",
+            "memory.current": "10362880",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 306101456\nuser_usec 306086462\nsystem_usec 14993\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.08 avg60=0.08 avg300=0.01 total=384202\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=335870",
+            "memory.current": "10493952",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9838512051655988,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10493952,
+            "cpu_pressure_some_seconds": 0.035514,
+            "cpu_pressure_full_seconds": 0.035513,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786613.5989778,
+          "window_end_time": 1795786621.6099477,
+          "perf_start_time": 1795786614.6006768,
+          "perf_end_time": 1795786620.6006768,
+          "system_metrics_start_time": 1795786614.6019485,
+          "system_metrics_end_time": 1795786620.60116,
+          "power_socket0_watts": 32.600980166666666,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48046.23,
+            "cpus_utilized": 8.0,
+            "context_switches": 4556.0,
+            "context_switches_per_sec": 94.825,
+            "cpu_migrations": 39.0,
+            "cpu_migrations_per_sec": 0.812,
+            "page_faults": 4.0,
+            "page_faults_per_sec": 0.083,
+            "cycles": 147393324879.0,
+            "ghz": 3.068,
+            "instructions": 44841815766.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12496825615.0,
+            "branches_per_sec": 260.1,
+            "branch_misses": 142771978.0,
+            "branch_miss_rate_pct": 1.14,
+            "cache_references": 6310369.0,
+            "cache_references_per_sec": 131.34,
+            "cache_misses": 136980.0,
+            "time_elapsed_seconds": 6.005620266
+          }
+        },
+        "msec_task_clock": 48046.23,
+        "cpus_utilized": 8.0,
+        "context_switches": 4556.0,
+        "context_switches_per_sec": 94.825,
+        "cpu_migrations": 39.0,
+        "cpu_migrations_per_sec": 0.812,
+        "page_faults": 4.0,
+        "page_faults_per_sec": 0.083,
+        "cycles": 147393324879.0,
+        "ghz": 3.068,
+        "instructions": 44841815766.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12496825615.0,
+        "branches_per_sec": 260.1,
+        "branch_misses": 142771978.0,
+        "branch_miss_rate_pct": 1.14,
+        "cache_references": 6310369.0,
+        "cache_references_per_sec": 131.34,
+        "cache_misses": 136980.0,
+        "time_elapsed_seconds": 6.005620266,
+        "power_socket0_watts": 32.600980166666666,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": 8,
+      "phase": "0-after",
+      "start": 1795786621.709739,
+      "end": 1795786629.7209482,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2821.37125,
+          "raw": {
+            "window_start": 1795786621.709739,
+            "window_end": 1795786629.7209482,
+            "intervals": 8,
+            "interval_coverage_seconds": 8.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.44,
+            "events_per_second": 2821.37125,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 307124560\nuser_usec 307112563\nsystem_usec 11996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.07 avg60=0.07 avg300=0.01 total=249949\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=188912",
+            "memory.current": "10366976",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 339150311\nuser_usec 339137315\nsystem_usec 12996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.13 avg60=0.09 avg300=0.02 total=258840\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=197802",
+            "memory.current": "10375168",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.997617588382548,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10375168,
+            "cpu_pressure_some_seconds": 0.008891,
+            "cpu_pressure_full_seconds": 0.00889,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 1093.7649999999999,
+          "raw": {
+            "window_start": 1795786621.709739,
+            "window_end": 1795786629.7209482,
+            "intervals": 8,
+            "interval_coverage_seconds": 8.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 3.75,
+            "events_per_second": 1093.7649999999999,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 306442161\nuser_usec 306427167\nsystem_usec 14993\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.08 avg60=0.08 avg300=0.01 total=392857\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=342753",
+            "memory.current": "10366976",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 338339187\nuser_usec 338324194\nsystem_usec 14993\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.03 avg60=0.06 avg300=0.01 total=431872\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=381767",
+            "memory.current": "10375168",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9815494773157836,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10375168,
+            "cpu_pressure_some_seconds": 0.039015,
+            "cpu_pressure_full_seconds": 0.039014,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786621.709739,
+          "window_end_time": 1795786629.7209482,
+          "perf_start_time": 1795786622.7113678,
+          "perf_end_time": 1795786628.7113678,
+          "system_metrics_start_time": 1795786622.712951,
+          "system_metrics_end_time": 1795786628.7120004,
+          "power_socket0_watts": 32.530343333333334,
+          "power_ram_watts": null,
+          "cstate_poll_pct": 0.0,
+          "cstate_c1_pct": 35.32999346547593,
+          "cstate_c1e_pct": 0.0,
+          "cstate_c6_pct": 64.67000653452408,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48050.22,
+            "cpus_utilized": 8.0,
+            "context_switches": 4429.0,
+            "context_switches_per_sec": 92.174,
+            "cpu_migrations": 42.0,
+            "cpu_migrations_per_sec": 0.874,
+            "page_faults": 5.0,
+            "page_faults_per_sec": 0.104,
+            "cycles": 147406067093.0,
+            "ghz": 3.068,
+            "instructions": 44843429634.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12494956037.0,
+            "branches_per_sec": 260.04,
+            "branch_misses": 144811020.0,
+            "branch_miss_rate_pct": 1.16,
+            "cache_references": 6151141.0,
+            "cache_references_per_sec": 128.015,
+            "cache_misses": 140706.0,
+            "time_elapsed_seconds": 6.006132693
+          }
+        },
+        "msec_task_clock": 48050.22,
+        "cpus_utilized": 8.0,
+        "context_switches": 4429.0,
+        "context_switches_per_sec": 92.174,
+        "cpu_migrations": 42.0,
+        "cpu_migrations_per_sec": 0.874,
+        "page_faults": 5.0,
+        "page_faults_per_sec": 0.104,
+        "cycles": 147406067093.0,
+        "ghz": 3.068,
+        "instructions": 44843429634.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12494956037.0,
+        "branches_per_sec": 260.04,
+        "branch_misses": 144811020.0,
+        "branch_miss_rate_pct": 1.16,
+        "cache_references": 6151141.0,
+        "cache_references_per_sec": 128.015,
+        "cache_misses": 140706.0,
+        "time_elapsed_seconds": 6.006132693,
+        "power_socket0_watts": 32.530343333333334,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": 9,
+      "phase": "0-after",
+      "start": 1795786629.8267298,
+      "end": 1795786637.8389475,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2816.9300000000003,
+          "raw": {
+            "window_start": 1795786629.8267298,
+            "window_end": 1795786637.8389475,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.44,
+            "events_per_second": 2816.9300000000003,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 339489200\nuser_usec 339476203\nsystem_usec 12996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.13 avg60=0.09 avg300=0.02 total=276855\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=205753",
+            "memory.current": "10375168",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 371507724\nuser_usec 371494727\nsystem_usec 12996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.15 avg60=0.11 avg300=0.02 total=288373\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=217269",
+            "memory.current": "10375168",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9962124044486886,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10375168,
+            "cpu_pressure_some_seconds": 0.011518,
+            "cpu_pressure_full_seconds": 0.011516,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 1093.1571428571428,
+          "raw": {
+            "window_start": 1795786629.8267298,
+            "window_end": 1795786637.8389475,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 3.75,
+            "events_per_second": 1093.1571428571428,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 338681622\nuser_usec 338666628\nsystem_usec 14993\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.03 avg60=0.06 avg300=0.01 total=451640\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=385365",
+            "memory.current": "10375168",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 370595357\nuser_usec 370580363\nsystem_usec 14993\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.11 avg60=0.08 avg300=0.02 total=488316\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=422033",
+            "memory.current": "10375168",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.983133753426244,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10375168,
+            "cpu_pressure_some_seconds": 0.036676,
+            "cpu_pressure_full_seconds": 0.036668,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786629.8267298,
+          "window_end_time": 1795786637.8389475,
+          "perf_start_time": 1795786630.8283622,
+          "perf_end_time": 1795786636.8283622,
+          "system_metrics_start_time": 1795786630.8299544,
+          "system_metrics_end_time": 1795786636.8290014,
+          "power_socket0_watts": 32.488950833333334,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48044.26,
+            "cpus_utilized": 8.0,
+            "context_switches": 4110.0,
+            "context_switches_per_sec": 85.546,
+            "cpu_migrations": 55.0,
+            "cpu_migrations_per_sec": 1.145,
+            "page_faults": 150.0,
+            "page_faults_per_sec": 3.122,
+            "cycles": 147387633430.0,
+            "ghz": 3.068,
+            "instructions": 44830662001.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12496326558.0,
+            "branches_per_sec": 260.1,
+            "branch_misses": 142871892.0,
+            "branch_miss_rate_pct": 1.14,
+            "cache_references": 6087073.0,
+            "cache_references_per_sec": 126.697,
+            "cache_misses": 136352.0,
+            "time_elapsed_seconds": 6.00537618
+          }
+        },
+        "msec_task_clock": 48044.26,
+        "cpus_utilized": 8.0,
+        "context_switches": 4110.0,
+        "context_switches_per_sec": 85.546,
+        "cpu_migrations": 55.0,
+        "cpu_migrations_per_sec": 1.145,
+        "page_faults": 150.0,
+        "page_faults_per_sec": 3.122,
+        "cycles": 147387633430.0,
+        "ghz": 3.068,
+        "instructions": 44830662001.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12496326558.0,
+        "branches_per_sec": 260.1,
+        "branch_misses": 142871892.0,
+        "branch_miss_rate_pct": 1.14,
+        "cache_references": 6087073.0,
+        "cache_references_per_sec": 126.697,
+        "cache_misses": 136352.0,
+        "time_elapsed_seconds": 6.00537618,
+        "power_socket0_watts": 32.488950833333334,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": 10,
+      "phase": "1-before",
+      "start": 1795786640.9509792,
+      "end": 1795786648.961948,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2818.2,
+          "raw": {
+            "window_start": 1795786640.9509792,
+            "window_end": 1795786648.961948,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.44,
+            "events_per_second": 2818.2,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 383931847\nuser_usec 383918851\nsystem_usec 12996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.10 avg60=0.10 avg300=0.02 total=291594\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=220490",
+            "memory.current": "10375168",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 415907020\nuser_usec 415894023\nsystem_usec 12996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.04 avg60=0.08 avg300=0.02 total=307883\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=233638",
+            "memory.current": "10379264",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.991424040799468,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10379264,
+            "cpu_pressure_some_seconds": 0.016289,
+            "cpu_pressure_full_seconds": 0.013148,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 1094.0014285714285,
+          "raw": {
+            "window_start": 1795786640.9509792,
+            "window_end": 1795786648.961948,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 3.75,
+            "events_per_second": 1094.0014285714285,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 382886970\nuser_usec 382871976\nsystem_usec 14993\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.22 avg60=0.11 avg300=0.02 total=518089\nfull avg10=0.14 avg60=0.04 avg300=0.00 total=441466",
+            "memory.current": "10375168",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 414842056\nuser_usec 414826063\nsystem_usec 15993\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.10 avg60=0.10 avg300=0.02 total=539670\nfull avg10=0.06 avg60=0.03 avg300=0.00 total=463047",
+            "memory.current": "10379264",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9889166037104635,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10379264,
+            "cpu_pressure_some_seconds": 0.021581,
+            "cpu_pressure_full_seconds": 0.021581,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786640.9509792,
+          "window_end_time": 1795786648.961948,
+          "perf_start_time": 1795786641.952677,
+          "perf_end_time": 1795786647.952677,
+          "system_metrics_start_time": 1795786641.9539468,
+          "system_metrics_end_time": 1795786647.953173,
+          "power_socket0_watts": 32.45171633333333,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48048.59,
+            "cpus_utilized": 8.0,
+            "context_switches": 3940.0,
+            "context_switches_per_sec": 82.0,
+            "cpu_migrations": 31.0,
+            "cpu_migrations_per_sec": 0.645,
+            "page_faults": 2.0,
+            "page_faults_per_sec": 0.042,
+            "cycles": 147399748372.0,
+            "ghz": 3.068,
+            "instructions": 44862131608.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12501402286.0,
+            "branches_per_sec": 260.183,
+            "branch_misses": 140082798.0,
+            "branch_miss_rate_pct": 1.12,
+            "cache_references": 5974558.0,
+            "cache_references_per_sec": 124.344,
+            "cache_misses": 126092.0,
+            "time_elapsed_seconds": 6.005910701
+          }
+        },
+        "msec_task_clock": 48048.59,
+        "cpus_utilized": 8.0,
+        "context_switches": 3940.0,
+        "context_switches_per_sec": 82.0,
+        "cpu_migrations": 31.0,
+        "cpu_migrations_per_sec": 0.645,
+        "page_faults": 2.0,
+        "page_faults_per_sec": 0.042,
+        "cycles": 147399748372.0,
+        "ghz": 3.068,
+        "instructions": 44862131608.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12501402286.0,
+        "branches_per_sec": 260.183,
+        "branch_misses": 140082798.0,
+        "branch_miss_rate_pct": 1.12,
+        "cache_references": 5974558.0,
+        "cache_references_per_sec": 124.344,
+        "cache_misses": 126092.0,
+        "time_elapsed_seconds": 6.005910701,
+        "power_socket0_watts": 32.45171633333333,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": 11,
+      "phase": "1-before",
+      "start": 1795786649.0747328,
+      "end": 1795786657.085947,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2813.12,
+          "raw": {
+            "window_start": 1795786649.0747328,
+            "window_end": 1795786657.085947,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.44,
+            "events_per_second": 2813.12,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 416313479\nuser_usec 416300483\nsystem_usec 12996\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.04 avg60=0.08 avg300=0.02 total=318082\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=243838",
+            "memory.current": "10379264",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 448225205\nuser_usec 448211209\nsystem_usec 13995\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.11 avg60=0.10 avg300=0.02 total=354879\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=271988",
+            "memory.current": "10379264",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.983381916787207,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10379264,
+            "cpu_pressure_some_seconds": 0.036797,
+            "cpu_pressure_full_seconds": 0.02815,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 1096.2842857142857,
+          "raw": {
+            "window_start": 1795786649.0747328,
+            "window_end": 1795786657.085947,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 3.68,
+            "events_per_second": 1096.2842857142857,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 415172120\nuser_usec 415156127\nsystem_usec 15993\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.10 avg60=0.10 avg300=0.02 total=558373\nfull avg10=0.06 avg60=0.03 avg300=0.00 total=478134",
+            "memory.current": "10379264",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 447182677\nuser_usec 447166683\nsystem_usec 15993\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.14 avg60=0.11 avg300=0.03 total=569886\nfull avg10=0.02 avg60=0.02 avg300=0.00 total=489646",
+            "memory.current": "10379264",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9957184985884546,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10379264,
+            "cpu_pressure_some_seconds": 0.011513,
+            "cpu_pressure_full_seconds": 0.011512,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786649.0747328,
+          "window_end_time": 1795786657.085947,
+          "perf_start_time": 1795786650.076346,
+          "perf_end_time": 1795786656.076346,
+          "system_metrics_start_time": 1795786650.0779512,
+          "system_metrics_end_time": 1795786656.0769904,
+          "power_socket0_watts": 32.47096183333334,
+          "power_ram_watts": null,
+          "cstate_poll_pct": 0.0,
+          "cstate_c1_pct": 5.657170605373907,
+          "cstate_c1e_pct": 0.0,
+          "cstate_c6_pct": 87.33408870184526,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 99.97937293729372,
+          "perf_metrics": {
+            "msec_task_clock": 48049.57,
+            "cpus_utilized": 8.0,
+            "context_switches": 3898.0,
+            "context_switches_per_sec": 81.125,
+            "cpu_migrations": 58.0,
+            "cpu_migrations_per_sec": 1.207,
+            "page_faults": 4.0,
+            "page_faults_per_sec": 0.083,
+            "cycles": 147393171169.0,
+            "ghz": 3.068,
+            "instructions": 44884309123.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12506442448.0,
+            "branches_per_sec": 260.282,
+            "branch_misses": 138593941.0,
+            "branch_miss_rate_pct": 1.11,
+            "cache_references": 6097186.0,
+            "cache_references_per_sec": 126.894,
+            "cache_misses": 124877.0,
+            "time_elapsed_seconds": 6.00603864
+          }
+        },
+        "msec_task_clock": 48049.57,
+        "cpus_utilized": 8.0,
+        "context_switches": 3898.0,
+        "context_switches_per_sec": 81.125,
+        "cpu_migrations": 58.0,
+        "cpu_migrations_per_sec": 1.207,
+        "page_faults": 4.0,
+        "page_faults_per_sec": 0.083,
+        "cycles": 147393171169.0,
+        "ghz": 3.068,
+        "instructions": 44884309123.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12506442448.0,
+        "branches_per_sec": 260.282,
+        "branch_misses": 138593941.0,
+        "branch_miss_rate_pct": 1.11,
+        "cache_references": 6097186.0,
+        "cache_references_per_sec": 126.894,
+        "cache_misses": 124877.0,
+        "time_elapsed_seconds": 6.00603864,
+        "power_socket0_watts": 32.47096183333334,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 99.97937293729372
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": 12,
+      "phase": "1-before",
+      "start": 1795786657.2048917,
+      "end": 1795786665.214948,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2817.8885714285716,
+          "raw": {
+            "window_start": 1795786657.2048917,
+            "window_end": 1795786665.214948,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.44,
+            "events_per_second": 2817.8885714285716,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 448619082\nuser_usec 448605087\nsystem_usec 13995\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.11 avg60=0.10 avg300=0.02 total=374698\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=289489",
+            "memory.current": "10379264",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 480567875\nuser_usec 480552880\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.15 avg60=0.12 avg300=0.03 total=398924\nfull avg10=0.09 avg60=0.03 avg300=0.00 total=309550",
+            "memory.current": "10383360",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.988585344964467,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10383360,
+            "cpu_pressure_some_seconds": 0.024226,
+            "cpu_pressure_full_seconds": 0.020061,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 1095.142857142857,
+          "raw": {
+            "window_start": 1795786657.2048917,
+            "window_end": 1795786665.214948,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 3.68,
+            "events_per_second": 1095.142857142857,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 447577075\nuser_usec 447561081\nsystem_usec 15993\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.14 avg60=0.11 avg300=0.03 total=588038\nfull avg10=0.02 avg60=0.02 avg300=0.00 total=499099",
+            "memory.current": "10379264",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 479544444\nuser_usec 479528451\nsystem_usec 15993\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.16 avg60=0.13 avg300=0.03 total=609319\nfull avg10=0.01 avg60=0.02 avg300=0.00 total=515800",
+            "memory.current": "10383360",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.990904429800256,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10383360,
+            "cpu_pressure_some_seconds": 0.021281,
+            "cpu_pressure_full_seconds": 0.016701,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786657.2048917,
+          "window_end_time": 1795786665.214948,
+          "perf_start_time": 1795786658.2065294,
+          "perf_end_time": 1795786664.2065294,
+          "system_metrics_start_time": 1795786658.2081263,
+          "system_metrics_end_time": 1795786664.2070796,
+          "power_socket0_watts": 32.51455116666667,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48046.99,
+            "cpus_utilized": 8.0,
+            "context_switches": 3884.0,
+            "context_switches_per_sec": 80.838,
+            "cpu_migrations": 34.0,
+            "cpu_migrations_per_sec": 0.708,
+            "page_faults": 2.0,
+            "page_faults_per_sec": 0.042,
+            "cycles": 147387445045.0,
+            "ghz": 3.068,
+            "instructions": 44881109807.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12508124034.0,
+            "branches_per_sec": 260.331,
+            "branch_misses": 138002885.0,
+            "branch_miss_rate_pct": 1.1,
+            "cache_references": 6013802.0,
+            "cache_references_per_sec": 125.165,
+            "cache_misses": 121903.0,
+            "time_elapsed_seconds": 6.005713532
+          }
+        },
+        "msec_task_clock": 48046.99,
+        "cpus_utilized": 8.0,
+        "context_switches": 3884.0,
+        "context_switches_per_sec": 80.838,
+        "cpu_migrations": 34.0,
+        "cpu_migrations_per_sec": 0.708,
+        "page_faults": 2.0,
+        "page_faults_per_sec": 0.042,
+        "cycles": 147387445045.0,
+        "ghz": 3.068,
+        "instructions": 44881109807.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12508124034.0,
+        "branches_per_sec": 260.331,
+        "branch_misses": 138002885.0,
+        "branch_miss_rate_pct": 1.1,
+        "cache_references": 6013802.0,
+        "cache_references_per_sec": 125.165,
+        "cache_misses": 121903.0,
+        "time_elapsed_seconds": 6.005713532,
+        "power_socket0_watts": 32.51455116666667,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": 13,
+      "phase": "1-intervention",
+      "start": 1795786668.3339815,
+      "end": 1795786676.344949,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2547.28,
+          "raw": {
+            "window_start": 1795786668.3339815,
+            "window_end": 1795786676.344949,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.58,
+            "events_per_second": 2547.28,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 492953428\nuser_usec 492938433\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.30 avg60=0.15 avg300=0.04 total=422508\nfull avg10=0.08 avg60=0.03 avg300=0.00 total=326718",
+            "memory.current": "10383360",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 524968623\nuser_usec 524953628\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.13 avg60=0.13 avg300=0.03 total=433181\nfull avg10=0.03 avg60=0.03 avg300=0.00 total=333582",
+            "memory.current": "10383360",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9964205356901203,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10383360,
+            "cpu_pressure_some_seconds": 0.010673,
+            "cpu_pressure_full_seconds": 0.006864,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 984.5728571428572,
+          "raw": {
+            "window_start": 1795786668.3339815,
+            "window_end": 1795786676.344949,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 4.18,
+            "events_per_second": 984.5728571428572,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 491929611\nuser_usec 491912618\nsystem_usec 16993\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.31 avg60=0.16 avg300=0.04 total=633306\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=529219",
+            "memory.current": "10383360",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 523829507\nuser_usec 523811514\nsystem_usec 17992\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.14 avg60=0.13 avg300=0.04 total=672724\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=568636",
+            "memory.current": "10383360",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.982027892092462,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10383360,
+            "cpu_pressure_some_seconds": 0.039418,
+            "cpu_pressure_full_seconds": 0.039417,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786668.3339815,
+          "window_end_time": 1795786676.344949,
+          "perf_start_time": 1795786669.3358645,
+          "perf_end_time": 1795786675.3358645,
+          "system_metrics_start_time": 1795786669.3369517,
+          "system_metrics_end_time": 1795786675.3363864,
+          "power_socket0_watts": 28.871228,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48043.91,
+            "cpus_utilized": 8.0,
+            "context_switches": 3870.0,
+            "context_switches_per_sec": 80.551,
+            "cpu_migrations": 26.0,
+            "cpu_migrations_per_sec": 0.541,
+            "page_faults": 3.0,
+            "page_faults_per_sec": 0.062,
+            "cycles": 132970402606.0,
+            "ghz": 2.768,
+            "instructions": 40502539208.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 11284670789.0,
+            "branches_per_sec": 234.882,
+            "branch_misses": 125354065.0,
+            "branch_miss_rate_pct": 1.11,
+            "cache_references": 6002731.0,
+            "cache_references_per_sec": 124.943,
+            "cache_misses": 117906.0,
+            "time_elapsed_seconds": 6.005316325
+          }
+        },
+        "msec_task_clock": 48043.91,
+        "cpus_utilized": 8.0,
+        "context_switches": 3870.0,
+        "context_switches_per_sec": 80.551,
+        "cpu_migrations": 26.0,
+        "cpu_migrations_per_sec": 0.541,
+        "page_faults": 3.0,
+        "page_faults_per_sec": 0.062,
+        "cycles": 132970402606.0,
+        "ghz": 2.768,
+        "instructions": 40502539208.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 11284670789.0,
+        "branches_per_sec": 234.882,
+        "branch_misses": 125354065.0,
+        "branch_miss_rate_pct": 1.11,
+        "cache_references": 6002731.0,
+        "cache_references_per_sec": 124.943,
+        "cache_misses": 117906.0,
+        "time_elapsed_seconds": 6.005316325,
+        "power_socket0_watts": 28.871228,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "80"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "80"
+      }
+    },
+    {
+      "window": 14,
+      "phase": "1-intervention",
+      "start": 1795786676.471906,
+      "end": 1795786684.4849486,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2538.82,
+          "raw": {
+            "window_start": 1795786676.471906,
+            "window_end": 1795786684.4849486,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.58,
+            "events_per_second": 2538.82,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 525418007\nuser_usec 525403012\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.13 avg60=0.13 avg300=0.03 total=440578\nfull avg10=0.03 avg60=0.03 avg300=0.00 total=340979",
+            "memory.current": "10383360",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 557359752\nuser_usec 557344757\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.06 avg60=0.11 avg300=0.03 total=471235\nfull avg10=0.01 avg60=0.02 avg300=0.00 total=370762",
+            "memory.current": "10387456",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.986219248071737,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10387456,
+            "cpu_pressure_some_seconds": 0.030657,
+            "cpu_pressure_full_seconds": 0.029783,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 987.8571428571429,
+          "raw": {
+            "window_start": 1795786676.471906,
+            "window_end": 1795786684.4849486,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 4.1,
+            "events_per_second": 987.8571428571429,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 524214222\nuser_usec 524196229\nsystem_usec 17992\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.14 avg60=0.13 avg300=0.04 total=699544\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=589523",
+            "memory.current": "10383360",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 556195147\nuser_usec 556177154\nsystem_usec 17992\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.16 avg60=0.15 avg300=0.04 total=720719\nfull avg10=0.10 avg60=0.04 avg300=0.00 total=610696",
+            "memory.current": "10514432",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.991108776497296,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10514432,
+            "cpu_pressure_some_seconds": 0.021175,
+            "cpu_pressure_full_seconds": 0.021173,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786676.471906,
+          "window_end_time": 1795786684.4849486,
+          "perf_start_time": 1795786677.473712,
+          "perf_end_time": 1795786683.473712,
+          "system_metrics_start_time": 1795786677.4769607,
+          "system_metrics_end_time": 1795786683.4750066,
+          "power_socket0_watts": 28.833642833333332,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48051.69,
+            "cpus_utilized": 8.0,
+            "context_switches": 4065.0,
+            "context_switches_per_sec": 84.596,
+            "cpu_migrations": 38.0,
+            "cpu_migrations_per_sec": 0.791,
+            "page_faults": 1.0,
+            "page_faults_per_sec": 0.021,
+            "cycles": 132993754514.0,
+            "ghz": 2.768,
+            "instructions": 40514418745.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 11286971013.0,
+            "branches_per_sec": 234.892,
+            "branch_misses": 124849719.0,
+            "branch_miss_rate_pct": 1.11,
+            "cache_references": 6051485.0,
+            "cache_references_per_sec": 125.937,
+            "cache_misses": 118528.0,
+            "time_elapsed_seconds": 6.006280627
+          }
+        },
+        "msec_task_clock": 48051.69,
+        "cpus_utilized": 8.0,
+        "context_switches": 4065.0,
+        "context_switches_per_sec": 84.596,
+        "cpu_migrations": 38.0,
+        "cpu_migrations_per_sec": 0.791,
+        "page_faults": 1.0,
+        "page_faults_per_sec": 0.021,
+        "cycles": 132993754514.0,
+        "ghz": 2.768,
+        "instructions": 40514418745.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 11286971013.0,
+        "branches_per_sec": 234.892,
+        "branch_misses": 124849719.0,
+        "branch_miss_rate_pct": 1.11,
+        "cache_references": 6051485.0,
+        "cache_references_per_sec": 125.937,
+        "cache_misses": 118528.0,
+        "time_elapsed_seconds": 6.006280627,
+        "power_socket0_watts": 28.833642833333332,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "80"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "80"
+      }
+    },
+    {
+      "window": 15,
+      "phase": "1-intervention",
+      "start": 1795786684.599918,
+      "end": 1795786692.6109488,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2534.4314285714286,
+          "raw": {
+            "window_start": 1795786684.599918,
+            "window_end": 1795786692.6109488,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.58,
+            "events_per_second": 2534.4314285714286,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 557757259\nuser_usec 557742264\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.06 avg60=0.11 avg300=0.03 total=479155\nfull avg10=0.01 avg60=0.02 avg300=0.00 total=378683",
+            "memory.current": "10387456",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 589671930\nuser_usec 589656935\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.02 avg60=0.09 avg300=0.03 total=509798\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=407162",
+            "memory.current": "10387456",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9838407002778125,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10387456,
+            "cpu_pressure_some_seconds": 0.030643,
+            "cpu_pressure_full_seconds": 0.028479,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 988.4285714285714,
+          "raw": {
+            "window_start": 1795786684.599918,
+            "window_end": 1795786692.6109488,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 4.1,
+            "events_per_second": 988.4285714285714,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 556535175\nuser_usec 556517182\nsystem_usec 17992\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.16 avg60=0.15 avg300=0.04 total=752443\nfull avg10=0.10 avg60=0.04 avg300=0.00 total=620623",
+            "memory.current": "10514432",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 588528084\nuser_usec 588510091\nsystem_usec 17992\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.17 avg60=0.16 avg300=0.05 total=767219\nfull avg10=0.04 avg60=0.04 avg300=0.00 total=634927",
+            "memory.current": "10387456",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.993606983900424,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10387456,
+            "cpu_pressure_some_seconds": 0.014776,
+            "cpu_pressure_full_seconds": 0.014304,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786684.599918,
+          "window_end_time": 1795786692.6109488,
+          "perf_start_time": 1795786685.6017382,
+          "perf_end_time": 1795786691.6017382,
+          "system_metrics_start_time": 1795786685.6039555,
+          "system_metrics_end_time": 1795786691.6027544,
+          "power_socket0_watts": 28.85362783333333,
+          "power_ram_watts": null,
+          "cstate_poll_pct": 0.0,
+          "cstate_c1_pct": 56.362275449101794,
+          "cstate_c1e_pct": 0.0,
+          "cstate_c6_pct": 2.245508982035928,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 99.97977346278317,
+          "perf_metrics": {
+            "msec_task_clock": 48047.22,
+            "cpus_utilized": 8.0,
+            "context_switches": 4208.0,
+            "context_switches_per_sec": 87.581,
+            "cpu_migrations": 48.0,
+            "cpu_migrations_per_sec": 0.999,
+            "page_faults": 3.0,
+            "page_faults_per_sec": 0.062,
+            "cycles": 132985079468.0,
+            "ghz": 2.768,
+            "instructions": 40487536634.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 11280149486.0,
+            "branches_per_sec": 234.772,
+            "branch_misses": 128790110.0,
+            "branch_miss_rate_pct": 1.14,
+            "cache_references": 6072192.0,
+            "cache_references_per_sec": 126.38,
+            "cache_misses": 137930.0,
+            "time_elapsed_seconds": 6.005734404
+          }
+        },
+        "msec_task_clock": 48047.22,
+        "cpus_utilized": 8.0,
+        "context_switches": 4208.0,
+        "context_switches_per_sec": 87.581,
+        "cpu_migrations": 48.0,
+        "cpu_migrations_per_sec": 0.999,
+        "page_faults": 3.0,
+        "page_faults_per_sec": 0.062,
+        "cycles": 132985079468.0,
+        "ghz": 2.768,
+        "instructions": 40487536634.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 11280149486.0,
+        "branches_per_sec": 234.772,
+        "branch_misses": 128790110.0,
+        "branch_miss_rate_pct": 1.14,
+        "cache_references": 6072192.0,
+        "cache_references_per_sec": 126.38,
+        "cache_misses": 137930.0,
+        "time_elapsed_seconds": 6.005734404,
+        "power_socket0_watts": 28.85362783333333,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 99.97977346278317
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "80"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "80"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "80"
+      }
+    },
+    {
+      "window": 16,
+      "phase": "1-after",
+      "start": 1795786695.7279751,
+      "end": 1795786703.7389474,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2811.1485714285714,
+          "raw": {
+            "window_start": 1795786695.7279751,
+            "window_end": 1795786703.7389474,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.44,
+            "events_per_second": 2811.1485714285714,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 602047778\nuser_usec 602032783\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.16 avg60=0.12 avg300=0.04 total=532884\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=417170",
+            "memory.current": "10387456",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 633973653\nuser_usec 633958658\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.07 avg60=0.10 avg300=0.04 total=565548\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=448224",
+            "memory.current": "10391552",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.985268449089064,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10391552,
+            "cpu_pressure_some_seconds": 0.032664,
+            "cpu_pressure_full_seconds": 0.031054,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 1096.7271428571428,
+          "raw": {
+            "window_start": 1795786695.7279751,
+            "window_end": 1795786703.7389474,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 3.68,
+            "events_per_second": 1096.7271428571428,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 600889171\nuser_usec 600871178\nsystem_usec 17992\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.26 avg60=0.18 avg300=0.05 total=797505\nfull avg10=0.02 avg60=0.03 avg300=0.00 total=642115",
+            "memory.current": "10387456",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 632893367\nuser_usec 632874374\nsystem_usec 18992\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.11 avg60=0.15 avg300=0.05 total=810559\nfull avg10=0.01 avg60=0.03 avg300=0.00 total=655169",
+            "memory.current": "10518528",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.995045165003698,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10518528,
+            "cpu_pressure_some_seconds": 0.013054,
+            "cpu_pressure_full_seconds": 0.013054,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786695.7279751,
+          "window_end_time": 1795786703.7389474,
+          "perf_start_time": 1795786696.7296565,
+          "perf_end_time": 1795786702.7296565,
+          "system_metrics_start_time": 1795786696.7319589,
+          "system_metrics_end_time": 1795786702.730652,
+          "power_socket0_watts": 32.5608235,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48049.1,
+            "cpus_utilized": 8.0,
+            "context_switches": 3829.0,
+            "context_switches_per_sec": 79.689,
+            "cpu_migrations": 29.0,
+            "cpu_migrations_per_sec": 0.604,
+            "page_faults": 3.0,
+            "page_faults_per_sec": 0.062,
+            "cycles": 147412127116.0,
+            "ghz": 3.068,
+            "instructions": 44874438618.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12503830155.0,
+            "branches_per_sec": 260.23,
+            "branch_misses": 140206885.0,
+            "branch_miss_rate_pct": 1.12,
+            "cache_references": 5990511.0,
+            "cache_references_per_sec": 124.675,
+            "cache_misses": 131441.0,
+            "time_elapsed_seconds": 6.005973575
+          }
+        },
+        "msec_task_clock": 48049.1,
+        "cpus_utilized": 8.0,
+        "context_switches": 3829.0,
+        "context_switches_per_sec": 79.689,
+        "cpu_migrations": 29.0,
+        "cpu_migrations_per_sec": 0.604,
+        "page_faults": 3.0,
+        "page_faults_per_sec": 0.062,
+        "cycles": 147412127116.0,
+        "ghz": 3.068,
+        "instructions": 44874438618.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12503830155.0,
+        "branches_per_sec": 260.23,
+        "branch_misses": 140206885.0,
+        "branch_miss_rate_pct": 1.12,
+        "cache_references": 5990511.0,
+        "cache_references_per_sec": 124.675,
+        "cache_misses": 131441.0,
+        "time_elapsed_seconds": 6.005973575,
+        "power_socket0_watts": 32.5608235,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": 17,
+      "phase": "1-after",
+      "start": 1795786703.8460493,
+      "end": 1795786711.859948,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2815.8571428571427,
+          "raw": {
+            "window_start": 1795786703.8460493,
+            "window_end": 1795786711.859948,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.44,
+            "events_per_second": 2815.8571428571427,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 634279265\nuser_usec 634264270\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.07 avg60=0.10 avg300=0.04 total=588111\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=466502",
+            "memory.current": "10391552",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 666235775\nuser_usec 666220780\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.13 avg60=0.12 avg300=0.04 total=615630\nfull avg10=0.09 avg60=0.04 avg300=0.00 total=493725",
+            "memory.current": "10395648",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.987635924899518,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10395648,
+            "cpu_pressure_some_seconds": 0.027519,
+            "cpu_pressure_full_seconds": 0.027223,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 1095.5742857142857,
+          "raw": {
+            "window_start": 1795786703.8460493,
+            "window_end": 1795786711.859948,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 3.75,
+            "events_per_second": 1095.5742857142857,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 633276396\nuser_usec 633257404\nsystem_usec 18992\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.11 avg60=0.15 avg300=0.05 total=821688\nfull avg10=0.01 avg60=0.03 avg300=0.00 total=666298",
+            "memory.current": "10518528",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 665268825\nuser_usec 665249833\nsystem_usec 18992\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.05 avg60=0.13 avg300=0.05 total=838039\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=679649",
+            "memory.current": "10395648",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9921180130495215,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10395648,
+            "cpu_pressure_some_seconds": 0.016351,
+            "cpu_pressure_full_seconds": 0.013351,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786703.8460493,
+          "window_end_time": 1795786711.859948,
+          "perf_start_time": 1795786704.8476844,
+          "perf_end_time": 1795786710.8476844,
+          "system_metrics_start_time": 1795786704.8519583,
+          "system_metrics_end_time": 1795786710.8489914,
+          "power_socket0_watts": 32.55656666666666,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48044.62,
+            "cpus_utilized": 8.0,
+            "context_switches": 4134.0,
+            "context_switches_per_sec": 86.045,
+            "cpu_migrations": 33.0,
+            "cpu_migrations_per_sec": 0.687,
+            "page_faults": 3.0,
+            "page_faults_per_sec": 0.062,
+            "cycles": 147379408786.0,
+            "ghz": 3.068,
+            "instructions": 44879359637.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12507126193.0,
+            "branches_per_sec": 260.323,
+            "branch_misses": 137783010.0,
+            "branch_miss_rate_pct": 1.1,
+            "cache_references": 5751175.0,
+            "cache_references_per_sec": 119.705,
+            "cache_misses": 131485.0,
+            "time_elapsed_seconds": 6.005418328
+          }
+        },
+        "msec_task_clock": 48044.62,
+        "cpus_utilized": 8.0,
+        "context_switches": 4134.0,
+        "context_switches_per_sec": 86.045,
+        "cpu_migrations": 33.0,
+        "cpu_migrations_per_sec": 0.687,
+        "page_faults": 3.0,
+        "page_faults_per_sec": 0.062,
+        "cycles": 147379408786.0,
+        "ghz": 3.068,
+        "instructions": 44879359637.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12507126193.0,
+        "branches_per_sec": 260.323,
+        "branch_misses": 137783010.0,
+        "branch_miss_rate_pct": 1.1,
+        "cache_references": 5751175.0,
+        "cache_references_per_sec": 119.705,
+        "cache_misses": 131485.0,
+        "time_elapsed_seconds": 6.005418328,
+        "power_socket0_watts": 32.55656666666666,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    },
+    {
+      "window": 18,
+      "phase": "1-after",
+      "start": 1795786711.9657,
+      "end": 1795786719.9769468,
+      "applications": {
+        "prime_10000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 2816.574285714286,
+          "raw": {
+            "window_start": 1795786711.9657,
+            "window_end": 1795786719.9769468,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 1.44,
+            "events_per_second": 2816.574285714286,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 666545862\nuser_usec 666530867\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.13 avg60=0.12 avg300=0.04 total=641891\nfull avg10=0.09 avg60=0.04 avg300=0.00 total=507948",
+            "memory.current": "10395648",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 698488648\nuser_usec 698473653\nsystem_usec 14994\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.15 avg60=0.13 avg300=0.05 total=671161\nfull avg10=0.04 avg60=0.03 avg300=0.00 total=536481",
+            "memory.current": "10395648",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.9872427251895854,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10395648,
+            "cpu_pressure_some_seconds": 0.02927,
+            "cpu_pressure_full_seconds": 0.028533,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        },
+        "prime_20000": {
+          "metric": "events_per_second",
+          "objective": "maximize",
+          "current": 1095.8557142857144,
+          "raw": {
+            "window_start": 1795786711.9657,
+            "window_end": 1795786719.9769468,
+            "intervals": 7,
+            "interval_coverage_seconds": 7.0,
+            "metric_time_semantics": "complete one-second reports contained in the common window; receipt timestamps",
+            "latency_p99_ms": 3.75,
+            "events_per_second": 1095.8557142857144,
+            "percentile_semantics": "maximum of interval p99 latency, NOT pooled request p99"
+          },
+          "cgroup_before": {
+            "cpu.stat": "usage_usec 665636261\nuser_usec 665616269\nsystem_usec 19991\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.05 avg60=0.13 avg300=0.05 total=845250\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=686859",
+            "memory.current": "10395648",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_after": {
+            "cpu.stat": "usage_usec 697627356\nuser_usec 697607364\nsystem_usec 19991\nnr_periods 0\nnr_throttled 0\nthrottled_usec 0",
+            "cpu.pressure": "some avg10=0.02 avg60=0.12 avg300=0.05 total=861332\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=699463",
+            "memory.current": "10395648",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0",
+            "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3"
+          },
+          "cgroup_window": {
+            "cpu_usage_cores": 3.99327287261665,
+            "cpu_throttled_seconds": 0.0,
+            "cpu_throttled_periods": 0.0,
+            "memory_current_bytes": 10395648,
+            "cpu_pressure_some_seconds": 0.016082,
+            "cpu_pressure_full_seconds": 0.012604,
+            "memory_pressure_some_seconds": 0.0,
+            "memory_pressure_full_seconds": 0.0,
+            "io_pressure_some_seconds": 0.0,
+            "io_pressure_full_seconds": 0.0
+          }
+        }
+      },
+      "shared": {
+        "system_metrics": {
+          "window_start_time": 1795786711.9657,
+          "window_end_time": 1795786719.9769468,
+          "perf_start_time": 1795786712.9673207,
+          "perf_end_time": 1795786718.9673207,
+          "system_metrics_start_time": 1795786712.9689481,
+          "system_metrics_end_time": 1795786718.9679928,
+          "power_socket0_watts": 32.535225833333335,
+          "power_ram_watts": null,
+          "cstate_poll_pct": null,
+          "cstate_c1_pct": null,
+          "cstate_c1e_pct": null,
+          "cstate_c6_pct": null,
+          "cpu_load_cores_pct": null,
+          "cpu_load_socket0_pct": 100.0,
+          "perf_metrics": {
+            "msec_task_clock": 48044.35,
+            "cpus_utilized": 8.0,
+            "context_switches": 3841.0,
+            "context_switches_per_sec": 79.947,
+            "cpu_migrations": 31.0,
+            "cpu_migrations_per_sec": 0.645,
+            "page_faults": 1.0,
+            "page_faults_per_sec": 0.021,
+            "cycles": 147378110727.0,
+            "ghz": 3.068,
+            "instructions": 44882039768.0,
+            "instructions_per_cycle": 0.3,
+            "branches": 12510983194.0,
+            "branches_per_sec": 260.405,
+            "branch_misses": 136622348.0,
+            "branch_miss_rate_pct": 1.09,
+            "cache_references": 5994996.0,
+            "cache_references_per_sec": 124.78,
+            "cache_misses": 118029.0,
+            "time_elapsed_seconds": 6.005386336
+          }
+        },
+        "msec_task_clock": 48044.35,
+        "cpus_utilized": 8.0,
+        "context_switches": 3841.0,
+        "context_switches_per_sec": 79.947,
+        "cpu_migrations": 31.0,
+        "cpu_migrations_per_sec": 0.645,
+        "page_faults": 1.0,
+        "page_faults_per_sec": 0.021,
+        "cycles": 147378110727.0,
+        "ghz": 3.068,
+        "instructions": 44882039768.0,
+        "instructions_per_cycle": 0.3,
+        "branches": 12510983194.0,
+        "branches_per_sec": 260.405,
+        "branch_misses": 136622348.0,
+        "branch_miss_rate_pct": 1.09,
+        "cache_references": 5994996.0,
+        "cache_references_per_sec": 124.78,
+        "cache_misses": 118029.0,
+        "time_elapsed_seconds": 6.005386336,
+        "power_socket0_watts": 32.535225833333335,
+        "power_ram_watts": null,
+        "cpu_load_cores_pct": null,
+        "cpu_load_socket0_pct": 100.0
+      },
+      "configuration_start": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "configuration_end": {
+        "application_updates": {
+          "prime_10000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          },
+          "prime_20000": {
+            "cpu.weight": "100",
+            "cpu.max": "max 100000"
+          }
+        },
+        "host_updates": {
+          "min_granularity_ns": "3000000",
+          "latency_ns": "24000000",
+          "wakeup_granularity_ns": "4000000",
+          "migration_cost_ns": "500000",
+          "min_perf_pct": "45",
+          "max_perf_pct": "100"
+        }
+      },
+      "observed_host_start": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      },
+      "observed_host_end": {
+        "min_granularity_ns": "3000000",
+        "latency_ns": "24000000",
+        "wakeup_granularity_ns": "4000000",
+        "migration_cost_ns": "500000",
+        "min_perf_pct": "45",
+        "max_perf_pct": "100"
+      }
+    }
+  ],
+  "restoration_errors": [],
+  "host_after": {
+    "min_granularity_ns": "3000000",
+    "latency_ns": "24000000",
+    "wakeup_granularity_ns": "4000000",
+    "migration_cost_ns": "500000",
+    "min_perf_pct": "45",
+    "max_perf_pct": "100"
+  },
+  "parent_before": [
+    "memory",
+    "pids"
+  ],
+  "parent_after": [
+    "memory",
+    "pids"
+  ]
+}

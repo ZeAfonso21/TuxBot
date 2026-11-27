@@ -1,0 +1,191 @@
+{
+  "batch_completed": true,
+  "elapsed_seconds": 3570.175188779831,
+  "runs": {
+    "cpu-cpu-frequency/A": {
+      "completed": true,
+      "phase_counts": {
+        "baseline": 3,
+        "tuning": 30,
+        "stable": 20
+      },
+      "frozen_stable_snapshot": true,
+      "constant_within_windows": true,
+      "telemetry_positive_windows": {
+        "instructions_per_cycle": 53,
+        "cycles": 53,
+        "instructions": 53,
+        "power_socket0_watts": 53
+      },
+      "raw_stable_medians": {
+        "prime_10000": 2816.2135714285714,
+        "prime_20000": 1095.722142857143
+      }
+    },
+    "cpu-cpu-frequency/C": {
+      "completed": true,
+      "phase_counts": {
+        "baseline": 3,
+        "tuning": 30,
+        "stable": 20
+      },
+      "frozen_stable_snapshot": true,
+      "constant_within_windows": true,
+      "telemetry_positive_windows": {
+        "instructions_per_cycle": 53,
+        "cycles": 53,
+        "instructions": 53,
+        "power_socket0_watts": 53
+      },
+      "raw_stable_medians": {
+        "prime_10000": 2813.4292857142855,
+        "prime_20000": 1095.4285714285713
+      },
+      "inference_rows": 61
+    },
+    "cpu-memory-contention/A": {
+      "completed": true,
+      "phase_counts": {
+        "baseline": 3,
+        "tuning": 30,
+        "stable": 20
+      },
+      "frozen_stable_snapshot": true,
+      "constant_within_windows": true,
+      "telemetry_positive_windows": {
+        "instructions_per_cycle": 53,
+        "cycles": 53,
+        "instructions": 53,
+        "power_socket0_watts": 53
+      },
+      "raw_stable_medians": {
+        "cpu_latency": 21.11,
+        "memory_bandwidth": 21243.393571428573
+      }
+    },
+    "cpu-memory-contention/C": {
+      "completed": true,
+      "phase_counts": {
+        "baseline": 3,
+        "tuning": 30,
+        "stable": 20
+      },
+      "frozen_stable_snapshot": true,
+      "constant_within_windows": true,
+      "telemetry_positive_windows": {
+        "instructions_per_cycle": 53,
+        "cycles": 53,
+        "instructions": 53,
+        "power_socket0_watts": 53
+      },
+      "raw_stable_medians": {
+        "cpu_latency": 22.29,
+        "memory_bandwidth": 21176.260714285716
+      },
+      "inference_rows": 61
+    },
+    "cpu-memory-partitioned/A": {
+      "completed": true,
+      "phase_counts": {
+        "baseline": 3,
+        "tuning": 30,
+        "stable": 20
+      },
+      "frozen_stable_snapshot": true,
+      "constant_within_windows": true,
+      "telemetry_positive_windows": {
+        "instructions_per_cycle": 53,
+        "cycles": 53,
+        "instructions": 53,
+        "power_socket0_watts": 53
+      },
+      "raw_stable_medians": {
+        "cpu_latency": 2.66,
+        "memory_bandwidth": 13641.142857142857
+      }
+    },
+    "cpu-memory-partitioned/C": {
+      "completed": true,
+      "phase_counts": {
+        "baseline": 3,
+        "tuning": 30,
+        "stable": 20
+      },
+      "frozen_stable_snapshot": true,
+      "constant_within_windows": true,
+      "telemetry_positive_windows": {
+        "instructions_per_cycle": 53,
+        "cycles": 53,
+        "instructions": 53,
+        "power_socket0_watts": 53
+      },
+      "raw_stable_medians": {
+        "cpu_latency": 2.71,
+        "memory_bandwidth": 13568.01
+      },
+      "inference_rows": 61
+    }
+  },
+  "summaries": {
+    "cpu-cpu-frequency": [
+      {
+        "application": "prime_10000",
+        "n_pairs": "1",
+        "median_improvement_pct": "-0.09886628423829259",
+        "minimum_improvement_pct": "-0.09886628423829259",
+        "maximum_improvement_pct": "-0.09886628423829259",
+        "variability": "observed paired-run range, not a confidence interval",
+        "statistical_unit": "A/C run pair after within-run stable medians"
+      },
+      {
+        "application": "prime_20000",
+        "n_pairs": "1",
+        "median_improvement_pct": "-0.026792506703028504",
+        "minimum_improvement_pct": "-0.026792506703028504",
+        "maximum_improvement_pct": "-0.026792506703028504",
+        "variability": "observed paired-run range, not a confidence interval",
+        "statistical_unit": "A/C run pair after within-run stable medians"
+      }
+    ],
+    "cpu-memory-contention": [
+      {
+        "application": "cpu_latency",
+        "n_pairs": "1",
+        "median_improvement_pct": "-5.589767882520132",
+        "minimum_improvement_pct": "-5.589767882520132",
+        "maximum_improvement_pct": "-5.589767882520132",
+        "variability": "observed paired-run range, not a confidence interval",
+        "statistical_unit": "A/C run pair after within-run stable medians"
+      },
+      {
+        "application": "memory_bandwidth",
+        "n_pairs": "1",
+        "median_improvement_pct": "-0.3160175746738854",
+        "minimum_improvement_pct": "-0.3160175746738854",
+        "maximum_improvement_pct": "-0.3160175746738854",
+        "variability": "observed paired-run range, not a confidence interval",
+        "statistical_unit": "A/C run pair after within-run stable medians"
+      }
+    ],
+    "cpu-memory-partitioned": [
+      {
+        "application": "cpu_latency",
+        "n_pairs": "1",
+        "median_improvement_pct": "-1.879699248120294",
+        "minimum_improvement_pct": "-1.879699248120294",
+        "maximum_improvement_pct": "-1.879699248120294",
+        "variability": "observed paired-run range, not a confidence interval",
+        "statistical_unit": "A/C run pair after within-run stable medians"
+      },
+      {
+        "application": "memory_bandwidth",
+        "n_pairs": "1",
+        "median_improvement_pct": "-0.5361197218498625",
+        "minimum_improvement_pct": "-0.5361197218498625",
+        "maximum_improvement_pct": "-0.5361197218498625",
+        "variability": "observed paired-run range, not a confidence interval",
+        "statistical_unit": "A/C run pair after within-run stable medians"
+      }
+    ]
+  }
+}

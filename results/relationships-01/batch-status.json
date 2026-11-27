@@ -1,0 +1,117 @@
+{
+  "started": 1795786544.608929,
+  "cases": {
+    "cpu-cpu-frequency": {
+      "hypothesis": "aligned",
+      "effects": [
+        {
+          "prime_10000": {
+            "reference": 2821.043482142857,
+            "intervention": 2545.1428571428573,
+            "improvement_pct": -9.780091187762423,
+            "reference_drift_pct": -0.12678474593177633
+          },
+          "prime_20000": {
+            "reference": 1093.292857142857,
+            "intervention": 985.14,
+            "improvement_pct": -9.892395842180557,
+            "reference_drift_pct": -0.024823621635738292
+          }
+        },
+        {
+          "prime_10000": {
+            "reference": 2816.215714285714,
+            "intervention": 2538.82,
+            "improvement_pct": -9.84994554495875,
+            "reference_drift_pct": -0.0720904507022103
+          },
+          "prime_20000": {
+            "reference": 1095.7150000000001,
+            "intervention": 987.8571428571429,
+            "improvement_pct": -9.84360505632005,
+            "reference_drift_pct": 0.06509261674929454
+          }
+        }
+      ],
+      "qualified": true,
+      "A": "results/relationships-01/cpu-cpu-frequency/A/results.json",
+      "C": "results/relationships-01/cpu-cpu-frequency/C/results.json"
+    },
+    "cpu-memory-contention": {
+      "hypothesis": "conflicting",
+      "effects": [
+        {
+          "cpu_latency": {
+            "reference": 22.92,
+            "intervention": 9.06,
+            "improvement_pct": 60.47120418848168,
+            "reference_drift_pct": -8.601252609603335
+          },
+          "memory_bandwidth": {
+            "reference": 21235.600803571426,
+            "intervention": 8659.265714285713,
+            "improvement_pct": -59.22288333453044,
+            "reference_drift_pct": 0.13956072733245473
+          }
+        },
+        {
+          "cpu_latency": {
+            "reference": 22.085,
+            "intervention": 7.7,
+            "improvement_pct": 65.13470681458004,
+            "reference_drift_pct": 1.7816354499771612
+          },
+          "memory_bandwidth": {
+            "reference": 21083.39285714286,
+            "intervention": 8274.74142857143,
+            "improvement_pct": -60.752325374575456,
+            "reference_drift_pct": -0.9746636345021791
+          }
+        }
+      ],
+      "qualified": true,
+      "A": "results/relationships-01/cpu-memory-contention/A/results.json",
+      "C": "results/relationships-01/cpu-memory-contention/C/results.json"
+    },
+    "cpu-memory-partitioned": {
+      "hypothesis": "weakly_related",
+      "effects": [
+        {
+          "cpu_latency": {
+            "reference": 2.66,
+            "intervention": 52.89,
+            "improvement_pct": -1888.345864661654,
+            "reference_drift_pct": 0.0
+          },
+          "memory_bandwidth": {
+            "reference": 13604.567857142858,
+            "intervention": 13677.711428571429,
+            "improvement_pct": 0.5376398000776478,
+            "reference_drift_pct": -0.00010500668734935589
+          }
+        },
+        {
+          "cpu_latency": {
+            "reference": 2.66,
+            "intervention": 52.89,
+            "improvement_pct": -1888.345864661654,
+            "reference_drift_pct": 0.0
+          },
+          "memory_bandwidth": {
+            "reference": 13604.559285714286,
+            "intervention": 13677.698571428571,
+            "improvement_pct": 0.5376086367684599,
+            "reference_drift_pct": -0.26880670362904346
+          }
+        }
+      ],
+      "qualified": true,
+      "A": "results/relationships-01/cpu-memory-partitioned/A/results.json",
+      "C": "results/relationships-01/cpu-memory-partitioned/C/results.json"
+    }
+  },
+  "scope": "Three Sysbench load/affinity regimes; not three distinct benchmark suites",
+  "criterion": "Two intervention cycles: aligned/conflicting both >=5% with same/opposite signs; weak CPU >=10%, memory <=3%. Descriptive only.",
+  "completed": true,
+  "finished": 1795790114.7841177
+}

@@ -1,0 +1,15 @@
+pair,window,phase,start,end,x_application,y_application,x_improvement_pct,y_improvement_pct,observed_nondominated
+historical-sysbench-pilot,-1,baseline,1795721100.9690495,1795721108.9819891,cpu_latency,memory_bandwidth,-0.0,-0.16916033049227838,False
+historical-sysbench-pilot,-2,baseline,1795721109.1605432,1795721117.1739883,cpu_latency,memory_bandwidth,11.825192802056554,1.0166105513408517,False
+historical-sysbench-pilot,-3,baseline,1795721117.3685079,1795721125.3819873,cpu_latency,memory_bandwidth,-1.7994858611825153,-0.1696701287485592,False
+historical-sysbench-pilot,1,tuning,1795721127.77224,1795721135.8199768,cpu_latency,memory_bandwidth,1.7994858611825266,0.3830703546752467,False
+historical-sysbench-pilot,2,tuning,1795721136.015868,1795721144.0309854,cpu_latency,memory_bandwidth,-0.0,-0.0002979340458893361,False
+historical-sysbench-pilot,3,tuning,1795721144.3711233,1795721152.394989,cpu_latency,memory_bandwidth,13.62467866323908,1.0170806250576692,True
+historical-sysbench-pilot,4,tuning,1795721153.96557,1795721162.0039878,cpu_latency,memory_bandwidth,15.167095115681242,0.677925748744656,False
+historical-sysbench-pilot,5,tuning,1795721163.9383025,1795721171.9769952,cpu_latency,memory_bandwidth,11.825192802056554,1.2918792646775776,True
+historical-sysbench-pilot,6,tuning,1795721174.796759,1795721182.837993,cpu_latency,memory_bandwidth,-0.0,0.1694384022684193,False
+historical-sysbench-pilot,7,tuning,1795721187.9180498,1795721195.956995,cpu_latency,memory_bandwidth,-0.0,0.8470860792369344,False
+historical-sysbench-pilot,8,tuning,1795721198.6571994,1795721206.6779935,cpu_latency,memory_bandwidth,13.62467866323908,1.0169283476564557,False
+historical-sysbench-pilot,9,stable,1795721220.6625638,1795721228.6749887,cpu_latency,memory_bandwidth,13.62467866323908,1.0167959325249398,False
+historical-sysbench-pilot,10,stable,1795721228.8214374,1795721236.8369925,cpu_latency,memory_bandwidth,15.167095115681242,0.847483324631448,True
+historical-sysbench-pilot,11,stable,1795721237.0356877,1795721245.0469763,cpu_latency,memory_bandwidth,13.62467866323908,0.8477746379207488,False

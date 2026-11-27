@@ -79,7 +79,8 @@ class Windows(BenchmarkInterface):
         if any(p.poll() is not None for p in self.processes):
             raise RuntimeError("A workload exited before measurement")
         start = time.time()
-        before = {a.id: cgroup_sample(self.groups.paths[a.id]) for a in self.apps}
+        # EXTENSION: default A has no workload cgroups; do not substitute ancestor samples.
+        before = {a.id: cgroup_sample(self.groups.paths[a.id]) for a in self.apps} if self.groups is not None else {}
         configuration_start = self.actuator.snapshot() if self.actuator else None
         host_start = {k: c.read() for k, c in self.host_observers.items()}
         # A unique collector index avoids overwriting baseline/stable artifacts.
@@ -89,7 +90,7 @@ class Windows(BenchmarkInterface):
         try:
             time.sleep(duration)
             end = time.time()
-            after = {a.id: cgroup_sample(self.groups.paths[a.id]) for a in self.apps}
+            after = {a.id: cgroup_sample(self.groups.paths[a.id]) for a in self.apps} if self.groups is not None else {}
         finally:
             self.finalize_perf_metrics(index, perf)
 
@@ -121,8 +122,10 @@ class Windows(BenchmarkInterface):
         for app, raw in zip(self.apps, values):
             value = raw[app.metric]
             observation = app.observation(value, self.tolerance) if app.baseline else dict(metric=app.metric, objective=app.objective, current=value)
-            observation.update(raw=raw, cgroup_before=before[app.id], cgroup_after=after[app.id],
-                               cgroup_window=cgroup_deltas(before[app.id], after[app.id], end - start))
+            observation['raw'] = raw
+            if self.groups is not None:
+                observation.update(cgroup_before=before[app.id], cgroup_after=after[app.id],
+                                   cgroup_window=cgroup_deltas(before[app.id], after[app.id], end - start))
             observations[app.id] = observation
         row = dict(window=number, phase=self.phase, start=start, end=end, applications=observations,
                    shared=system, configuration_start=configuration_start,

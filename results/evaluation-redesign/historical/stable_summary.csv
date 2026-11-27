@@ -1,0 +1,3 @@
+pair,application,metric,objective,reference,coordinated,improvement_pct,a_stable_windows,c_stable_windows,aggregate
+historical-sysbench-pilot,cpu_latency,latency_p99_ms,minimize,3.89,3.36,13.62467866323908,3,3,median of complete joint stable window metrics
+historical-sysbench-pilot,memory_bandwidth,throughput_mib_s,maximize,21577.16285714286,21760.088571428572,0.8477746379207488,3,3,median of complete joint stable window metrics

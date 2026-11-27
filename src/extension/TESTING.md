@@ -1,65 +1,70 @@
-# TuxBot extension — current testing status
+# TuxBot extension — current validation status
 
-**Local checkout = source of truth. All execution takes place on bart via SSH.** Source changes are synchronized to `/work_dir/TuxBot`; no TuxBot, benchmark, test, dependency installation or system tuning is executed locally.
+**Local checkout = source of truth. All execution is remote via `ssh bart 'COMMAND'`.**
+
+**Latest live stage:** [005 — Relationship batch](../../progress/005-relationship-batch.md), [complete results](../../results/relationships-01/README.md). All three screened relationships qualified; all six no-cgroup-A/scoped-C runs completed with 3/30/20 windows. 48 extension tests passed before execution. All 318 full-run windows passed the final phase/control/telemetry audit; restoration succeeded with no leftover workloads/groups. Stable C gains were negative in every metric; no statistical improvement is claimed. Actual inference usage is recorded with the results.
+
+The sections below retain the **previous offline plotting stage** for historical context. Statements there that no measured no-cgroup A exists or that the runner still groups default A are superseded by stage 005.
 
 ## Progress history
 
-- [001 — Initial remote validation](../../progress/001-remote-validation.md): 16 tests, schema/model compatibility fixes, two bounded Gemini no-op checks and isolated real-cgroup validation.
-- [002 — Real Sysbench A/C pilot](../../progress/002-sysbench-pilot.md): workload provisioning, failed setup and fix, 23 tests, actual co-located A and coordinated C sessions, telemetry, plots, restoration, token usage and limitations.
-- [003 — Run lengths, plot colors and next experiment plan](../../progress/003-clarifications-and-experiment-plan.md).
-- [Progress/artifact index](../../progress/README.md).
+- [001 — Initial validation](../../progress/001-remote-validation.md): original tests, schema/model fixes and isolated cgroup smoke check.
+- [002 — Historical Sysbench pilot](../../progress/002-sysbench-pilot.md): old grouped-A/C sessions and original artifacts.
+- [003 — Run-length clarification](../../progress/003-clarifications-and-experiment-plan.md): 8/3 versus 30/20 and planned coupling studies.
+- [004 — Evaluation redesign](../../progress/004-evaluation-redesign.md): new formulas, baseline provenance, four main figures, future configurations and offline-only validation.
+- [Current evaluation guide](EVALUATION.md).
 
-The logs preserve what was known at each stage; an earlier "untested" statement describes that stage, not the current status below.
+## Critical finding: the existing A is not the newly requested A
 
-## Latest verified status
+The historical A used **dedicated default-valued per-workload cgroups**. The new protocol explicitly requires no dedicated workload cgroups. The raw records prove the difference; they were not relabelled or edited.
 
-- Remote: **bart**, Linux `5.15.0-89-lowlatency`, Python 3.10.12.
-- Isolated Python environment: `/work_dir/tuxbot-venv`.
-- Native benchmark: **Sysbench 1.0.20**, installed on bart. CPU and memory workloads require no database/dataset. TailBench remains unprovisioned and is not used for this pilot.
-- Perf installed by the user; hardware counters verified with actual co-located workloads.
-- **24 targeted tests pass**: unit validation, original perf-parser tests, mocked controller/runner lifecycle and privacy, failure handling, real collector construction, continuous Sysbench parsing, cgroup rates, narrowed host ranges, hostname gate, CSV and plot generation. Latest evidence: local/remote `results/pilot-01/validation/`.
-- **A and C completed**, each with three concurrent baseline windows, eight default/tuning windows and three stable windows, all 8 seconds long. Both workloads stayed alive together throughout each run.
-- **17 validated C decisions** (8 Speculator + 9 Actor including final freeze) applied real cgroup and host changes with zero recorded actuation errors. Models: Gemini 3.5 Flash / Flash-Lite.
-- All 14 windows in each run contain shared cycles/instructions/IPC/cache misses, CPU load and RAPL power, plus app metrics and cgroup resource/pressure observations.
-- Exact selected host/app snapshots and ancestor CPU-delegation state restored after each run. No experimental cgroups/workloads remained in the post-run check.
-- First A setup failure retained: an abstract `cleanup` omission prevented collector construction before workload startup. Fixed and regression-tested; successful retry is `A-default-02`, not an overwritten failure.
+The report now rejects this historical A by default. `--allow-legacy-a` produces visibly marked historical diagnostics, not a conforming new A/C evaluation. No measured no-cgroup A exists yet. `runner.py` still creates groups in default mode; this execution change was deliberately not made during a plotting-only task. A profiles remain disabled/annotated until that work is separately authorized.
 
-## Retained real plots and data
+## Latest offline validation
 
-Copied into the local source checkout for inspection, also retained on bart:
+**27 plot/data tests passed** remotely in `src/extension/test_evaluation.py`; the current validation log/JUnit are authoritative. Tests use explicitly synthetic fixtures and optional existing artifact JSON, never native workloads or a tuning controller. They cover:
 
-**`results/pilot-01/comparison/`**
+- Ordinary signed latency reduction / throughput increase, zero current values, missing/invalid references.
+- No-cgroup A; contradictory/unknown provenance; tuned or failed A rejection; workload/metric/time mismatch.
+- Complete joint CPU/Memory windows, input-order independence, no A/C window-index pairing.
+- Stable raw medians before normalization; no invented stable boundary or window pseudo-replication.
+- Actual C readbacks rather than proposals; missing/null/mixed histories, discovered knobs/unlimited states and telemetry/control separation.
+- Rejected parent aggregate resource scope; never plotting A child-cgroup data as process telemetry.
+- Four main PNG/PDF figures, separate optional diagnostics, retired default plots, CSV consistency and unchanged source bytes.
+- Explicit 30/20 future profiles and unmeasured workload-pair declarations.
 
-- [Per-window improvement](../../results/pilot-01/comparison/improvement_per_window.png)
-- [Shared Configuration A reference](../../results/pilot-01/comparison/improvement_vs_configuration_A.png)
-- [Control trajectory](../../results/pilot-01/comparison/control_trajectory.png)
-- [Host telemetry](../../results/pilot-01/comparison/host_telemetry.png)
-- [Application resources](../../results/pilot-01/comparison/application_resources.png)
-- Raw CPU/memory performance comparisons, PNG/PDF versions, CSV tables and `pilot-summary.json`.
+Authoritative artifacts: `results/evaluation-redesign/validation/pytest.log`, `pytest.xml`, and `strict-baseline-check.log`, mirrored locally from bart. Earlier broad/mock/privileged validation is historical; its tuning loops were **not rerun** in this stage. The older mocked-runner test's exporter expectations were updated but not executed under the current restriction.
 
-Plotting source: [`report.py`](report.py) and [`plots.py`](plots.py). The earlier mock-test plots were temporary and did not survive test cleanup; these are now retained real measurements.
+## Current plots
 
-Initial stable medians: CPU max-interval-p99 **3.89 ms (A) → 3.36 ms (C)**; memory throughput **21577.16 → 21760.09 MiB/s**. This is one short pilot, **not a statistically established research gain**. CPU metric is a maximum of interval p99s, never a pooled request p99. Relative-improvement curves use ratio factors, not latency-reduction percentages. See log 002 for baseline drift, raw violating windows and interpretation.
+- **Real historical diagnostics:** `results/evaluation-redesign/historical/`, all marked nonconforming A.
+- **Strict-schema synthetic demonstration:** `results/evaluation-redesign/synthetic/`, all marked synthetic.
 
-## Commands / credentials
+Each set contains:
 
-Execute only remotely, for example:
+1. `relative_improvement.png` / `.pdf` — C relative to fixed A stable medians.
+2. `stable_performance.png` / `.pdf` — changes from raw A/C stable aggregates.
+3. `applied_parameters.png` / `.pdf` — only actual modified C control histories, grouped by scope/units.
+4. `pareto_tradeoffs.png` / `.pdf` — synchronized two-metric windows using the same normalization as Figure 1.
+
+The historical set additionally contains explicitly requested `resource_telemetry`; no A process traces were invented. Old own-baseline/factor/bound-marker/fake-A-cgroup graphs are retired under `results/pilot-01/comparison/retired/`; historical CSV/JSON files remain unchanged.
+
+The historical fixed references are A steady-phase medians: 3.89 ms and 21577.162857 MiB/s. Historical C stable changes are 13.624679% lower CPU latency and 0.847775% higher memory throughput. These are **not new results** and cannot establish the new no-cgroup research comparison. No confidence interval is invented for one run pair. Percentile summaries are not pooled request p99s.
+
+## Future configuration / workload preparation
+
+Generic A/B/C and Sysbench profiles now explicitly request **30 tuning + 20 stable windows**, not yet run. Raw pilot snapshots retain their actual 8/3 configuration and recorded phases.
+
+`examples/workload-pairs.json` contains planned Silo/img-dnn, Xapian/CPU, Sphinx/CPU and Memcached/CPU hypotheses. Added Xapian, Sphinx and CPU-throughput workload definitions reuse existing adapters; they need provisioning, data/storage checks, unique output paths and offered-load calibration. All relationships remain **unmeasured**. Busy-poll socket behavior and a reversible idle-state interface are prerequisites for the proposed network/idle conflict; `cstate_max` remains excluded. No new benchmark dependency was installed.
+
+## Offline-only reproduction
 
 ```sh
-ssh bart 'cd /work_dir/TuxBot && OS_PARAM_TUNING_ROOT=/work_dir/TuxBot MPLBACKEND=Agg PYTHONPATH=src /work_dir/tuxbot-venv/bin/python -m pytest -q src/extension/test_extension.py src/extension/test_controller.py src/extension/test_runner.py src/extension/test_sysbench.py tests/test_perf_collection.py'
+ssh bart 'cd /work_dir/TuxBot && MPLBACKEND=Agg PYTHONPATH=src /work_dir/tuxbot-venv/bin/python -m pytest -q src/extension/test_evaluation.py'
 ```
 
-`OS_PARAM_TUNING_ROOT` avoids copied-repository ownership/Git root-discovery issues without globally trusting unrelated repositories. The key remains outside the repository in `/work_dir/.secrets/gemini.env` (0600; directory 0700). Load it into remote tuning processes with `. /work_dir/.secrets/gemini.env`; do not display its contents or put it into JSON. A scan found no key bytes in copied pilot artifacts. SSH keys/passphrases were not accessed.
+See EVALUATION.md for read-only generation commands. The Python environment is `/work_dir/tuxbot-venv`. Plotting does not need or load the Gemini key; no credits were used in this stage. The protected credential environment file from earlier stages remains outside the repository; no SSH keys/passphrases were accessed.
 
-C reported **463170 billable tokens** across recorded successful decisions (445546 input, 4876 output, 12748 thinking). The user subsequently reported approximately €0.30 spent and confirmed the €10 budget may be used. No charge/account balance was independently verified through a billing API. No attempt was made to spend down the budget.
+## Still outstanding
 
-## Not yet established
-
-- Full 30-tuning/20-stable-window runs: the completed A/C sessions used only 8/3 plus three baseline windows.
-- Independent-mode B with real workloads; repeated/rerandomized A/C experiments or uncertainty estimates.
-- General performance superiority, or causal isolation of individual controls/contextual awareness.
-- Real full-session interruption/partial-kernel-write failure recovery, memory.high under load and other workload adapters.
-- Exact request-level percentile reconstruction: the current pilot intentionally uses interval summaries and receipt-time alignment.
-- Full privileged legacy test suite (intentionally not run).
-
-Do not rerun the current pilot profiles into existing result/metrics paths. Create new run IDs and review the expected-default checks first. Raw artifacts stay under the existing ignored `results/` directory; code/config/progress logs remain separate from experiment data.
+True no-cgroup A execution/capture, real 30/20 datasets, equivalent independent B, new workload provisioning/experiments and classification, repetitions/uncertainty, and live interruption/failure recovery. The existing successful host/cgroup restoration observations belong to the historical pilot, not a new execution in this stage. No new statistical or causal performance claim is made.

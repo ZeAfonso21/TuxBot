@@ -1,0 +1,6 @@
+{
+  "started": 1795786325.6911058,
+  "cases": {},
+  "scope": "Three Sysbench load/affinity regimes; not three distinct benchmark suites",
+  "criterion": "Two intervention cycles: aligned/conflicting both >=5% with same/opposite signs; weak CPU >=10%, memory <=3%. Descriptive only."
+}

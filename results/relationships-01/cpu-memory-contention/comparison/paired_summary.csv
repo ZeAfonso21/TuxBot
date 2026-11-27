@@ -1,0 +1,3 @@
+application,n_pairs,median_improvement_pct,minimum_improvement_pct,maximum_improvement_pct,variability,statistical_unit
+cpu_latency,1,-5.589767882520132,-5.589767882520132,-5.589767882520132,"observed paired-run range, not a confidence interval",A/C run pair after within-run stable medians
+memory_bandwidth,1,-0.3160175746738854,-0.3160175746738854,-0.3160175746738854,"observed paired-run range, not a confidence interval",A/C run pair after within-run stable medians

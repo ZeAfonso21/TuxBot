@@ -1,0 +1,14 @@
+{
+  "benchmark": "tailbench",
+  "tailbench_app": "xapian",
+  "tailbench_root": "deps/Tailbench/tailbench",
+  "tailbench_data_root": "deps/Tailbench/tailbench.inputs",
+  "tailbench_xapian_db_path": "deps/Tailbench/tailbench.inputs/xapian/wiki",
+  "tailbench_output_dir": "results/planned-workloads/xapian",
+  "results_dir": "results/planned-workloads/xapian/collector",
+  "tailbench_qps": 1000,
+  "tailbench_threads": 4,
+  "tailbench_warmupreqs": 1000,
+  "tailbench_maxreqs": 1000000000,
+  "tailbench_metrics_interval_sec": 1
+}

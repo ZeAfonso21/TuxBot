@@ -1,0 +1,21 @@
+pair,configuration,application,window,phase,metric,objective,value,bound,violation,bound_source
+pair-1,Configuration A — Untuned,cpu_latency,1,tuning,latency_p99_ms,minimize,4,8,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration A — Untuned,memory_bandwidth,1,tuning,throughput_mib_s,maximize,100,50,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration A — Untuned,cpu_latency,2,tuning,latency_p99_ms,minimize,4,8,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration A — Untuned,memory_bandwidth,2,tuning,throughput_mib_s,maximize,100,50,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration A — Untuned,cpu_latency,3,stable,latency_p99_ms,minimize,4,8,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration A — Untuned,memory_bandwidth,3,stable,throughput_mib_s,maximize,100,50,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration A — Untuned,cpu_latency,4,stable,latency_p99_ms,minimize,4,8,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration A — Untuned,memory_bandwidth,4,stable,throughput_mib_s,maximize,100,50,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration A — Untuned,cpu_latency,5,stable,latency_p99_ms,minimize,4,8,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration A — Untuned,memory_bandwidth,5,stable,throughput_mib_s,maximize,100,50,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration C — Coordinated,cpu_latency,1,tuning,latency_p99_ms,minimize,5,8,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration C — Coordinated,memory_bandwidth,1,tuning,throughput_mib_s,maximize,110,50,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration C — Coordinated,cpu_latency,2,tuning,latency_p99_ms,minimize,3,8,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration C — Coordinated,memory_bandwidth,2,tuning,throughput_mib_s,maximize,90,50,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration C — Coordinated,cpu_latency,3,stable,latency_p99_ms,minimize,5,8,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration C — Coordinated,memory_bandwidth,3,stable,throughput_mib_s,maximize,80,50,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration C — Coordinated,cpu_latency,4,stable,latency_p99_ms,minimize,3.2,8,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration C — Coordinated,memory_bandwidth,4,stable,throughput_mib_s,maximize,120,50,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration C — Coordinated,cpu_latency,5,stable,latency_p99_ms,minimize,3,8,False,own run measured initial baseline; NOT the A evaluation reference
+pair-1,Configuration C — Coordinated,memory_bandwidth,5,stable,throughput_mib_s,maximize,118,50,False,own run measured initial baseline; NOT the A evaluation reference
